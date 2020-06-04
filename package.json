@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "prop-types": "^15.6.0",
+    "classnames": "^2.2.5",
     "react-final-form": "^6.3.0",
     "lodash": "^4.17.4"
   },

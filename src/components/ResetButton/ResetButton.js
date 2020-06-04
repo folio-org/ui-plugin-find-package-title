@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames'; /* eslint-disable-line import/no-extraneous-dependencies */
-import { Button, Icon } from '@folio/stripes/components';
-import css from './ResetAllButton.css';
+import classnames from 'classnames';
+
+import {
+  Button,
+  Icon,
+} from '@folio/stripes/components';
+
+import css from './ResetButton.css';
 
 
 const propTypes = {

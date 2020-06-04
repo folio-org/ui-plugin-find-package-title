@@ -15,7 +15,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import SearchFilters from '../SearchFilters';
-import ResetAllButton from '../ResetAllButton';
+import ResetAllButton from '../ResetButton';
 import {
   packageFilters,
   searchFiltersShape,

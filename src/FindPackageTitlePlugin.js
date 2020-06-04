@@ -11,7 +11,7 @@ const propTypes = {
   onRecordChosen: PropTypes.func.isRequired,
 };
 
-const FindPackageTitlePluginContainer = ({
+const FindPackageTitlePlugin = ({
   onRecordChosen,
   renderCustomTrigger,
 }) => {
@@ -47,6 +47,6 @@ const FindPackageTitlePluginContainer = ({
   );
 };
 
-FindPackageTitlePluginContainer.propTypes = propTypes;
+FindPackageTitlePlugin.propTypes = propTypes;
 
-export default FindPackageTitlePluginContainer;
+export default FindPackageTitlePlugin;
