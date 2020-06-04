@@ -1,7 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { turnOffWarnings } from './helpers/helpers';
 
-// require all modules ending in "-test" from the current directory and
-// all subdirectories
+turnOffWarnings();
 const requireTest = require.context('./tests/', true, /-test/);
 requireTest.keys().forEach(requireTest);

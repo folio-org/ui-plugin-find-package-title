@@ -7,8 +7,8 @@ import { Button } from '@folio/stripes/components';
 import { SearchModal } from './components';
 
 const propTypes = {
-  renderTrigger: PropTypes.func,
   onRecordChosen: PropTypes.func.isRequired,
+  renderCustomTrigger: PropTypes.func,
 };
 
 const FindPackageTitlePlugin = ({
@@ -23,7 +23,10 @@ const FindPackageTitlePlugin = ({
 
   const renderDefaultTrigger = () => {
     return (
-      <Button onClick={openPluginModal}>
+      <Button
+        data-test-find-package-title-trigger
+        onClick={openPluginModal}
+      >
         <FormattedMessage id="ui-plugin-find-package-title.defaultTriggerLabel" />
       </Button>
     );

@@ -15,7 +15,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import SearchFilters from '../SearchFilters';
-import ResetAllButton from '../ResetButton';
+import ResetButton from '../ResetButton';
 import {
   packageFilters,
   searchFiltersShape,
@@ -81,6 +81,7 @@ const SearchForm = ({
             label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.accessTypes.accessTypesOnly" />}
             onChange={toggleSearchByAccessTypes}
             checked={searchAccessTypesEnabled}
+            data-test-toggle-search-by-access-types
           />
           <MultiSelectionFilter
             dataOptions={accessTypesFilterOptions}
@@ -116,6 +117,7 @@ const SearchForm = ({
             label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.tags.tagsOnly" />}
             onChange={toggleSearchByTags}
             checked={searchByTagsEnabled}
+            data-test-toggle-search-by-tags
           />
           <MultiSelectionFilter
             dataOptions={tagsFilterOptions}
@@ -150,6 +152,7 @@ const SearchForm = ({
             ariaLabel={ariaLabel}
             value={searchQuery}
             disabled={searchByTagsEnabled || searchAccessTypesEnabled}
+            data-test-find-package-title-search-field
           />
         )}
       </FormattedMessage>
@@ -158,13 +161,15 @@ const SearchForm = ({
         fullWidth
         disabled={!searchQuery || searchByTagsEnabled || searchAccessTypesEnabled}
         type="submit"
+        data-test-find-package-title-search-button
       >
         <FormattedMessage id="ui-plugin-find-package-title.searchPane.searchButton.label" />
       </Button>
-      <ResetAllButton
+      <ResetButton
         label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.resetAll" />}
         disabled={resetButtonDisabled}
         onClick={onResetAll}
+        data-test-find-package-title-reset-button
       />
       {tagsExist && renderTagsFilter()}
       {accessTypesExist && renderAccessTypesFilter()}

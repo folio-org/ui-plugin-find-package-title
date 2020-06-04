@@ -277,6 +277,7 @@ const SearchModal = ({
       label={<FormattedMessage id="ui-plugin-find-package-title.modal.label.selectPackage" />}
       onClose={closeModal}
       size="large"
+      id="find-package-title-modal"
     >
       <Paneset static isRoot>
         <Pane

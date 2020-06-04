@@ -52,7 +52,7 @@ export default function SearchFilters({
                     tabIndex={isChecked ? 0 : -1}
                     key={i}
                     name={name}
-                    id={`eholdings-search-filters-${name}-${value}`}
+                    id={`filter-${name}-${value}`}
                     label={radioBtnLabel}
                     value={value}
                     checked={isChecked}

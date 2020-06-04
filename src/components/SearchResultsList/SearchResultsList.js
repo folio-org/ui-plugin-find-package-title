@@ -37,8 +37,16 @@ const SearchResultsList = ({
   const emptyMessage = (
     <Layout className="display-flex centerContent">
       {hasLoaded
-        ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
-        : <FormattedMessage id="ui-plugin-find-package-title.resultsPane.emptyMessage" />
+        ? (
+          <span data-test-no-results-message>
+            <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
+          </span>
+        )
+        : (
+          <span data-test-search-prompt>
+            <FormattedMessage id="ui-plugin-find-package-title.resultsPane.emptyMessage" />
+          </span>
+        )
       }
     </Layout>
   );
