@@ -17,57 +17,74 @@ export default function SearchFilters({
   onChange,
   disabled,
 }) {
+  const resetFilter = filterName => () => {
+    onChange({
+      ...activeFilters,
+      [filterName]: undefined,
+    });
+  };
+
+  const renderFilterOption = filterData => optionData => {
+    const { name, defaultValue } = filterData;
+    const { label: radioBtnLabel, value } = optionData;
+
+    const isChecked = value === (activeFilters[name] || defaultValue);
+
+    return (
+      <RadioButton
+        role="radio"
+        aria-checked={isChecked}
+        tabIndex={isChecked ? 0 : -1}
+        key={value}
+        name={name}
+        id={`filter-${name}-${value}`}
+        label={radioBtnLabel}
+        value={value}
+        checked={isChecked}
+        disabled={disabled}
+        onChange={e => onChange({
+          ...activeFilters,
+          [name]: e.target.value,
+        })}
+      />
+    );
+  };
+
+  const renderFilter = ({ name, label, defaultValue, options }) => {
+    const accordionLabelId = `filter-${name}-label`;
+
+    return (
+      <Accordion
+        key={name}
+        name={name}
+        label={
+          <span id={accordionLabelId}>
+            {label}
+          </span>
+        }
+        separator={false}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={!!activeFilters[name] && activeFilters[name] !== defaultValue}
+        onClearFilter={resetFilter(name)}
+        id={`filter-${name}`}
+      >
+        <div
+          role="radiogroup"
+          aria-labelledby={accordionLabelId}
+        >
+          {options.map(renderFilterOption({
+            name,
+            defaultValue,
+          }))}
+        </div>
+      </Accordion>
+    );
+  };
+
   return (
-    <div className={styles['search-filters']} data-test-eholdings-search-filters>
-      {availableFilters.map(({ name, label, defaultValue, options }) => {
-        const accordionLabelId = `filter-${name}-label`;
-
-        return (
-          <Accordion
-            key={name}
-            name={name}
-            label={
-              <span id={accordionLabelId}>
-                {label}
-              </span>
-            }
-            separator={false}
-            closedByDefault
-            header={FilterAccordionHeader}
-            displayClearButton={!!activeFilters[name] && activeFilters[name] !== defaultValue}
-            onClearFilter={() => onChange({ ...activeFilters, [name]: undefined })}
-            id={`filter-${name}`}
-          >
-            <div
-              role="radiogroup"
-              aria-labelledby={accordionLabelId}
-            >
-              {options.map(({ label: radioBtnLabel, value }, i) => {
-                const isChecked = value === (activeFilters[name] || defaultValue);
-
-                return (
-                  <RadioButton
-                    role="radio"
-                    aria-checked={isChecked}
-                    tabIndex={isChecked ? 0 : -1}
-                    key={i}
-                    name={name}
-                    id={`filter-${name}-${value}`}
-                    label={radioBtnLabel}
-                    value={value}
-                    checked={isChecked}
-                    disabled={disabled}
-                    onChange={e => onChange({
-                      ...activeFilters,
-                      [name]: e.target.value,
-                    })}
-                  />
-                );
-              })}
-            </div>
-          </Accordion>
-        );
-      })}
+    <div className={styles['search-filters']}>
+      {availableFilters.map(renderFilter)}
     </div>
   );
 }
