@@ -7,6 +7,8 @@ import {
   Layout,
 } from '@folio/stripes/components';
 
+import NoResultsMessage from '../NoResultsMessage';
+
 import { packageAttributesFields } from '../../constants';
 
 const propTypes = {
@@ -38,14 +40,14 @@ const SearchResultsList = ({
     <Layout className="display-flex centerContent">
       {hasLoaded
         ? (
-          <span data-test-no-results-message>
+          <NoResultsMessage data-test-no-results-message>
             <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
-          </span>
+          </NoResultsMessage>
         )
         : (
-          <span data-test-search-prompt>
+          <NoResultsMessage data-test-search-prompt>
             <FormattedMessage id="ui-plugin-find-package-title.resultsPane.emptyMessage" />
-          </span>
+          </NoResultsMessage>
         )
       }
     </Layout>
