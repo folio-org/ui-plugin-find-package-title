@@ -46,10 +46,14 @@
     "react-dom": "^16.5.0",
     "react-intl": "^4.5.3",
     "react-router-dom": "^4.0.0",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.3",
+    "sinon": "^7.3.2"
   },
   "dependencies": {
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "classnames": "^2.2.5",
+    "react-final-form": "^6.3.0",
+    "lodash": "^4.17.4"
   },
   "peerDependencies": {
     "@folio/stripes": "^4.0.0",
