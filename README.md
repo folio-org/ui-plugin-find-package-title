@@ -1,4 +1,4 @@
-# ui-plugin-find-package-title
+# ui-plugin-find-packages-titles
 
 Copyright (C) 2017-2018 The Open Library Foundation
 
