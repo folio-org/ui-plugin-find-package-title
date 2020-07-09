@@ -2,3 +2,9 @@
   padding: 0;
   height: 60vh;
 }
+
+.modalFooter {
+  width: 100%;
+  display: flex;
+  justify-content: space-between
+}

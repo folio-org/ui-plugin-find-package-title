@@ -23,6 +23,7 @@ import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/
 
 @interactor class PluginModalInteractor {
   clickNotSelectedFilter = clickable('#filter-selected-false');
+  clickSelectedFilter = clickable('#filter-selected-true');
 
   resultsItems = collection('[role="group"] [role="row"]', {
     click: clickable(),
@@ -53,6 +54,9 @@ import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/
 
   noResultsDisplayed = isPresent('[data-test-no-results-message]');
   searchPromptDisplayed = isPresent('[data-test-search-prompt]');
+  titlesSelectedText = text('[data-test-titles-selected-count]');
+  cancelSelection = clickable('[data-test-find-package-title-cancel]');
+  saveSelection = clickable('[data-test-find-package-title-save]');
 }
 
 @interactor class PluginInteractor {

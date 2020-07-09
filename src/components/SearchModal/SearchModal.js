@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import isEqual from 'lodash/isEqual';
+import {
+  isEqual,
+  omit,
+} from 'lodash';
 
 import {
   AppIcon,
@@ -13,6 +16,7 @@ import {
   Pane,
   Paneset,
   Icon,
+  Button,
 } from '@folio/stripes/components';
 
 import SearchForm from '../SearchForm';
@@ -26,12 +30,14 @@ import css from './SearchModal.css';
 
 
 const propTypes = {
+  isMultiSelect: PropTypes.bool,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onRecordChosen: PropTypes.func.isRequired,
   mutator: PropTypes.shape({
     packages: PropTypes.shape({
       GET: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
   resources: PropTypes.shape({
@@ -73,8 +79,10 @@ const SearchModal = ({
   onClose,
   mutator,
   resources,
+  isMultiSelect,
 }) => {
   const [lastFetchedPage, setLastFetchedPage] = useState(0);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const getInitialFiltersState = () => packageFilters.reduce((filtersState, filter) => ({
     ...filtersState,
@@ -114,7 +122,12 @@ const SearchModal = ({
 
     return records
       .reduce((acc, rec) => [...acc, ...rec.data], [])
-      .map(({ attributes, id, type }) => ({ ...attributes, id, type }));
+      .map(({ attributes, id, type }) => ({
+        ...attributes,
+        id,
+        type,
+        checked: !!selectedItems.find(item => item.id === id),
+      }));
   };
 
   const getTotalResults = () => {
@@ -238,12 +251,27 @@ const SearchModal = ({
 
   const closeModal = () => {
     resetSearch();
+    setSelectedItems([]);
     onClose();
   };
 
   const handleRecordClick = item => {
+    if (isMultiSelect) {
+      const isAlreadySelected = !!selectedItems.find(selectedItem => selectedItem.id === item.id);
+      const newSelectedItems = isAlreadySelected
+        ? selectedItems.filter(selectedItem => item.id !== selectedItem.id)
+        : [...selectedItems, item];
+
+      setSelectedItems(newSelectedItems);
+    } else {
+      closeModal();
+      onRecordChosen(omit(item, ['checked']));
+    }
+  };
+
+  const handleSave = () => {
     closeModal();
-    onRecordChosen(item);
+    onRecordChosen(selectedItems.map(item => omit(item, ['checked'])));
   };
 
   const toggleSearchByTags = () => {
@@ -269,6 +297,40 @@ const SearchModal = ({
         : '';
   };
 
+  const renderModalFooter = () => {
+    if (!isMultiSelect) {
+      return null;
+    }
+
+    return (
+      <div className={css.modalFooter}>
+        <Button
+          data-test-find-package-title-cancel
+          onClick={closeModal}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-components.cancel" />
+        </Button>
+        <div data-test-titles-selected-count>
+          <FormattedMessage
+            id="ui-plugin-find-package-title.resultsPane.totalSelected.count"
+            values={{
+              count: selectedItems.length,
+            }}
+          />
+        </div>
+        <Button
+          data-test-find-package-title-save
+          marginBottom0
+          buttonStyle="primary"
+          onClick={handleSave}
+        >
+          <FormattedMessage id="stripes-components.saveAndClose" />
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <Modal
       open={open}
@@ -278,6 +340,7 @@ const SearchModal = ({
       onClose={closeModal}
       size="large"
       id="find-package-title-modal"
+      footer={renderModalFooter()}
     >
       <Paneset static isRoot>
         <Pane
@@ -319,6 +382,7 @@ const SearchModal = ({
                 totalCount={totalResults}
                 onNeedMoreData={fetchNextPage}
                 hasLoaded={hasLoaded}
+                isMultiSelect={isMultiSelect}
               />
             )
             : (

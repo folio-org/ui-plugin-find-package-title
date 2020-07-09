@@ -1,113 +1,19 @@
-const taggedPackages = [
-  {
-    id: '1075-7698',
-    type: 'packages',
-    attributes: {
-      contentType: 'Online Reference',
-      customCoverage: {
-        beginCoverage: '',
-        endCoverage: ''
-      },
-      isCustom: false,
-      isSelected: false,
-      name: 'Tagged package',
-      packageId: 7698,
-      packageType: 'Complete',
-      providerId: 1075,
-      providerName: 'ABC Chemistry',
-      selectedCount: 0,
-      titleCount: 1,
-      visibilityData: {
-        isHidden: false,
-        reason: ''
-      }
-    },
-  },
-];
-
-const withAccessTypesPackages = [
-  {
-    id: '1075-7698',
-    type: 'packages',
-    attributes: {
-      contentType: 'Online Reference',
-      customCoverage: {
-        beginCoverage: '',
-        endCoverage: ''
-      },
-      isCustom: false,
-      isSelected: false,
-      name: 'With access types',
-      packageId: 7698,
-      packageType: 'Complete',
-      providerId: 1075,
-      providerName: 'ABC Chemistry',
-      selectedCount: 0,
-      titleCount: 1,
-      visibilityData: {
-        isHidden: false,
-        reason: ''
-      }
-    },
-  },
-];
-
-const notSelectedPackages = [
-  {
-    id: '1075-7698',
-    type: 'packages',
-    attributes: {
-      contentType: 'Online Reference',
-      customCoverage: {
-        beginCoverage: '',
-        endCoverage: ''
-      },
-      isCustom: false,
-      isSelected: false,
-      name: 'Not selected',
-      packageId: 7698,
-      packageType: 'Complete',
-      providerId: 1075,
-      providerName: 'ABC Chemistry',
-      selectedCount: 0,
-      titleCount: 1,
-      visibilityData: {
-        isHidden: false,
-        reason: ''
-      }
-    },
-  }
-];
-
-const selectedPackages = [
-  {
-    id: '440-3391',
-    type: 'packages',
-    attributes: {
-      contentType: 'Abstract and Index',
-      customCoverage: {
-        beginCoverage: '',
-        endCoverage: ''
-      },
-      isCustom: false,
-      isSelected: true,
-      name: 'Selected',
-      packageId: 3391,
-      packageType: 'Complete',
-      providerId: 440,
-      providerName: 'Getty Conservation Institute',
-      selectedCount: 0,
-      titleCount: 1,
-      visibilityData: {
-        isHidden: false,
-        reason: ''
-      }
-    },
-  }
-];
+import {
+  selectedPackages,
+  notSelectedPackages,
+  taggedPackages,
+  withAccessTypesPackages,
+} from '../constants';
 
 export default function config() {
   this.get('/eholdings/packages', (schema, request) => {
+    const allPackages = [
+      ...selectedPackages,
+      ...notSelectedPackages,
+      ...taggedPackages,
+      ...withAccessTypesPackages,
+    ];
+
     if (request.queryParams['filter[selected]']) {
       if (request.queryParams['filter[selected]'] === 'true') {
         return {
@@ -146,13 +52,20 @@ export default function config() {
       };
     }
 
+    if (request.queryParams.q) {
+      const filteredPackages = allPackages.filter(item => {
+        return item.attributes.name.toLowerCase().includes(request.queryParams.q.toLowerCase());
+      });
+      return {
+        data: filteredPackages,
+        meta: {
+          totalResults: filteredPackages.length,
+        },
+      };
+    }
+
     return {
-      data: [
-        ...selectedPackages,
-        ...notSelectedPackages,
-        ...taggedPackages,
-        ...withAccessTypesPackages,
-      ],
+      data: allPackages,
       meta: {
         totalResults: notSelectedPackages.length
           + selectedPackages.length
