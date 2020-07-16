@@ -36,5 +36,6 @@
     "resultsPane.status.notSelected": "未选",
     "resultsPane.name": "名称",
     "resultsPane.titlesSelected": "已选标题",
-    "resultsPane.totalTitles": "总计标题"
+    "resultsPane.totalTitles": "总计标题",
+    "resultsPane.totalSelected.count": "Titles selected: {count}"
 }

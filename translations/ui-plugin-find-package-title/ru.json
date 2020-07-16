@@ -36,5 +36,6 @@
     "resultsPane.status.notSelected": "Не выбран",
     "resultsPane.name": "Название",
     "resultsPane.titlesSelected": "Отобранные заголовки",
-    "resultsPane.totalTitles": "Общее количество заголовков"
+    "resultsPane.totalTitles": "Общее количество заголовков",
+    "resultsPane.totalSelected.count": "Titles selected: {count}"
 }

@@ -36,5 +36,6 @@
     "resultsPane.status.notSelected": "Not selected",
     "resultsPane.name": "Name",
     "resultsPane.titlesSelected": "Titles selected",
-    "resultsPane.totalTitles": "Total titles"
+    "resultsPane.totalTitles": "Total titles",
+    "resultsPane.totalSelected.count": "Titles selected: {count}"
 }

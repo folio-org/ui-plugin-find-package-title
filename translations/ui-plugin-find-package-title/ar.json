@@ -36,5 +36,6 @@
     "resultsPane.status.notSelected": "غير محدد",
     "resultsPane.name": "الاسم",
     "resultsPane.titlesSelected": "العناوين المحددة",
-    "resultsPane.totalTitles": "إجمالي العناوين"
+    "resultsPane.totalTitles": "إجمالي العناوين",
+    "resultsPane.totalSelected.count": "العناوين المحددة: {count}"
 }
