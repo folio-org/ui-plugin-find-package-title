@@ -6,8 +6,11 @@ import { Pluggable } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 
 import setupApplication, { mount } from '../helpers/helpers';
-import PluginHarness from '../helpers/PluginHarness';
 import PluginInteractor from '../interactors/plugin';
+import {
+  selectedPackages,
+  notSelectedPackages,
+} from '../constants';
 
 const onRecordChosenHandler = sinon.spy();
 
@@ -15,6 +18,16 @@ const onRecordChosenHandler = sinon.spy();
 describe('ui-plugin-find-package-title', function () {
   const plugin = new PluginInteractor();
   setupApplication();
+
+  const renderComponent = (props = {}) => {
+    return mount(
+      <Pluggable
+        type="find-package-title"
+        onRecordChosen={onRecordChosenHandler}
+        {...props}
+      />
+    );
+  };
 
   describe('when the plugin is provided a custom trigger button', () => {
     beforeEach(async function () {
@@ -43,12 +56,7 @@ describe('ui-plugin-find-package-title', function () {
     beforeEach(async function () {
       onRecordChosenHandler.resetHistory();
 
-      await mount(
-        <Pluggable
-          type="find-package-title"
-          onRecordChosen={onRecordChosenHandler}
-        />
-      );
+      await renderComponent();
     });
 
     it('should render the default trigger button', function () {
@@ -90,7 +98,7 @@ describe('ui-plugin-find-package-title', function () {
 
       describe('and a search query was entered', () => {
         beforeEach(async () => {
-          await plugin.modal.searchField.fill('some query');
+          await plugin.modal.searchField.fill('selected');
         });
 
         it('should enable the search button', () => {
@@ -165,7 +173,7 @@ describe('ui-plugin-find-package-title', function () {
           });
 
           it('should display a list of loaded packages', () => {
-            expect(plugin.modal.resultsList.rows().length).to.equal(4);
+            expect(plugin.modal.resultsList.rows().length).to.equal(3);
           });
 
           describe('and reset button was clicked', () => {
@@ -188,7 +196,7 @@ describe('ui-plugin-find-package-title', function () {
             });
 
             it('should display only not selected packages', () => {
-              expect(plugin.modal.resultsList.rows().length).to.equal(1);
+              expect(plugin.modal.resultsList.rows().length).to.equal(3);
               expect(plugin.modal.resultsList.rows(0).cells(1).content).to.equal('Not selected');
             });
 
@@ -202,28 +210,104 @@ describe('ui-plugin-find-package-title', function () {
               });
 
               it('should call the provided callback with the data of the selected package', () => {
+                const { attributes, id, type } = notSelectedPackages[0];
+
                 expect(onRecordChosenHandler.calledOnceWith({
-                  id: '1075-7698',
-                  type: 'packages',
-                  contentType: 'Online Reference',
-                  customCoverage: {
-                    beginCoverage: '',
-                    endCoverage: ''
-                  },
-                  isCustom: false,
-                  isSelected: false,
-                  name: 'Not selected',
-                  packageId: 7698,
-                  packageType: 'Complete',
-                  providerId: 1075,
-                  providerName: 'ABC Chemistry',
-                  selectedCount: 0,
-                  titleCount: 1,
-                  visibilityData: {
-                    isHidden: false,
-                    reason: ''
-                  }
+                  id,
+                  type,
+                  ...attributes,
                 })).to.be.true;
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
+  describe('when the plugin is rendered with a multiselect prop', () => {
+    beforeEach(async function () {
+      onRecordChosenHandler.resetHistory();
+
+      await renderComponent({
+        isMultiSelect: true,
+      });
+    });
+
+    describe('and a trigger button is clicked', () => {
+      beforeEach(async () => {
+        await plugin.triggerButton.click();
+      });
+
+      it('should open the plugin modal', () => {
+        expect(plugin.modalIsDisplayed).to.be.true;
+      });
+
+      describe('when searching for packages', () => {
+        beforeEach(async () => {
+          await plugin.modal.searchField.fill('Selected');
+          await plugin.modal.clickSelectedFilter();
+        });
+
+        describe('and submit button was clicked', () => {
+          beforeEach(async () => {
+            await plugin.modal.searchButton.click();
+          });
+
+          it('should display a list of loaded packages', () => {
+            expect(plugin.modal.resultsList.rows().length).to.equal(2);
+          });
+
+          describe('and a package was selected', () => {
+            beforeEach(async () => {
+              await plugin.modal.resultsList.rows(0).click();
+            });
+
+            it('should not close the modal', () => {
+              expect(plugin.modalIsDisplayed).to.be.true;
+            });
+
+            it('should update titles selected count in the footer', () => {
+              expect(plugin.modal.titlesSelectedText).to.equal('Titles selected: 1');
+            });
+
+            describe('and clicking Cancel', () => {
+              beforeEach(async () => {
+                await plugin.modal.cancelSelection();
+              });
+
+              it('should close the modal', () => {
+                expect(plugin.modalIsDisplayed).to.be.false;
+              });
+
+              it('should not call the provided callback', () => {
+                expect(onRecordChosenHandler.callCount).to.equal(0);
+              });
+            });
+
+            describe('and selecting a second package', () => {
+              beforeEach(async () => {
+                await plugin.modal.resultsList.rows(1).click();
+              });
+
+              describe('and clicking Save', () => {
+                beforeEach(async () => {
+                  await plugin.modal.saveSelection();
+                });
+
+                it('should close the modal', () => {
+                  expect(plugin.modalIsDisplayed).to.be.false;
+                });
+
+                it('should call the provided callback with correct data', () => {
+                  const expectedPackages = selectedPackages
+                    .map(({ id, type, attributes }) => ({
+                      id,
+                      type,
+                      ...attributes,
+                    }));
+                  expect(onRecordChosenHandler.calledOnceWith(expectedPackages)).to.be.true;
+                });
               });
             });
           });

@@ -7,6 +7,7 @@ import { Button } from '@folio/stripes/components';
 import { SearchModal } from './components';
 
 const propTypes = {
+  isMultiSelect: PropTypes.bool,
   onRecordChosen: PropTypes.func.isRequired,
   renderCustomTrigger: PropTypes.func,
 };
@@ -14,6 +15,7 @@ const propTypes = {
 const FindPackageTitlePlugin = ({
   onRecordChosen,
   renderCustomTrigger,
+  isMultiSelect = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -45,6 +47,7 @@ const FindPackageTitlePlugin = ({
         open={isOpen}
         onClose={closePluginModal}
         onRecordChosen={onRecordChosen}
+        isMultiSelect={isMultiSelect}
       />
     </>
   );

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   MultiColumnList,
@@ -8,10 +11,12 @@ import {
 } from '@folio/stripes/components';
 
 import NoResultsMessage from '../NoResultsMessage';
+import CheckboxColumn from '../CheckboxColumn';
 
 import { packageAttributesFields } from '../../constants';
 
 const propTypes = {
+  isMultiSelect: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.shape({
       ...packageAttributesFields,
@@ -35,7 +40,10 @@ const SearchResultsList = ({
   totalCount,
   onNeedMoreData,
   hasLoaded,
+  isMultiSelect,
 }) => {
+  const intl = useIntl();
+
   const emptyMessage = (
     <Layout className="display-flex centerContent">
       {hasLoaded
@@ -53,25 +61,52 @@ const SearchResultsList = ({
     </Layout>
   );
 
+  const getVisibleColumns = () => {
+    const visibleColumns = ['isSelected', 'name', 'selectedCount', 'titleCount'];
+
+    return isMultiSelect
+      ? ['checked', ...visibleColumns]
+      : visibleColumns;
+  };
+
+  const getColumnWidths = () => {
+    const columnWidths = {
+      isSelected: '15%',
+      name: '53%',
+      selectedCount: '17%',
+      titleCount: '15%',
+    };
+
+    return isMultiSelect
+      ? {
+        ...columnWidths,
+        checked: '5%',
+        name: '48%',
+      }
+      : columnWidths;
+  };
+
   return (
     <MultiColumnList
-      visibleColumns={['isSelected', 'name', 'selectedCount', 'titleCount']}
+      visibleColumns={getVisibleColumns()}
       columnMapping={{
-        isSelected: <FormattedMessage id="ui-plugin-find-package-title.resultsPane.status" />,
-        name: <FormattedMessage id="ui-plugin-find-package-title.resultsPane.name" />,
-        selectedCount: <FormattedMessage id="ui-plugin-find-package-title.resultsPane.titlesSelected" />,
-        titleCount: <FormattedMessage id="ui-plugin-find-package-title.resultsPane.totalTitles" />,
+        isSelected: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status' }),
+        name: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.name' }),
+        selectedCount: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.titlesSelected' }),
+        titleCount: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.totalTitles' }),
+        checked: null,
       }}
-      columnWidths={{
-        isSelected: '15%',
-        name: '53%',
-        selectedCount: '17%',
-        titleCount: '15%',
-      }}
+      columnWidths={getColumnWidths()}
       formatter={{
         isSelected: item => item.isSelected //eslint-disable-line
-          ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.status.selected" />
-          : <FormattedMessage id="ui-plugin-find-package-title.resultsPane.status.notSelected" />
+          ? intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status.selected' })
+          : intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status.notSelected' }),
+        checked: item => (
+          <CheckboxColumn
+            checked={item.checked}
+            onChange={() => onRecordChosen(item)}
+          />
+        )
       }}
       contentData={items}
       isEmptyMessage={emptyMessage}
