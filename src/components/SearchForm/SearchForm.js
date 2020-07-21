@@ -16,9 +16,12 @@ import {
 
 import SearchFilters from '../SearchFilters';
 import ResetButton from '../ResetButton';
+import SearchTypeSwitcher from '../SearchTypeSwitcher';
+import SearchFieldSelect from '../SearchFieldSelect';
 import {
-  packageFilters,
+  searchFiltersConfig,
   searchFiltersShape,
+  searchTypes,
 } from '../../constants';
 
 import css from './SearchForm.css';
@@ -44,6 +47,10 @@ const propTypes = {
   onResetAll: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   resetButtonDisabled: PropTypes.bool.isRequired,
+  onSearchTypeChange: PropTypes.func.isRequired,
+  searchType: PropTypes.oneOf(searchTypes).isRequired,
+  titleSearchField: PropTypes.string.isRequired,
+  onTitleSearchFieldChange: PropTypes.func.isRequired,
 };
 
 const SearchForm = ({
@@ -62,6 +69,10 @@ const SearchForm = ({
   accessTypesFilterOptions,
   searchAccessTypesEnabled,
   toggleSearchByAccessTypes,
+  onSearchTypeChange,
+  searchType,
+  titleSearchField,
+  onTitleSearchFieldChange,
 }) => {
   const renderAccessTypesFilter = () => {
     const accessTypesFilter = searchFilters.accessTypes || [];
@@ -142,44 +153,56 @@ const SearchForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormattedMessage id="ui-plugin-find-package-title.searchableEntity.package">
-        {ariaLabel => (
-          <SearchField
-            autoFocus
-            onChange={onSearchQueryChange}
-            placeholder={ariaLabel}
-            ariaLabel={ariaLabel}
-            value={searchQuery}
-            disabled={searchByTagsEnabled || searchAccessTypesEnabled}
-            data-test-find-package-title-search-field
+    <>
+      <SearchTypeSwitcher
+        currentSearchType={searchType}
+        onSearchTypeChange={onSearchTypeChange}
+      />
+      <form onSubmit={handleSubmit}>
+        {searchType === searchTypes.TITLE && (
+          <SearchFieldSelect
+            value={titleSearchField}
+            onChange={onTitleSearchFieldChange}
           />
         )}
-      </FormattedMessage>
-      <Button
-        buttonStyle="primary"
-        fullWidth
-        disabled={!searchQuery || searchByTagsEnabled || searchAccessTypesEnabled}
-        type="submit"
-        data-test-find-package-title-search-button
-      >
-        <FormattedMessage id="ui-plugin-find-package-title.searchPane.searchButton.label" />
-      </Button>
-      <ResetButton
-        label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.resetAll" />}
-        disabled={resetButtonDisabled}
-        onClick={onResetAll}
-        data-test-find-package-title-reset-button
-      />
-      {tagsExist && renderTagsFilter()}
-      {accessTypesExist && renderAccessTypesFilter()}
-      <SearchFilters
-        activeFilters={searchFilters}
-        availableFilters={packageFilters}
-        onChange={onSearchFiltersChange}
-        disabled={searchByTagsEnabled || searchAccessTypesEnabled}
-      />
-    </form>
+        <FormattedMessage id="ui-plugin-find-package-title.searchableEntity.package">
+          {ariaLabel => (
+            <SearchField
+              autoFocus
+              onChange={onSearchQueryChange}
+              placeholder={ariaLabel}
+              ariaLabel={ariaLabel}
+              value={searchQuery}
+              disabled={searchByTagsEnabled || searchAccessTypesEnabled}
+              data-test-find-package-title-search-field
+            />
+          )}
+        </FormattedMessage>
+        <Button
+          buttonStyle="primary"
+          fullWidth
+          disabled={!searchQuery || searchByTagsEnabled || searchAccessTypesEnabled}
+          type="submit"
+          data-test-find-package-title-search-button
+        >
+          <FormattedMessage id="ui-plugin-find-package-title.searchPane.searchButton.label" />
+        </Button>
+        <ResetButton
+          label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.resetAll" />}
+          disabled={resetButtonDisabled}
+          onClick={onResetAll}
+          data-test-find-package-title-reset-button
+        />
+        {tagsExist && renderTagsFilter()}
+        {accessTypesExist && renderAccessTypesFilter()}
+        <SearchFilters
+          activeFilters={searchFilters}
+          availableFilters={searchFiltersConfig[searchType]}
+          onChange={onSearchFiltersChange}
+          disabled={searchByTagsEnabled || searchAccessTypesEnabled}
+        />
+      </form>
+    </>
   );
 };
 
