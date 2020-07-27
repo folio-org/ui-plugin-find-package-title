@@ -61,6 +61,8 @@
   "resultsPane.titlesSelected": "Titles selected",
   "resultsPane.totalTitles": "Total titles",
   "resultsPane.totalSelected.count": "Titles selected: {count}",
+  "resultsPane.packageName": "Package",
+  "resultsPane.publicationType": "Type",
   "searchTypes.package": "Packages",
   "searchTypes.title": "Titles"
 }

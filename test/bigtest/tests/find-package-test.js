@@ -131,7 +131,7 @@ describe('ui-plugin-find-package-title', function () {
               await plugin.modal.tagsFilterSelect.clickOption(1);
             });
 
-            it('should display only tagged packages', () => {
+            it('should display only tagged titles', () => {
               expect(plugin.modal.resultsList.rows().length).to.equal(1);
               expect(plugin.modal.resultsList.rows(0).cells(1).content).to.equal('Tagged package');
             });

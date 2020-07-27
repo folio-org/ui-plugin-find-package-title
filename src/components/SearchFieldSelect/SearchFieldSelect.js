@@ -24,17 +24,20 @@ const SearchFieldSelect = ({
   return (
     <FormattedMessage id="ui-plugin-find-package-title.searchPane.selectFieldToSearch">
       {(ariaLabel) => (
-        <Select
-          onChange={handleSearchFieldChange}
-          value={value}
-          aria-label={ariaLabel}
-        >
-          {Object.values(titleSearchFields).map(searchField => (
-            <FormattedMessage id={titleSearchFieldsTranslationIDs[searchField]}>
-              {label => <option value={searchField}>{label}</option>}
-            </FormattedMessage>
-          ))}
-        </Select>
+        <div data-test-search-field-select>
+          <Select
+            onChange={handleSearchFieldChange}
+            value={value}
+            aria-label={ariaLabel}
+            data-test-search-field-select
+          >
+            {Object.values(titleSearchFields).map(searchField => (
+              <FormattedMessage id={titleSearchFieldsTranslationIDs[searchField]}>
+                {label => <option value={searchField}>{label}</option>}
+              </FormattedMessage>
+            ))}
+          </Select>
+        </div>
       )}
     </FormattedMessage>
   );

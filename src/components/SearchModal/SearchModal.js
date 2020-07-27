@@ -44,6 +44,7 @@ const propTypes = {
     }).isRequired,
     titles: PropTypes.shape({
       GET: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
   resources: PropTypes.shape({
@@ -125,8 +126,12 @@ const SearchModal = ({
     ? packageSearchConfig
     : titlesSearchConfig;
 
-  const hasLoaded = !!resources.packages?.hasLoaded;
-  const fetchIsPending = !hasLoaded && resources.packages?.isPending;
+  const resourcesToBeDisplayed = searchType === searchTypes.PACKAGE
+    ? resources?.packages
+    : resources?.titles;
+
+  const hasLoaded = !!resourcesToBeDisplayed.packages?.hasLoaded;
+  const fetchIsPending = !hasLoaded && resourcesToBeDisplayed?.isPending;
 
   const tagsLoaded = !!resources.tags?.hasLoaded;
   const tagsExist = tagsLoaded && !!resources.tags?.records[0]?.tags?.length;
@@ -143,11 +148,11 @@ const SearchModal = ({
     : [];
 
   const getFormattedListItems = () => {
-    if (!resources?.packages?.hasLoaded) {
+    if (!resourcesToBeDisplayed?.hasLoaded) {
       return [];
     }
 
-    const records = resources.packages.records;
+    const records = resourcesToBeDisplayed.records;
 
     return records
       .reduce((acc, rec) => [...acc, ...rec.data], [])
@@ -160,11 +165,11 @@ const SearchModal = ({
   };
 
   const getTotalResults = () => {
-    if (!resources?.packages?.hasLoaded) {
+    if (!resourcesToBeDisplayed?.hasLoaded) {
       return null;
     }
 
-    const records = resources.packages.records;
+    const records = resourcesToBeDisplayed.records;
 
     return records[records.length - 1].meta.totalResults;
   };
@@ -205,19 +210,29 @@ const SearchModal = ({
       }, {});
 
       params = {
-        q: query,
         ...formattedFilters,
       };
 
       if (sort === 'name') {
         params.sort = sort;
       }
+
+      if (searchType === searchTypes.TITLE) {
+        const currentSearchField = currentSearchConfig.searchField === titleSearchFields.TITLE
+          ? 'name'
+          : currentSearchConfig.searchField;
+
+        const searchFilterName = currentSearchField === titleSearchFields.TITLE
+          ? 'name'
+          : currentSearchField;
+
+        params.searchfield = currentSearchField;
+        params[`filter[${searchFilterName}]`] = query;
+      } else {
+        params.q = query;
+      }
     }
 
-    if (searchType === searchTypes.TITLE) {
-      params['filter[name]'] = query;
-      params.include = 'resources';
-    }
 
     if (page) {
       params.page = page;
@@ -268,7 +283,11 @@ const SearchModal = ({
       && Object.keys(otherFilters).length && searchQuery;
 
     if (shouldPerformSearchByTags || shouldPerformRegularSearch || shouldPerformSearchByAccessTypes) {
-      mutator.packages.reset();
+      if (searchType === searchTypes.PACKAGE) {
+        mutator.packages.reset();
+      } else {
+        mutator.titles.reset();
+      }
 
       handleSearchConfigChange(prev => ({
         ...prev,
@@ -301,7 +320,12 @@ const SearchModal = ({
   };
 
   const handleSearchFormSubmit = () => {
-    mutator.packages.reset();
+    if (searchType === searchTypes.PACKAGE) {
+      mutator.packages.reset();
+    } else {
+      mutator.titles.reset();
+    }
+
     handleSearchConfigChange(prev => ({
       ...prev,
       lastFetchedPage: 1,
@@ -314,14 +338,18 @@ const SearchModal = ({
   };
 
   const isResetButtonDisabed = () => {
-    const searchFormIsPristine = isEqual(getInitialSearchConfig(searchType), currentSearchConfig.searchFilters);
+    const searchFormIsPristine = isEqual(getInitialFiltersState(searchType), currentSearchConfig.searchFilters);
     const searchQueryIsMissing = !currentSearchConfig.searchQuery;
 
     return searchFormIsPristine && searchQueryIsMissing;
   };
 
   const resetSearch = () => {
-    mutator.packages.reset();
+    if (searchType === searchTypes.PACKAGE) {
+      mutator.packages.reset();
+    } else {
+      mutator.titles.reset();
+    }
 
     handleSearchConfigChange(prev => ({
       ...prev,
@@ -361,6 +389,7 @@ const SearchModal = ({
 
   const handleSave = () => {
     closeModal();
+    console.log('selected', currentSearchConfig.selectedItems.map(item => omit(item, ['checked'])));
     onRecordChosen(currentSearchConfig.selectedItems.map(item => omit(item, ['checked'])));
   };
 
@@ -494,6 +523,7 @@ const SearchModal = ({
                 onNeedMoreData={fetchNextPage}
                 hasLoaded={hasLoaded}
                 isMultiSelect={isMultiSelect}
+                searchType={searchType}
               />
             )
             : (
@@ -517,7 +547,7 @@ SearchModal.manifest = {
     accumulate: true,
   },
   titles: {
-    path: 'eholdings/titles',
+    path: 'eholdings/resources',
     type: 'okapi',
     headers: {
       'accept': 'application/vnd.api+json'
@@ -538,9 +568,6 @@ SearchModal.manifest = {
       'accept': 'application/vnd.api+json'
     }
   },
-  currentTitleId: {
-    type: 'local',
-  }
 };
 
 SearchModal.propTypes = propTypes;
