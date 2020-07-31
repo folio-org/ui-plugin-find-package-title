@@ -1,8 +1,8 @@
 {
-    "meta.title": "包和标题查找器（插件）",
-    "defaultTriggerLabel": "添加包/资源",
-    "modal.label.selectPackage": "选择包",
-    "searchableEntity.package": "包",
+    "meta.title": "资源包和标题查找器（插件）",
+    "defaultTriggerLabel": "添加资源包/资源",
+    "modal.label.selectPackage": "选择资源包",
+    "searchableEntity.package": "资源包",
     "searchableEntity.title": "题名",
     "searchPane.label": "搜索和筛选",
     "searchPane.searchButton.label": "搜索",
@@ -12,7 +12,7 @@
     "searchPane.filters.accessTypes": "访问状态类型",
     "searchPane.filters.accessTypes.accessTypesOnly": "仅按访问状态类型搜索",
     "searchPane.filters.sortOptions.label": "排序选项",
-    "searchPane.filters.sortOptions.package": "包",
+    "searchPane.filters.sortOptions.package": "资源包",
     "searchPane.filters.sortOptions.relevance": "关联",
     "searchPane.filters.selectionStatus": "选择状态",
     "searchPane.filters.selectionStatus.all": "所有",
@@ -30,12 +30,12 @@
     "resultsPane.resultsCount": "{totalResults, number} {totalResults, plural, one {找到结果} other {找到结果}}",
     "resultsPane.resultsCount.loading": "载入中...",
     "resultsPane.emptyMessage": "输入查询以显示搜索结果。",
-    "resultsPane.noPackagesFound": "未找到包。",
+    "resultsPane.noPackagesFound": "未找到资源包。",
     "resultsPane.status": "状态",
     "resultsPane.status.selected": "已选",
     "resultsPane.status.notSelected": "未选",
     "resultsPane.name": "名称",
     "resultsPane.titlesSelected": "已选标题",
     "resultsPane.totalTitles": "总计标题",
-    "resultsPane.totalSelected.count": "Titles selected: {count}"
+    "resultsPane.totalSelected.count": "已选标题： {count}"
 }

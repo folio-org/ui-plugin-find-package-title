@@ -37,5 +37,5 @@
     "resultsPane.name": "Nom",
     "resultsPane.titlesSelected": "Titres sélectionnés",
     "resultsPane.totalTitles": "Total des titres",
-    "resultsPane.totalSelected.count": "Titles selected: {count}"
+    "resultsPane.totalSelected.count": "Titres sélectionnés: {count}"
 }
