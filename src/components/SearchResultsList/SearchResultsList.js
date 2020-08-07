@@ -54,7 +54,10 @@ const SearchResultsList = ({
       {hasLoaded
         ? (
           <NoResultsMessage data-test-no-results-message>
-            <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
+            {searchType === searchTypes.PACKAGE
+              ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
+              : <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noTitlesFound" />
+            }
           </NoResultsMessage>
         )
         : (
@@ -69,7 +72,7 @@ const SearchResultsList = ({
   const getVisibleColumns = () => {
     const visibleColumns = searchType === searchTypes.PACKAGE
       ? ['isSelected', 'name', 'selectedCount', 'titleCount']
-      : ['isSelected', 'name', 'packageName', 'publicationType'];
+      : ['isSelected', 'name', 'packageName', 'publisherName', 'publicationType'];
 
     return isMultiSelect
       ? ['checked', ...visibleColumns]
@@ -86,8 +89,9 @@ const SearchResultsList = ({
       }
       : {
         isSelected: '15%',
-        name: '40%',
-        packageName: '30%',
+        name: '30%',
+        packageName: '20%',
+        publisherName: '20%',
         publicationType: '15%',
       };
 
@@ -95,7 +99,7 @@ const SearchResultsList = ({
       ? {
         ...columnWidths,
         checked: '5%',
-        name: searchType === searchTypes.PACKAGE ? '48%' : '35%',
+        name: searchType === searchTypes.PACKAGE ? '48%' : '25%',
       }
       : columnWidths;
   };
@@ -105,11 +109,14 @@ const SearchResultsList = ({
       visibleColumns={getVisibleColumns()}
       columnMapping={{
         isSelected: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status' }),
-        name: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.name' }),
+        name: searchType === searchTypes.PACKAGE
+          ? intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.name' })
+          : intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.title' }),
         selectedCount: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.titlesSelected' }),
         titleCount: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.totalTitles' }),
         checked: null,
         packageName: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.packageName' }),
+        publisherName: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.publisher' }),
         publicationType: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.publicationType' }),
       }}
       columnWidths={getColumnWidths()}
