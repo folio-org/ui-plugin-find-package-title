@@ -1,254 +1,498 @@
 export const taggedTitles = [{
-  id: '350-1207860-3927704',
-  type: 'resources',
+  id: '15174590',
+  type: 'titles',
   attributes: {
-    isTitleCustom: false,
-    publisherName: 'Unspecified',
-    titleId: 3927704,
-    contributors: [],
     identifiers: [],
+    isTitleCustom: false,
     name: 'Tagged title',
-    publicationType: 'Database',
-    subjects: [{
-      subject: 'Asian History',
-      type: 'TLI'
-    }],
-    customEmbargoPeriod: {
-      embargoValue: 0
-    },
-    isPackageCustom: false,
-    isSelected: true,
-    isTokenNeeded: false,
-    locationId: 10726546,
-    managedEmbargoPeriod: {
-      embargoValue: 0
-    },
-    packageId: '350-1207860',
-    packageName: 'A Biographical Dictionary of the Qin, Former Han and Xin Periods (221 BC – AD 24) Online',
-    url: 'http://chinesereferenceshelf.brillonline.com/dictionary-qin',
-    providerId: 350,
-    providerName: 'Brill',
-    visibilityData: {
-      isHidden: false,
-      reason: ''
-    },
-    managedCoverages: [],
-    customCoverages: [],
-    tags: {
-      tagList: ['important']
+    publicationType: 'Book',
+    publisherName: 'Unspecified',
+    subjects: [],
+    contributors: [],
+    relationships: {
+      resources: {
+        data: [{
+          type: 'resources',
+          id: '466-2697499-15174590'
+        }],
+        meta: {
+          included: true
+        }
+      }
     }
   },
+  included: [{
+    id: '466-2697499-15174590',
+    type: 'resources',
+    attributes: {
+      isTitleCustom: false,
+      publisherName: 'Unspecified',
+      titleId: 15174590,
+      contributors: [],
+      identifiers: [],
+      name: 'Tagged title',
+      publicationType: 'Book',
+      subjects: [],
+      customEmbargoPeriod: {
+        embargoValue: 0
+      },
+      isPackageCustom: false,
+      isSelected: true,
+      isTokenNeeded: false,
+      locationId: 33912027,
+      managedEmbargoPeriod: {
+        embargoValue: 0
+      },
+      packageId: '466-2697499',
+      packageName: 'British Library 19th Century Collection (BL) (Historical Texts)',
+      url: 'https://historicaltexts.jisc.ac.uk/bl-001357279',
+      providerId: 466,
+      providerName: 'JISC',
+      visibilityData: {
+        isHidden: false,
+        reason: ''
+      },
+      managedCoverages: [{
+        beginCoverage: '1877-01-01',
+        endCoverage: '1877-12-31'
+      }],
+      customCoverages: [],
+      tags: {
+        tagList: ['important']
+      }
+    },
+    relationships: {
+      provider: {
+        meta: {
+          included: false
+        }
+      },
+      title: {
+        meta: {
+          included: false
+        }
+      },
+      package: {
+        meta: {
+          included: false
+        }
+      }
+    }
+  }]
 }];
 
-
 export const withAccessStatusTitles = [{
-  id: '350-1207860-3927704',
-  type: 'resources',
+  id: '15174590',
+  type: 'titles',
   attributes: {
-    isTitleCustom: false,
-    publisherName: 'Unspecified',
-    titleId: 3927704,
-    contributors: [],
     identifiers: [],
+    isTitleCustom: false,
     name: 'Has access type',
-    publicationType: 'Database',
-    subjects: [{
-      subject: 'Asian History',
-      type: 'TLI'
-    }],
-    customEmbargoPeriod: {
-      embargoValue: 0
-    },
-    isPackageCustom: false,
-    isSelected: true,
-    isTokenNeeded: false,
-    locationId: 10726546,
-    managedEmbargoPeriod: {
-      embargoValue: 0
-    },
-    packageId: '350-1207860',
-    packageName: 'A Biographical Dictionary of the Qin, Former Han and Xin Periods (221 BC – AD 24) Online',
-    url: 'http://chinesereferenceshelf.brillonline.com/dictionary-qin',
-    providerId: 350,
-    providerName: 'Brill',
-    visibilityData: {
-      isHidden: false,
-      reason: ''
-    },
-    managedCoverages: [],
-    customCoverages: [],
-    tags: {
-      tagList: []
+    publicationType: 'Book',
+    publisherName: 'Unspecified',
+    subjects: [],
+    contributors: [],
+    relationships: {
+      resources: {
+        data: [{
+          type: 'resources',
+          id: '466-2697499-15174590'
+        }],
+        meta: {
+          included: true
+        }
+      }
     }
   },
+  included: [{
+    id: '466-2697499-15174590',
+    type: 'resources',
+    attributes: {
+      isTitleCustom: false,
+      publisherName: 'Unspecified',
+      titleId: 15174590,
+      contributors: [],
+      identifiers: [],
+      name: 'Has access type',
+      publicationType: 'Book',
+      subjects: [],
+      customEmbargoPeriod: {
+        embargoValue: 0
+      },
+      isPackageCustom: false,
+      isSelected: true,
+      isTokenNeeded: false,
+      locationId: 33912027,
+      managedEmbargoPeriod: {
+        embargoValue: 0
+      },
+      packageId: '466-2697499',
+      packageName: 'British Library 19th Century Collection (BL) (Historical Texts)',
+      url: 'https://historicaltexts.jisc.ac.uk/bl-001357279',
+      providerId: 466,
+      providerName: 'JISC',
+      visibilityData: {
+        isHidden: false,
+        reason: ''
+      },
+      managedCoverages: [{
+        beginCoverage: '1877-01-01',
+        endCoverage: '1877-12-31'
+      }],
+      customCoverages: [],
+      tags: {
+        tagList: ['important']
+      }
+    },
+    relationships: {
+      provider: {
+        meta: {
+          included: false
+        }
+      },
+      title: {
+        meta: {
+          included: false
+        }
+      },
+      package: {
+        meta: {
+          included: false
+        }
+      }
+    }
+  }]
 }];
 
 export const notSelectedTitles = [{
-  id: '350-1207860-3927704',
-  type: 'resources',
+  id: '15174590',
+  type: 'titles',
   attributes: {
-    isTitleCustom: false,
-    publisherName: 'Unspecified',
-    titleId: 3927704,
-    contributors: [],
     identifiers: [],
+    isTitleCustom: false,
     name: 'Not selected',
-    publicationType: 'Database',
-    subjects: [{
-      subject: 'Asian History',
-      type: 'TLI'
-    }],
-    customEmbargoPeriod: {
-      embargoValue: 0
-    },
-    isPackageCustom: false,
-    isSelected: false,
-    isTokenNeeded: false,
-    locationId: 10726546,
-    managedEmbargoPeriod: {
-      embargoValue: 0
-    },
-    packageId: '350-1207860',
-    packageName: 'A Biographical Dictionary of the Qin, Former Han and Xin Periods (221 BC – AD 24) Online',
-    url: 'http://chinesereferenceshelf.brillonline.com/dictionary-qin',
-    providerId: 350,
-    providerName: 'Brill',
-    visibilityData: {
-      isHidden: false,
-      reason: ''
-    },
-    managedCoverages: [],
-    customCoverages: [],
-    tags: {
-      tagList: []
+    publicationType: 'Book',
+    publisherName: 'Unspecified',
+    subjects: [],
+    contributors: [],
+    relationships: {
+      resources: {
+        data: [{
+          type: 'resources',
+          id: '466-2697499-15174590'
+        }],
+        meta: {
+          included: true
+        }
+      }
     }
   },
+  included: [{
+    id: '466-2697499-15174590',
+    type: 'resources',
+    attributes: {
+      isTitleCustom: false,
+      publisherName: 'Unspecified',
+      titleId: 15174590,
+      contributors: [],
+      identifiers: [],
+      name: 'Not selected',
+      publicationType: 'Book',
+      subjects: [],
+      customEmbargoPeriod: {
+        embargoValue: 0
+      },
+      isPackageCustom: false,
+      isSelected: true,
+      isTokenNeeded: false,
+      locationId: 33912027,
+      managedEmbargoPeriod: {
+        embargoValue: 0
+      },
+      packageId: '466-2697499',
+      packageName: 'British Library 19th Century Collection (BL) (Historical Texts)',
+      url: 'https://historicaltexts.jisc.ac.uk/bl-001357279',
+      providerId: 466,
+      providerName: 'JISC',
+      visibilityData: {
+        isHidden: false,
+        reason: ''
+      },
+      managedCoverages: [{
+        beginCoverage: '1877-01-01',
+        endCoverage: '1877-12-31'
+      }],
+      customCoverages: [],
+      tags: {
+        tagList: ['important']
+      }
+    },
+    relationships: {
+      provider: {
+        meta: {
+          included: false
+        }
+      },
+      title: {
+        meta: {
+          included: false
+        }
+      },
+      package: {
+        meta: {
+          included: false
+        }
+      }
+    }
+  }]
 }];
 
 export const selectedTitles = [
   {
-    id: '350-1207860-3927704',
-    type: 'resources',
+    id: '151745903',
+    type: 'titles',
     attributes: {
-      isTitleCustom: false,
-      publisherName: 'Unspecified',
-      titleId: 3927704,
-      contributors: [],
       identifiers: [],
+      isTitleCustom: false,
       name: 'Selected title',
-      publicationType: 'Database',
-      subjects: [{
-        subject: 'Asian History',
-        type: 'TLI'
-      }],
-      customEmbargoPeriod: {
-        embargoValue: 0
-      },
-      isPackageCustom: false,
-      isSelected: true,
-      isTokenNeeded: false,
-      locationId: 10726546,
-      managedEmbargoPeriod: {
-        embargoValue: 0
-      },
-      packageId: '350-1207860',
-      packageName: 'A Biographical Dictionary of the Qin, Former Han and Xin Periods (221 BC – AD 24) Online',
-      url: 'http://chinesereferenceshelf.brillonline.com/dictionary-qin',
-      providerId: 350,
-      providerName: 'Brill',
-      visibilityData: {
-        isHidden: false,
-        reason: ''
-      },
-      managedCoverages: [],
-      customCoverages: [],
-      tags: {
-        tagList: []
+      publicationType: 'Book',
+      publisherName: 'Unspecified',
+      subjects: [],
+      contributors: [],
+      relationships: {
+        resources: {
+          data: [{
+            type: 'resources',
+            id: '466-2697499-15174590'
+          }],
+          meta: {
+            included: true
+          }
+        }
       }
     },
+    included: [{
+      id: '466-2697499-15174591',
+      type: 'resources',
+      attributes: {
+        isTitleCustom: false,
+        publisherName: 'Unspecified',
+        titleId: 15174590,
+        contributors: [],
+        identifiers: [],
+        name: 'Selected title',
+        publicationType: 'Book',
+        subjects: [],
+        customEmbargoPeriod: {
+          embargoValue: 0
+        },
+        isPackageCustom: false,
+        isSelected: true,
+        isTokenNeeded: false,
+        locationId: 33912027,
+        managedEmbargoPeriod: {
+          embargoValue: 0
+        },
+        packageId: '466-2697499',
+        packageName: 'British Library 19th Century Collection (BL) (Historical Texts)',
+        url: 'https://historicaltexts.jisc.ac.uk/bl-001357279',
+        providerId: 466,
+        providerName: 'JISC',
+        visibilityData: {
+          isHidden: false,
+          reason: ''
+        },
+        managedCoverages: [{
+          beginCoverage: '1877-01-01',
+          endCoverage: '1877-12-31'
+        }],
+        customCoverages: [],
+        tags: {
+          tagList: ['important']
+        }
+      },
+      relationships: {
+        provider: {
+          meta: {
+            included: false
+          }
+        },
+        title: {
+          meta: {
+            included: false
+          }
+        },
+        package: {
+          meta: {
+            included: false
+          }
+        }
+      }
+    }]
   },
   {
-    id: '350-1207860-3927704',
-    type: 'resources',
+    id: '15174590',
+    type: 'titles',
     attributes: {
-      isTitleCustom: false,
-      publisherName: 'Unspecified',
-      titleId: 3927704,
-      contributors: [],
       identifiers: [],
+      isTitleCustom: false,
       name: 'Another selected title',
-      publicationType: 'Database',
-      subjects: [{
-        subject: 'Asian History',
-        type: 'TLI'
-      }],
-      customEmbargoPeriod: {
-        embargoValue: 0
-      },
-      isPackageCustom: false,
-      isSelected: true,
-      isTokenNeeded: false,
-      locationId: 10726546,
-      managedEmbargoPeriod: {
-        embargoValue: 0
-      },
-      packageId: '350-1207860',
-      packageName: 'A Biographical Dictionary of the Qin, Former Han and Xin Periods (221 BC – AD 24) Online',
-      url: 'http://chinesereferenceshelf.brillonline.com/dictionary-qin',
-      providerId: 350,
-      providerName: 'Brill',
-      visibilityData: {
-        isHidden: false,
-        reason: ''
-      },
-      managedCoverages: [],
-      customCoverages: [],
-      tags: {
-        tagList: []
+      publicationType: 'Book',
+      publisherName: 'Unspecified',
+      subjects: [],
+      contributors: [],
+      relationships: {
+        resources: {
+          data: [{
+            type: 'resources',
+            id: '466-2697499-15174590'
+          }],
+          meta: {
+            included: true
+          }
+        }
       }
     },
+    included: [{
+      id: '466-2697499-15174590',
+      type: 'resources',
+      attributes: {
+        isTitleCustom: false,
+        publisherName: 'Unspecified',
+        titleId: 15174590,
+        contributors: [],
+        identifiers: [],
+        name: 'Another selected title',
+        publicationType: 'Book',
+        subjects: [],
+        customEmbargoPeriod: {
+          embargoValue: 0
+        },
+        isPackageCustom: false,
+        isSelected: true,
+        isTokenNeeded: false,
+        locationId: 33912027,
+        managedEmbargoPeriod: {
+          embargoValue: 0
+        },
+        packageId: '466-2697499',
+        packageName: 'British Library 19th Century Collection (BL) (Historical Texts)',
+        url: 'https://historicaltexts.jisc.ac.uk/bl-001357279',
+        providerId: 466,
+        providerName: 'JISC',
+        visibilityData: {
+          isHidden: false,
+          reason: ''
+        },
+        managedCoverages: [{
+          beginCoverage: '1877-01-01',
+          endCoverage: '1877-12-31'
+        }],
+        customCoverages: [],
+        tags: {
+          tagList: ['important']
+        }
+      },
+      relationships: {
+        provider: {
+          meta: {
+            included: false
+          }
+        },
+        title: {
+          meta: {
+            included: false
+          }
+        },
+        package: {
+          meta: {
+            included: false
+          }
+        }
+      }
+    }]
   }
 ];
 
-
 export const foundBySubjectTitles = [{
-  id: '350-1207860-3927704',
-  type: 'resources',
+  id: '15174590',
+  type: 'titles',
   attributes: {
-    isTitleCustom: false,
-    publisherName: 'Unspecified',
-    titleId: 3927704,
-    contributors: [],
     identifiers: [],
+    isTitleCustom: false,
     name: 'Found by subject',
-    publicationType: 'Database',
-    subjects: [{
-      subject: 'Asian History',
-      type: 'TLI'
-    }],
-    customEmbargoPeriod: {
-      embargoValue: 0
-    },
-    isPackageCustom: false,
-    isSelected: true,
-    isTokenNeeded: false,
-    locationId: 10726546,
-    managedEmbargoPeriod: {
-      embargoValue: 0
-    },
-    packageId: '350-1207860',
-    packageName: 'A Biographical Dictionary of the Qin, Former Han and Xin Periods (221 BC – AD 24) Online',
-    url: 'http://chinesereferenceshelf.brillonline.com/dictionary-qin',
-    providerId: 350,
-    providerName: 'Brill',
-    visibilityData: {
-      isHidden: false,
-      reason: ''
-    },
-    managedCoverages: [],
-    customCoverages: [],
-    tags: {
-      tagList: []
+    publicationType: 'Book',
+    publisherName: 'Unspecified',
+    subjects: [],
+    contributors: [],
+    relationships: {
+      resources: {
+        data: [{
+          type: 'resources',
+          id: '466-2697499-15174590'
+        }],
+        meta: {
+          included: true
+        }
+      }
     }
   },
+  included: [{
+    id: '466-2697499-15174590',
+    type: 'resources',
+    attributes: {
+      isTitleCustom: false,
+      publisherName: 'Unspecified',
+      titleId: 15174590,
+      contributors: [],
+      identifiers: [],
+      name: 'Found by subject',
+      publicationType: 'Book',
+      subjects: [],
+      customEmbargoPeriod: {
+        embargoValue: 0
+      },
+      isPackageCustom: false,
+      isSelected: true,
+      isTokenNeeded: false,
+      locationId: 33912027,
+      managedEmbargoPeriod: {
+        embargoValue: 0
+      },
+      packageId: '466-2697499',
+      packageName: 'British Library 19th Century Collection (BL) (Historical Texts)',
+      url: 'https://historicaltexts.jisc.ac.uk/bl-001357279',
+      providerId: 466,
+      providerName: 'JISC',
+      visibilityData: {
+        isHidden: false,
+        reason: ''
+      },
+      managedCoverages: [{
+        beginCoverage: '1877-01-01',
+        endCoverage: '1877-12-31'
+      }],
+      customCoverages: [],
+      tags: {
+        tagList: ['important']
+      }
+    },
+    relationships: {
+      provider: {
+        meta: {
+          included: false
+        }
+      },
+      title: {
+        meta: {
+          included: false
+        }
+      },
+      package: {
+        meta: {
+          included: false
+        }
+      }
+    }
+  }]
 }];

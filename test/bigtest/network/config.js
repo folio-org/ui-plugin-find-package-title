@@ -112,8 +112,7 @@ export default function config() {
   }));
 
 
-  this.get('/eholdings/resources', (schema, request) => {
-    console.log('paprams', JSON.stringify(request.queryParams));
+  this.get('/eholdings/titles', (schema, request) => {
     const allTitles = [
       ...selectedTitles,
       ...notSelectedTitles,
@@ -133,7 +132,6 @@ export default function config() {
       }
 
       if (request.queryParams['filter[selected]'] === 'false') {
-        console.log('not selected if', JSON.stringify(notSelectedTitles));
         return {
           data: notSelectedTitles,
           meta: {

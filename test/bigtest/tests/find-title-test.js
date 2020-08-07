@@ -14,7 +14,8 @@ import {
 const onRecordChosenHandler = sinon.spy();
 
 
-describe.only('find title functionality', function () {
+describe('find title functionality', function () {
+  beforeEach(() => { onRecordChosenHandler.resetHistory(); });
   const plugin = new PluginInteractor();
   setupApplication();
 
@@ -30,10 +31,7 @@ describe.only('find title functionality', function () {
 
   describe('when the plugin is open in the title search mode', function () {
     beforeEach(async function () {
-      onRecordChosenHandler.resetHistory();
-
       await renderComponent();
-      await new Promise(r => setTimeout(r, 500));
       await plugin.triggerButton.click();
       await plugin.modal.switchToTitleSearch();
     });
@@ -212,8 +210,6 @@ describe.only('find title functionality', function () {
             await plugin.modal.clickNotSelectedFilter();
             await plugin.modal.searchField.fill('some title');
             await plugin.modal.searchButton.click();
-
-            await new Promise(r => setTimeout(r, 5000));
           });
 
           it('should display only not selected titles', () => {
@@ -231,7 +227,7 @@ describe.only('find title functionality', function () {
             });
 
             it('should call the provided callback with the data of the selected title', () => {
-              const { attributes, id, type } = notSelectedTitles[0];
+              const { attributes, id, type } = notSelectedTitles[0].included[0];
 
               expect(onRecordChosenHandler.calledOnceWith({
                 id,
@@ -247,8 +243,6 @@ describe.only('find title functionality', function () {
 
   describe('when the plugin is rendered with a multiselect prop', () => {
     beforeEach(async function () {
-      onRecordChosenHandler.resetHistory();
-
       await renderComponent({
         isMultiSelect: true,
       });
@@ -306,7 +300,7 @@ describe.only('find title functionality', function () {
               });
             });
 
-            describe.only('and selecting a second title', () => {
+            describe('and selecting a second title', () => {
               beforeEach(async () => {
                 await plugin.modal.resultsList.rows(1).click();
               });
@@ -321,14 +315,20 @@ describe.only('find title functionality', function () {
                 });
 
                 it('should call the provided callback with correct data', () => {
-                  const expectedTitles = selectedTitles
-                    .map(({ id, type, attributes }) => ({
-                      id,
-                      type,
+                  const expectedTitles = selectedTitles.reduce((allResources, currentTitle) => {
+                    const titleResources = currentTitle.included;
+                    const formattedTitleResources = titleResources.map(({ attributes, id, type }) => ({
                       ...attributes,
+                      type,
+                      id,
                     }));
 
-                  console.log('expectedTitles', JSON.stringify(expectedTitles));
+                    return [
+                      ...allResources,
+                      ...formattedTitleResources,
+                    ];
+                  }, []);
+
                   expect(onRecordChosenHandler.calledOnceWith(expectedTitles)).to.be.true;
                 });
               });
