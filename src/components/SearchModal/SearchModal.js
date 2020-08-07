@@ -130,7 +130,7 @@ const SearchModal = ({
     ? resources?.packages
     : resources?.titles;
 
-  const hasLoaded = !!resourcesToBeDisplayed.hasLoaded;
+  const hasLoaded = !!resourcesToBeDisplayed?.hasLoaded;
   const fetchIsPending = !hasLoaded && resourcesToBeDisplayed?.isPending;
 
   const tagsLoaded = !!resources.tags?.hasLoaded;
