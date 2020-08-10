@@ -13,7 +13,10 @@ import {
 import NoResultsMessage from '../NoResultsMessage';
 import CheckboxColumn from '../CheckboxColumn';
 
-import { packageAttributesFields } from '../../constants';
+import {
+  packageAttributesFields,
+  searchTypes,
+} from '../../constants';
 
 const propTypes = {
   isMultiSelect: PropTypes.bool,
@@ -28,6 +31,7 @@ const propTypes = {
   totalCount: PropTypes.number,
   onNeedMoreData: PropTypes.func.isRequired,
   hasLoaded: PropTypes.bool.isRequired,
+  searchType: PropTypes.oneOf(searchTypes).isRequired,
 };
 
 const defaultProps = {
@@ -41,6 +45,7 @@ const SearchResultsList = ({
   onNeedMoreData,
   hasLoaded,
   isMultiSelect,
+  searchType,
 }) => {
   const intl = useIntl();
 
@@ -49,7 +54,10 @@ const SearchResultsList = ({
       {hasLoaded
         ? (
           <NoResultsMessage data-test-no-results-message>
-            <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
+            {searchType === searchTypes.PACKAGE
+              ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
+              : <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noTitlesFound" />
+            }
           </NoResultsMessage>
         )
         : (
@@ -62,7 +70,9 @@ const SearchResultsList = ({
   );
 
   const getVisibleColumns = () => {
-    const visibleColumns = ['isSelected', 'name', 'selectedCount', 'titleCount'];
+    const visibleColumns = searchType === searchTypes.PACKAGE
+      ? ['isSelected', 'name', 'selectedCount', 'titleCount']
+      : ['isSelected', 'name', 'packageName', 'publisherName', 'publicationType'];
 
     return isMultiSelect
       ? ['checked', ...visibleColumns]
@@ -70,18 +80,26 @@ const SearchResultsList = ({
   };
 
   const getColumnWidths = () => {
-    const columnWidths = {
-      isSelected: '15%',
-      name: '53%',
-      selectedCount: '17%',
-      titleCount: '15%',
-    };
+    const columnWidths = searchType === searchTypes.PACKAGE
+      ? {
+        isSelected: '15%',
+        name: '53%',
+        selectedCount: '17%',
+        titleCount: '15%',
+      }
+      : {
+        isSelected: '15%',
+        name: '30%',
+        packageName: '20%',
+        publisherName: '20%',
+        publicationType: '15%',
+      };
 
     return isMultiSelect
       ? {
         ...columnWidths,
         checked: '5%',
-        name: '48%',
+        name: searchType === searchTypes.PACKAGE ? '48%' : '25%',
       }
       : columnWidths;
   };
@@ -91,10 +109,15 @@ const SearchResultsList = ({
       visibleColumns={getVisibleColumns()}
       columnMapping={{
         isSelected: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status' }),
-        name: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.name' }),
+        name: searchType === searchTypes.PACKAGE
+          ? intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.name' })
+          : intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.title' }),
         selectedCount: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.titlesSelected' }),
         titleCount: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.totalTitles' }),
         checked: null,
+        packageName: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.packageName' }),
+        publisherName: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.publisher' }),
+        publicationType: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.publicationType' }),
       }}
       columnWidths={getColumnWidths()}
       formatter={{

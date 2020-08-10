@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -22,8 +22,11 @@ import {
 import SearchForm from '../SearchForm';
 import SearchResultsList from '../SearchResultsList';
 import {
-  packageFilters,
+  searchFiltersConfig,
   packageResponseShape,
+  searchTypes,
+  searchTypesTranslationIDs,
+  titleSearchFields,
 } from '../../constants';
 
 import css from './SearchModal.css';
@@ -36,6 +39,10 @@ const propTypes = {
   onRecordChosen: PropTypes.func.isRequired,
   mutator: PropTypes.shape({
     packages: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
+    }).isRequired,
+    titles: PropTypes.shape({
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
     }).isRequired,
@@ -81,23 +88,51 @@ const SearchModal = ({
   resources,
   isMultiSelect,
 }) => {
-  const [lastFetchedPage, setLastFetchedPage] = useState(0);
-  const [selectedItems, setSelectedItems] = useState([]);
-
-  const getInitialFiltersState = () => packageFilters.reduce((filtersState, filter) => ({
+  const getInitialFiltersState = currentSearchType => searchFiltersConfig[currentSearchType].reduce((filtersState, filter) => ({
     ...filtersState,
     [filter.name]: filter.defaultValue,
   }), {});
 
-  const hasLoaded = !!resources.packages?.hasLoaded;
-  const fetchIsPending = !hasLoaded && resources.packages?.isPending;
+  const getInitialSearchConfig = currentSearchType => {
+    const searchConfig = {
+      selectedItems: [],
+      lastFetchedPage: 0,
+      searchQuery: '',
+      searchFilters: getInitialFiltersState(currentSearchType),
+      searchByTagsEnabled: false,
+      searchAccessTypesEnabled: false,
+    };
 
-  const initialFiltersState = useMemo(getInitialFiltersState, []);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchFilters, setSearchFilters] = useState(initialFiltersState);
+    if (currentSearchType === searchTypes.TITLE) {
+      searchConfig.searchField = titleSearchFields.TITLE;
+    }
 
-  const [searchByTagsEnabled, setSearchByTagsEnabled] = useState(false);
-  const [searchAccessTypesEnabled, setSearchAccessTypesEnabled] = useState(false);
+    return searchConfig;
+  };
+
+  const [searchType, setSearchType] = useState(searchTypes.PACKAGE);
+  const [packageSearchConfig, setPackageSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.PACKAGE));
+  const [titlesSearchConfig, setTitleSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.TITLE));
+  const isPackageSearch = searchType === searchTypes.PACKAGE;
+
+  const changeCurrentSearchConfig = updater => {
+    if (isPackageSearch) {
+      setPackageSearchConfig(updater);
+    } else {
+      setTitleSearchConfig(updater);
+    }
+  };
+
+  const currentSearchConfig = isPackageSearch
+    ? packageSearchConfig
+    : titlesSearchConfig;
+
+  const resourcesToBeDisplayed = isPackageSearch
+    ? resources?.packages
+    : resources?.titles;
+
+  const hasLoaded = !!resourcesToBeDisplayed?.hasLoaded;
+  const fetchIsPending = !hasLoaded && resourcesToBeDisplayed?.isPending;
 
   const tagsLoaded = !!resources.tags?.hasLoaded;
   const tagsExist = tagsLoaded && !!resources.tags?.records[0]?.tags?.length;
@@ -113,29 +148,54 @@ const SearchModal = ({
     ? resources.accessTypes?.records[0]?.data.map(({ attributes }) => ({ value: attributes.name, label: attributes.name }))
     : [];
 
-  const getFormattedListItems = () => {
-    if (!resources?.packages?.hasLoaded) {
-      return [];
-    }
-
-    const records = resources.packages.records;
-
-    return records
-      .reduce((acc, rec) => [...acc, ...rec.data], [])
-      .map(({ attributes, id, type }) => ({
+  const getFormattedResourcesData = titleRecords => {
+    return titleRecords.reduce((allResources, currentTitle) => {
+      const titleResources = currentTitle.included;
+      const formattedTitleResources = titleResources.map(({ attributes, id, type }) => ({
         ...attributes,
         id,
         type,
-        checked: !!selectedItems.find(item => item.id === id),
+        checked: !!currentSearchConfig.selectedItems.find(item => item.id === id),
       }));
+
+      return [
+        ...allResources,
+        ...formattedTitleResources,
+      ];
+    }, []);
+  };
+
+  const getFormattedPackagesData = records => {
+    return records.map(({ attributes, id, type }) => ({
+      ...attributes,
+      id,
+      type,
+      checked: !!currentSearchConfig.selectedItems.find(item => item.id === id),
+    }));
+  };
+
+  const getFormattedListItems = () => {
+    if (!resourcesToBeDisplayed?.hasLoaded) {
+      return [];
+    }
+
+    const { records } = resourcesToBeDisplayed;
+
+    const jointRecords = records.reduce((acc, rec) => [...acc, ...rec.data], []);
+
+    if (isPackageSearch) {
+      return getFormattedPackagesData(jointRecords);
+    }
+
+    return getFormattedResourcesData(jointRecords);
   };
 
   const getTotalResults = () => {
-    if (!resources?.packages?.hasLoaded) {
+    if (!resourcesToBeDisplayed?.hasLoaded) {
       return null;
     }
 
-    const records = resources.packages.records;
+    const records = resourcesToBeDisplayed.records;
 
     return records[records.length - 1].meta.totalResults;
   };
@@ -157,11 +217,11 @@ const SearchModal = ({
 
     let params;
 
-    if (searchByTagsEnabled && tags?.length) {
+    if (currentSearchConfig.searchByTagsEnabled && tags?.length) {
       params = {
         'filter[tags]': tags.join(','),
       };
-    } else if (searchAccessTypesEnabled && accessTypes?.length) {
+    } else if (currentSearchConfig.searchAccessTypesEnabled && accessTypes?.length) {
       params = {
         'filter[access-type]': accessTypes.join(','),
       };
@@ -176,23 +236,49 @@ const SearchModal = ({
       }, {});
 
       params = {
-        q: query,
         ...formattedFilters,
       };
 
       if (sort === 'name') {
         params.sort = sort;
       }
+
+      if (!isPackageSearch) {
+        const currentSearchField = currentSearchConfig.searchField === titleSearchFields.TITLE
+          ? 'name'
+          : currentSearchConfig.searchField;
+
+        const searchFilterName = currentSearchField === titleSearchFields.TITLE
+          ? 'name'
+          : currentSearchField;
+
+        params.searchfield = currentSearchField;
+        params[`filter[${searchFilterName}]`] = query;
+        params.include = 'resources';
+      } else {
+        params.q = query;
+      }
     }
+
 
     if (page) {
       params.page = page;
     }
 
-    mutator.packages.GET({ params });
+    if (isPackageSearch) {
+      mutator.packages.GET({ params });
+    } else {
+      mutator.titles.GET({ params });
+    }
   };
 
   const fetchNextPage = () => {
+    const {
+      lastFetchedPage,
+      searchQuery,
+      searchFilters,
+    } = currentSearchConfig;
+
     const pageToFetch = lastFetchedPage + 1;
 
     fetchItems({
@@ -201,10 +287,19 @@ const SearchModal = ({
       page: pageToFetch
     });
 
-    setLastFetchedPage(pageToFetch);
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      lastFetchedPage: pageToFetch,
+    }));
   };
 
   useEffect(() => {
+    const {
+      searchFilters,
+      searchByTagsEnabled,
+      searchAccessTypesEnabled,
+      searchQuery,
+    } = currentSearchConfig;
     const { tags, accessTypes, ...otherFilters } = searchFilters;
 
     const shouldPerformSearchByTags = searchByTagsEnabled && tags?.length;
@@ -215,54 +310,106 @@ const SearchModal = ({
       && Object.keys(otherFilters).length && searchQuery;
 
     if (shouldPerformSearchByTags || shouldPerformRegularSearch || shouldPerformSearchByAccessTypes) {
-      mutator.packages.reset();
-      setLastFetchedPage(1);
+      if (isPackageSearch) {
+        mutator.packages.reset();
+      } else {
+        mutator.titles.reset();
+      }
+
+      changeCurrentSearchConfig(prev => ({
+        ...prev,
+        lastFetchedPage: 1,
+      }));
 
       fetchItems({
         searchQuery,
         searchFilters
       });
     }
-  }, [searchByTagsEnabled, searchAccessTypesEnabled, searchFilters]);
+  }, [
+    currentSearchConfig.searchByTagsEnabled,
+    currentSearchConfig.searchAccessTypesEnabled,
+    currentSearchConfig.searchFilters,
+  ]);
 
-  const onSearchQueryChange = e => {
-    setSearchQuery(e.target.value);
+  const onSearchQueryChange = ({ target: { value } }) => {
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      searchQuery: value,
+    }));
+  };
+
+  const onSearchFiltersChange = filters => {
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      searchFilters: filters,
+    }));
   };
 
   const handleSearchFormSubmit = () => {
-    mutator.packages.reset();
-    setLastFetchedPage(1);
+    if (isPackageSearch) {
+      mutator.packages.reset();
+    } else {
+      mutator.titles.reset();
+    }
+
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      lastFetchedPage: 1,
+    }));
 
     fetchItems({
-      searchQuery,
-      searchFilters
+      searchQuery: currentSearchConfig.searchQuery,
+      searchFilters: currentSearchConfig.searchFilters,
     });
   };
 
-  const resetButtonDisabled = isEqual(initialFiltersState, searchFilters) && !searchQuery;
+  const isResetButtonDisabed = () => {
+    const searchFormIsPristine = isEqual(getInitialFiltersState(searchType), currentSearchConfig.searchFilters);
+    const searchQueryIsMissing = !currentSearchConfig.searchQuery;
+
+    return searchFormIsPristine && searchQueryIsMissing;
+  };
 
   const resetSearch = () => {
-    mutator.packages.reset();
-    setSearchQuery('');
-    setSearchByTagsEnabled(false);
-    setSearchAccessTypesEnabled(false);
-    setSearchFilters(getInitialFiltersState());
+    if (isPackageSearch) {
+      mutator.packages.reset();
+    } else {
+      mutator.titles.reset();
+    }
+
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      lastFetchedPage: 1,
+      searchQuery: '',
+      searchByTagsEnabled: false,
+      searchAccessTypesEnabled: false,
+      searchFilters: getInitialFiltersState(searchType),
+    }));
   };
 
   const closeModal = () => {
-    resetSearch();
-    setSelectedItems([]);
+    setPackageSearchConfig(getInitialSearchConfig(searchTypes.PACKAGE));
+    setTitleSearchConfig(getInitialSearchConfig(searchTypes.TITLE));
+    setSearchType(searchTypes.PACKAGE);
+    mutator.packages.reset();
+    mutator.titles.reset();
     onClose();
   };
 
   const handleRecordClick = item => {
+    const { selectedItems } = currentSearchConfig;
+
     if (isMultiSelect) {
       const isAlreadySelected = !!selectedItems.find(selectedItem => selectedItem.id === item.id);
       const newSelectedItems = isAlreadySelected
         ? selectedItems.filter(selectedItem => item.id !== selectedItem.id)
         : [...selectedItems, item];
 
-      setSelectedItems(newSelectedItems);
+      changeCurrentSearchConfig(prev => ({
+        ...prev,
+        selectedItems: newSelectedItems,
+      }));
     } else {
       closeModal();
       onRecordChosen(omit(item, ['checked']));
@@ -271,17 +418,30 @@ const SearchModal = ({
 
   const handleSave = () => {
     closeModal();
-    onRecordChosen(selectedItems.map(item => omit(item, ['checked'])));
+    onRecordChosen(currentSearchConfig.selectedItems.map(item => omit(item, ['checked'])));
   };
 
   const toggleSearchByTags = () => {
-    setSearchByTagsEnabled(enabled => !enabled);
-    setSearchAccessTypesEnabled(false);
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      searchByTagsEnabled: !prev.searchByTagsEnabled,
+      searchAccessTypesEnabled: false,
+    }));
   };
 
   const toggleSearchByAccessTypes = () => {
-    setSearchAccessTypesEnabled(enabled => !enabled);
-    setSearchByTagsEnabled(false);
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      searchByTagsEnabled: false,
+      searchAccessTypesEnabled: !prev.searchAccessTypesEnabled,
+    }));
+  };
+
+  const handleTitleSearchFieldChange = newSearchField => {
+    changeCurrentSearchConfig(prev => ({
+      ...prev,
+      searchField: newSearchField,
+    }));
   };
 
   const renderSubHeader = () => {
@@ -315,7 +475,7 @@ const SearchModal = ({
           <FormattedMessage
             id="ui-plugin-find-package-title.resultsPane.totalSelected.count"
             values={{
-              count: selectedItems.length,
+              count: currentSearchConfig.selectedItems.length,
             }}
           />
         </div>
@@ -331,12 +491,14 @@ const SearchModal = ({
     );
   };
 
+  const modalLabel = <FormattedMessage id={`ui-plugin-find-package-title.modal.label.${searchType}`} />;
+
   return (
     <Modal
       open={open}
       dismissible
       contentClass={css.modalContent}
-      label={<FormattedMessage id="ui-plugin-find-package-title.modal.label.selectPackage" />}
+      label={modalLabel}
       onClose={closeModal}
       size="large"
       id="find-package-title-modal"
@@ -344,31 +506,35 @@ const SearchModal = ({
     >
       <Paneset static isRoot>
         <Pane
-          defaultWidth="30%"
+          defaultWidth="28%"
           paneTitle={<FormattedMessage id="ui-plugin-find-package-title.searchPane.label" />}
         >
           <SearchForm
             tagsExist={tagsExist}
             tagsFilterOptions={formattedTags}
             onSearch={fetchItems}
-            searchByTagsEnabled={searchByTagsEnabled}
+            searchByTagsEnabled={currentSearchConfig.searchByTagsEnabled}
             toggleSearchByTags={toggleSearchByTags}
             accessTypesFilterOptions={formattedAccessTypes}
             accessTypesExist={accessTypesExist}
-            searchAccessTypesEnabled={searchAccessTypesEnabled}
+            searchAccessTypesEnabled={currentSearchConfig.searchAccessTypesEnabled}
             toggleSearchByAccessTypes={toggleSearchByAccessTypes}
-            resetButtonDisabled={resetButtonDisabled}
-            searchQuery={searchQuery}
-            searchFilters={searchFilters}
+            resetButtonDisabled={isResetButtonDisabed()}
+            searchQuery={currentSearchConfig.searchQuery}
+            searchFilters={currentSearchConfig.searchFilters}
+            titleSearchField={titlesSearchConfig.searchField}
+            onTitleSearchFieldChange={handleTitleSearchFieldChange}
             onSearchQueryChange={onSearchQueryChange}
-            onSearchFiltersChange={setSearchFilters}
+            onSearchFiltersChange={onSearchFiltersChange}
             onResetAll={resetSearch}
             onSubmit={handleSearchFormSubmit}
+            onSearchTypeChange={setSearchType}
+            searchType={searchType}
           />
         </Pane>
         <Pane
           defaultWidth="fill"
-          paneTitle={<FormattedMessage id="ui-plugin-find-package-title.searchableEntity.package" />}
+          paneTitle={<FormattedMessage id={searchTypesTranslationIDs[searchType]} />}
           appIcon={<AppIcon app="eholdings" />}
           noOverflow
           padContent={false}
@@ -383,6 +549,7 @@ const SearchModal = ({
                 onNeedMoreData={fetchNextPage}
                 hasLoaded={hasLoaded}
                 isMultiSelect={isMultiSelect}
+                searchType={searchType}
               />
             )
             : (
@@ -398,6 +565,15 @@ const SearchModal = ({
 SearchModal.manifest = {
   packages: {
     path: 'eholdings/packages',
+    type: 'okapi',
+    headers: {
+      'accept': 'application/vnd.api+json'
+    },
+    fetch: false,
+    accumulate: true,
+  },
+  titles: {
+    path: 'eholdings/titles',
     type: 'okapi',
     headers: {
       'accept': 'application/vnd.api+json'

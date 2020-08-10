@@ -3,6 +3,11 @@ import {
   notSelectedPackages,
   taggedPackages,
   withAccessTypesPackages,
+  selectedTitles,
+  notSelectedTitles,
+  taggedTitles,
+  withAccessStatusTitles,
+  foundBySubjectTitles,
 } from '../constants';
 
 export default function config() {
@@ -105,4 +110,85 @@ export default function config() {
       label: 'urgent',
     }],
   }));
+
+
+  this.get('/eholdings/titles', (schema, request) => {
+    const allTitles = [
+      ...selectedTitles,
+      ...notSelectedTitles,
+      ...taggedTitles,
+      ...withAccessStatusTitles,
+      ...foundBySubjectTitles,
+    ];
+
+    if (request.queryParams['filter[selected]']) {
+      if (request.queryParams['filter[selected]'] === 'true') {
+        return {
+          data: selectedTitles,
+          meta: {
+            totalResults: selectedTitles.length,
+          }
+        };
+      }
+
+      if (request.queryParams['filter[selected]'] === 'false') {
+        return {
+          data: notSelectedTitles,
+          meta: {
+            totalResults: notSelectedTitles.length,
+          }
+        };
+      }
+    }
+
+    if (request.queryParams['filter[tags]']) {
+      return {
+        data: taggedTitles,
+        meta: {
+          totalResults: taggedTitles.length
+        }
+      };
+    }
+
+    if (request.queryParams['filter[access-type]']) {
+      return {
+        data: withAccessStatusTitles,
+        meta: {
+          totalResults: withAccessStatusTitles.length
+        }
+      };
+    }
+
+    if (request.queryParams.q) {
+      const filteredTitles = allTitles.filter(item => {
+        return item.attributes.name.toLowerCase().includes(request.queryParams.q.toLowerCase());
+      });
+      return {
+        data: filteredTitles,
+        meta: {
+          totalResults: filteredTitles.length,
+        },
+      };
+    }
+
+    if (request.queryParams.searchfield === 'subject') {
+      return {
+        data: foundBySubjectTitles,
+        meta: {
+          totalResults: foundBySubjectTitles.length
+        }
+      };
+    }
+
+    return {
+      data: allTitles,
+      meta: {
+        totalResults: notSelectedTitles.length
+          + selectedTitles.length
+          + taggedTitles.length
+          + withAccessStatusTitles.length
+          + foundBySubjectTitles.length
+      }
+    };
+  });
 }

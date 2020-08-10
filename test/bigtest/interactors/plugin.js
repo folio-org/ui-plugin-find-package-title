@@ -13,6 +13,7 @@ import {
 
 import MCLInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor'; // eslint-disable-line
 import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/tests/interactor'; // eslint-disable-line
+import SelectInteractor from '@folio/stripes-components/lib/Select/tests/interactor'; // eslint-disable-line
 
 @interactor class SearchField {
   isFocused = is(':focus');
@@ -31,6 +32,15 @@ import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/
       text: text()
     }),
   });
+
+  switchToTitleSearch = clickable('[data-test-search-type-button="title"]');
+  switchToPackageSearch = clickable('[data-test-search-type-button="package"]');
+
+  isTitleSearchActive = property('[data-test-search-type-button="title"]', 'class');
+  isPackageSearchActive = property('[data-test-search-type-button="package"]', 'class');
+
+  searchIndexSelectDisplayed = isPresent('[data-test-search-field-select]');
+  searchIndexSelect = new SelectInteractor('[data-test-search-field-select]');
 
   resultsList = new MCLInteractor();
 
