@@ -13,7 +13,6 @@ import {
 
 const onRecordChosenHandler = sinon.spy();
 
-
 describe('find title functionality', function () {
   beforeEach(() => { onRecordChosenHandler.resetHistory(); });
   const plugin = new PluginInteractor();
@@ -303,34 +302,29 @@ describe('find title functionality', function () {
             describe('and selecting a second title', () => {
               beforeEach(async () => {
                 await plugin.modal.resultsList.rows(1).click();
+                await plugin.modal.saveSelection();
               });
 
-              describe('and clicking Save', () => {
-                beforeEach(async () => {
-                  await plugin.modal.saveSelection();
-                });
+              it('should close the modal', () => {
+                expect(plugin.modalIsDisplayed).to.be.false;
+              });
 
-                it('should close the modal', () => {
-                  expect(plugin.modalIsDisplayed).to.be.false;
-                });
+              it('should call the provided callback with correct data', () => {
+                const expectedTitles = selectedTitles.reduce((allResources, currentTitle) => {
+                  const titleResources = currentTitle.included;
+                  const formattedTitleResources = titleResources.map(({ attributes, id, type }) => ({
+                    ...attributes,
+                    type,
+                    id,
+                  }));
 
-                it('should call the provided callback with correct data', () => {
-                  const expectedTitles = selectedTitles.reduce((allResources, currentTitle) => {
-                    const titleResources = currentTitle.included;
-                    const formattedTitleResources = titleResources.map(({ attributes, id, type }) => ({
-                      ...attributes,
-                      type,
-                      id,
-                    }));
+                  return [
+                    ...allResources,
+                    ...formattedTitleResources,
+                  ];
+                }, []);
 
-                    return [
-                      ...allResources,
-                      ...formattedTitleResources,
-                    ];
-                  }, []);
-
-                  expect(onRecordChosenHandler.calledOnceWith(expectedTitles)).to.be.true;
-                });
+                expect(onRecordChosenHandler.calledOnceWith(expectedTitles)).to.be.true;
               });
             });
           });

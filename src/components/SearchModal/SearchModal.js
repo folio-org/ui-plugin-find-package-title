@@ -88,22 +88,22 @@ const SearchModal = ({
   resources,
   isMultiSelect,
 }) => {
-  const getInitialFiltersState = searchType => searchFiltersConfig[searchType].reduce((filtersState, filter) => ({
+  const getInitialFiltersState = currentSearchType => searchFiltersConfig[currentSearchType].reduce((filtersState, filter) => ({
     ...filtersState,
     [filter.name]: filter.defaultValue,
   }), {});
 
-  const getInitialSearchConfig = searchType => {
+  const getInitialSearchConfig = currentSearchType => {
     const searchConfig = {
       selectedItems: [],
       lastFetchedPage: 0,
       searchQuery: '',
-      searchFilters: getInitialFiltersState(searchType),
+      searchFilters: getInitialFiltersState(currentSearchType),
       searchByTagsEnabled: false,
       searchAccessTypesEnabled: false,
     };
 
-    if (searchType === searchTypes.TITLE) {
+    if (currentSearchType === searchTypes.TITLE) {
       searchConfig.searchField = titleSearchFields.TITLE;
     }
 
@@ -113,20 +113,21 @@ const SearchModal = ({
   const [searchType, setSearchType] = useState(searchTypes.PACKAGE);
   const [packageSearchConfig, setPackageSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.PACKAGE));
   const [titlesSearchConfig, setTitleSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.TITLE));
+  const isPackageSearch = searchType === searchTypes.PACKAGE;
 
   const changeCurrentSearchConfig = updater => {
-    if (searchType === searchTypes.PACKAGE) {
+    if (isPackageSearch) {
       setPackageSearchConfig(updater);
     } else {
       setTitleSearchConfig(updater);
     }
   };
 
-  const currentSearchConfig = searchType === searchTypes.PACKAGE
+  const currentSearchConfig = isPackageSearch
     ? packageSearchConfig
     : titlesSearchConfig;
 
-  const resourcesToBeDisplayed = searchType === searchTypes.PACKAGE
+  const resourcesToBeDisplayed = isPackageSearch
     ? resources?.packages
     : resources?.titles;
 
@@ -182,7 +183,7 @@ const SearchModal = ({
 
     const jointRecords = records.reduce((acc, rec) => [...acc, ...rec.data], []);
 
-    if (searchType === searchTypes.PACKAGE) {
+    if (isPackageSearch) {
       return getFormattedPackagesData(jointRecords);
     }
 
@@ -242,7 +243,7 @@ const SearchModal = ({
         params.sort = sort;
       }
 
-      if (searchType === searchTypes.TITLE) {
+      if (!isPackageSearch) {
         const currentSearchField = currentSearchConfig.searchField === titleSearchFields.TITLE
           ? 'name'
           : currentSearchConfig.searchField;
@@ -264,7 +265,7 @@ const SearchModal = ({
       params.page = page;
     }
 
-    if (searchType === searchTypes.PACKAGE) {
+    if (isPackageSearch) {
       mutator.packages.GET({ params });
     } else {
       mutator.titles.GET({ params });
@@ -309,7 +310,7 @@ const SearchModal = ({
       && Object.keys(otherFilters).length && searchQuery;
 
     if (shouldPerformSearchByTags || shouldPerformRegularSearch || shouldPerformSearchByAccessTypes) {
-      if (searchType === searchTypes.PACKAGE) {
+      if (isPackageSearch) {
         mutator.packages.reset();
       } else {
         mutator.titles.reset();
@@ -338,7 +339,7 @@ const SearchModal = ({
     }));
   };
 
-  const onSearchFiltersChange = (filters) => {
+  const onSearchFiltersChange = filters => {
     changeCurrentSearchConfig(prev => ({
       ...prev,
       searchFilters: filters,
@@ -346,7 +347,7 @@ const SearchModal = ({
   };
 
   const handleSearchFormSubmit = () => {
-    if (searchType === searchTypes.PACKAGE) {
+    if (isPackageSearch) {
       mutator.packages.reset();
     } else {
       mutator.titles.reset();
@@ -371,7 +372,7 @@ const SearchModal = ({
   };
 
   const resetSearch = () => {
-    if (searchType === searchTypes.PACKAGE) {
+    if (isPackageSearch) {
       mutator.packages.reset();
     } else {
       mutator.titles.reset();
@@ -490,9 +491,7 @@ const SearchModal = ({
     );
   };
 
-  const modalLabel = searchType === searchTypes.PACKAGE
-    ? <FormattedMessage id="ui-plugin-find-package-title.modal.label.package" />
-    : <FormattedMessage id="ui-plugin-find-package-title.modal.label.title" />;
+  const modalLabel = <FormattedMessage id={`ui-plugin-find-package-title.modal.label.${searchType}`} />;
 
   return (
     <Modal
