@@ -44,7 +44,7 @@
     "searchPane.titleSearchField.isxn": "ISSN/ISBN",
     "searchPane.titleSearchField.publisher": "Publisher",
     "searchPane.titleSearchField.subject": "Subject",
-    "searchPane.filters.publicationType": "Publication type",
+    "searchPane.filters.publicationType": "Tipologia pubblicazione",
     "searchPane.filters.publicationType.all": "All",
     "searchPane.filters.publicationType.audiobook": "Audiobook",
     "searchPane.filters.publicationType.book": "Book",
