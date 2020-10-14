@@ -1,4 +1,4 @@
-## [2.0.0] (IN PROGRESS)
+## [2.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v2.0.0) (2020-10-14)
 
 * Added ability to select multiple packages. Refs UIPFPAT-4.
 * Replace `bigtest/mirage` with `miragejs`.

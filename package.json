@@ -1,6 +1,6 @@
 {
   "name": "@folio/plugin-find-package-title",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Stripes plugin to find packages and titles",
   "repository": "folio-org/ui-plugin-find-package-title",
   "publishConfig": {
