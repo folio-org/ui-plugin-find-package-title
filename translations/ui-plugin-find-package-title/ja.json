@@ -15,7 +15,7 @@
     "searchPane.filters.sortOptions.relevance": "Relevance",
     "searchPane.filters.selectionStatus": "Selection status",
     "searchPane.filters.selectionStatus.all": "全部",
-    "searchPane.filters.selectionStatus.selected": "Selected",
+    "searchPane.filters.selectionStatus.selected": "選択済み",
     "searchPane.filters.selectionStatus.notSelected": "Not selected",
     "searchPane.filters.contentType": "Content type",
     "searchPane.filters.contentType.all": "全部",
