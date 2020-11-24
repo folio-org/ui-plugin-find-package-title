@@ -6,7 +6,7 @@
     "searchPane.label": "Search & filter",
     "searchPane.searchButton.label": "Search",
     "searchPane.resetAll": "すべてリセット",
-    "searchPane.filters.tags": "Tags",
+    "searchPane.filters.tags": "タグ",
     "searchPane.filters.tags.tagsOnly": "Search by tags only",
     "searchPane.filters.accessTypes": "アクセス状況タイプ",
     "searchPane.filters.accessTypes.accessTypesOnly": "アクセス状況タイプのみで検索",
