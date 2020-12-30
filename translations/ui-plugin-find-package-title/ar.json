@@ -67,5 +67,6 @@
     "resultsPane.packageName": "حزمة",
     "resultsPane.publicationType": "النوع",
     "searchTypes.package": "حزم",
-    "searchTypes.title": "العناوين"
+    "searchTypes.title": "العناوين",
+    "modal.label.selectPackage": ""
 }

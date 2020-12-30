@@ -67,5 +67,6 @@
     "resultsPane.packageName": "Pacote",
     "resultsPane.publicationType": "Tipo",
     "searchTypes.package": "Pacotes",
-    "searchTypes.title": "Títulos"
+    "searchTypes.title": "Títulos",
+    "modal.label.selectPackage": ""
 }

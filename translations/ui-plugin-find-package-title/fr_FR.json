@@ -67,5 +67,6 @@
     "resultsPane.packageName": "Bouquet",
     "resultsPane.publicationType": "Type",
     "searchTypes.package": "Bouquets",
-    "searchTypes.title": "Titres"
+    "searchTypes.title": "Titres",
+    "modal.label.selectPackage": ""
 }

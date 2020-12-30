@@ -67,5 +67,6 @@
     "resultsPane.packageName": "资源包",
     "resultsPane.publicationType": "类型",
     "searchTypes.package": "资源包",
-    "searchTypes.title": "题名"
+    "searchTypes.title": "题名",
+    "modal.label.selectPackage": ""
 }

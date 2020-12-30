@@ -67,5 +67,6 @@
     "resultsPane.packageName": "Package",
     "resultsPane.publicationType": "Type",
     "searchTypes.package": "Packages",
-    "searchTypes.title": "Titles"
+    "searchTypes.title": "Titles",
+    "modal.label.selectPackage": ""
 }
