@@ -6,7 +6,7 @@
     "searchPane.label": "Search & filter",
     "searchPane.searchButton.label": "Search",
     "searchPane.resetAll": "Reset all",
-    "searchPane.filters.tags": "Tags",
+    "searchPane.filters.tags": "Etykiety",
     "searchPane.filters.tags.tagsOnly": "Search by tags only",
     "searchPane.filters.accessTypes": "Access status types",
     "searchPane.filters.accessTypes.accessTypesOnly": "Search by access status types only",
