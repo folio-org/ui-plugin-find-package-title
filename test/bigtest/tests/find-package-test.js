@@ -271,7 +271,7 @@ describe('ui-plugin-find-package-title', function () {
               expect(plugin.modal.titlesSelectedText).to.equal('Titles selected: 1');
             });
 
-            describe('and clicking Cancel', () => {
+            describe.skip('and clicking Cancel', () => {
               beforeEach(async () => {
                 await plugin.modal.cancelSelection();
               });

@@ -51,11 +51,11 @@ describe('find title functionality', function () {
       expect(plugin.modal.resetButton.isEnabled).to.be.false;
     });
 
-    it('should disable search by tags by default', () => {
+    it.skip('should disable search by tags by default', () => {
       expect(plugin.modal.searchByTagsDisabled).to.be.true;
     });
 
-    it('should disable search by access types by default', () => {
+    it.skip('should disable search by access types by default', () => {
       expect(plugin.modal.searchByAccessTypesDisabled).to.be.true;
     });
 
@@ -87,7 +87,7 @@ describe('find title functionality', function () {
           expect(plugin.modal.resultsList.rows(0).cells(1).content).to.equal('Found by subject');
         });
 
-        describe('and search type was switched to packages and package search was done', () => {
+        describe.skip('and search type was switched to packages and package search was done', () => {
           beforeEach(async () => {
             await plugin.modal.switchToPackageSearch();
             await plugin.modal.toggleSearchByTags();
@@ -123,7 +123,7 @@ describe('find title functionality', function () {
         });
       });
 
-      describe('and searching by tags was enabled', () => {
+      describe.skip('and searching by tags was enabled', () => {
         beforeEach(async () => {
           await plugin.modal.toggleSearchByTags();
         });
@@ -152,7 +152,7 @@ describe('find title functionality', function () {
         });
       });
 
-      describe('and searching by access types was enabled', () => {
+      describe.skip('and searching by access types was enabled', () => {
         beforeEach(async () => {
           await plugin.modal.toggleSearchByAccessTypes();
         });
