@@ -5,6 +5,7 @@ import {
   isEqual,
   omit,
 } from 'lodash';
+import queryString from 'qs';
 
 import {
   AppIcon,
@@ -31,6 +32,12 @@ import {
 
 import css from './SearchModal.css';
 
+export const qs = {
+  stringify: params => queryString.stringify(params, {
+    encodeValuesOnly: true,
+    indices: false,
+  }),
+};
 
 const propTypes = {
   isMultiSelect: PropTypes.bool,
@@ -230,27 +237,26 @@ const SearchModal = ({
       ...otherFilters
     } = filters;
 
-    let params;
+    const params = {
+      filter: {},
+    };
 
     if (currentSearchConfig.searchByTagsEnabled && tags?.length) {
-      params = {
-        'filter[tags]': tags.join(','),
-      };
+      params.filter.tags = tags;
     } else if (currentSearchConfig.searchAccessTypesEnabled && accessTypes?.length) {
-      params = {
-        'filter[access-type]': accessTypes.join(','),
-      };
+      params.filter['access-type'] = accessTypes;
     } else {
       const formattedFilters = Object.keys(otherFilters).reduce((acc, filterName) => {
         return otherFilters[filterName] !== 'all'
           ? {
             ...acc,
-            [`filter[${filterName}]`]: otherFilters[filterName],
+            [filterName]: otherFilters[filterName],
           }
           : { ...acc };
       }, {});
 
-      params = {
+      params.filter = {
+        ...params.filter,
         ...formattedFilters,
       };
 
@@ -280,10 +286,12 @@ const SearchModal = ({
       params.page = page;
     }
 
+    const queryParams = qs.stringify(params);
+
     if (isPackageSearch) {
-      mutator.packages.GET({ params });
+      mutator.packages.GET({ path: `eholdings/packages?${queryParams}` });
     } else {
-      mutator.titles.GET({ params });
+      mutator.titles.GET({ path: `eholdings/titles?${queryParams}` });
     }
   };
 
