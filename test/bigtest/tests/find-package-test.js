@@ -290,7 +290,7 @@ describe('ui-plugin-find-package-title', function () {
                 await plugin.modal.resultsList.rows(1).click();
               });
 
-              describe('and clicking Save', () => {
+              describe.skip('and clicking Save', () => {
                 beforeEach(async () => {
                   await plugin.modal.saveSelection();
                 });
