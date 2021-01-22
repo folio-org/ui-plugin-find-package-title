@@ -121,6 +121,15 @@ export default function config() {
       ...foundBySubjectTitles,
     ];
 
+    if (parseInt(request.queryParams.page, 10) >= 1) {
+      return {
+        data: [],
+        meta: {
+          totalResults: 0,
+        },
+      };
+    }
+
     if (request.queryParams['filter[selected]']) {
       if (request.queryParams['filter[selected]'] === 'true') {
         return {
@@ -159,9 +168,9 @@ export default function config() {
       };
     }
 
-    if (request.queryParams.q) {
+    if (request.queryParams['filter[name]']) {
       const filteredTitles = allTitles.filter(item => {
-        return item.attributes.name.toLowerCase().includes(request.queryParams.q.toLowerCase());
+        return item.attributes.name.toLowerCase().includes(request.queryParams['filter[name]'].toLowerCase());
       });
       return {
         data: filteredTitles,

@@ -34,10 +34,6 @@ const propTypes = {
   searchType: PropTypes.oneOf(searchTypes).isRequired,
 };
 
-const defaultProps = {
-  totalCount: null,
-};
-
 const SearchResultsList = ({
   items,
   onRecordChosen,
@@ -144,6 +140,5 @@ const SearchResultsList = ({
 };
 
 SearchResultsList.propTypes = propTypes;
-SearchResultsList.defaultProps = defaultProps;
 
 export default SearchResultsList;
