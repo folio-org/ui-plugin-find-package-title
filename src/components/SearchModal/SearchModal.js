@@ -269,12 +269,12 @@ const SearchModal = ({
 
         params.searchfield = currentSearchField;
         params[`filter[${searchFilterName}]`] = query;
-        params.include = 'resources';
       } else {
         params.q = query;
       }
     }
 
+    params.include = 'resources';
 
     if (page) {
       params.page = page;

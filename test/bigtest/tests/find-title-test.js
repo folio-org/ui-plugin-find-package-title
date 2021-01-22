@@ -187,7 +187,7 @@ describe('find title functionality', function () {
         });
 
         it('should display a list of loaded titles', () => {
-          expect(plugin.modal.resultsList.rows().length).to.equal(6);
+          expect(plugin.modal.resultsList.rows().length).to.equal(3);
         });
 
         describe('and reset button was clicked', () => {
@@ -203,38 +203,38 @@ describe('find title functionality', function () {
             expect(plugin.modal.searchPromptDisplayed).to.be.true;
           });
         });
+      });
+    });
 
-        describe('and search for not selected titles were done', () => {
-          beforeEach(async () => {
-            await plugin.modal.clickNotSelectedFilter();
-            await plugin.modal.searchField.fill('some title');
-            await plugin.modal.searchButton.click();
-          });
+    describe('and search for not selected titles were done', () => {
+      beforeEach(async () => {
+        await plugin.modal.clickNotSelectedFilter();
+        await plugin.modal.searchField.fill('some title');
+        await plugin.modal.searchButton.click();
+      });
 
-          it('should display only not selected titles', () => {
-            expect(plugin.modal.resultsList.rows().length).to.equal(1);
-            expect(plugin.modal.resultsList.rows(0).cells(1).content).to.equal('Not selected');
-          });
+      it('should display only not selected titles', () => {
+        expect(plugin.modal.resultsList.rows().length).to.equal(1);
+        expect(plugin.modal.resultsList.rows(0).cells(1).content).to.equal('Not selected');
+      });
 
-          describe('and a title was selected', () => {
-            beforeEach(async () => {
-              await plugin.modal.resultsList.rows(0).click();
-            });
+      describe('and a title was selected', () => {
+        beforeEach(async () => {
+          await plugin.modal.resultsList.rows(0).click();
+        });
 
-            it('should close the modal', () => {
-              expect(plugin.modalIsDisplayed).to.be.false;
-            });
+        it('should close the modal', () => {
+          expect(plugin.modalIsDisplayed).to.be.false;
+        });
 
-            it('should call the provided callback with the data of the selected title', () => {
-              const { attributes, id, type } = notSelectedTitles[0].included[0];
+        it('should call the provided callback with the data of the selected title', () => {
+          const { attributes, id, type } = notSelectedTitles[0].included[0];
 
-              expect(onRecordChosenHandler.calledOnceWith({
-                id,
-                type,
-                ...attributes,
-              })).to.be.true;
-            });
-          });
+          expect(onRecordChosenHandler.calledOnceWith({
+            id,
+            type,
+            ...attributes,
+          })).to.be.true;
         });
       });
     });
