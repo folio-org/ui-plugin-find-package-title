@@ -193,8 +193,8 @@ const SearchForm = ({
           onClick={onResetAll}
           data-test-find-package-title-reset-button
         />
-        {tagsExist && renderTagsFilter()}
-        {accessTypesExist && renderAccessTypesFilter()}
+        {searchType === searchTypes.PACKAGE && tagsExist && renderTagsFilter()}
+        {searchType === searchTypes.PACKAGE && accessTypesExist && renderAccessTypesFilter()}
         <SearchFilters
           activeFilters={searchFilters}
           availableFilters={searchFiltersConfig[searchType]}
