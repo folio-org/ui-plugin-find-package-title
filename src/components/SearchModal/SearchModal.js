@@ -58,6 +58,16 @@ const propTypes = {
         }).isRequired,
       })).isRequired,
     }),
+    titles: PropTypes.shape({
+      hasLoaded: PropTypes.bool.isRequired,
+      isPending: PropTypes.bool.isRequired,
+      records: PropTypes.arrayOf(PropTypes.shape({
+        data: PropTypes.arrayOf(packageResponseShape).isRequired,
+        meta: PropTypes.shape({
+          totalResults: PropTypes.number.isRequired,
+        }).isRequired,
+      })).isRequired,
+    }),
     tags: PropTypes.shape({
       hasLoaded: PropTypes.bool.isRequired,
       records: PropTypes.arrayOf(PropTypes.shape({
@@ -193,6 +203,11 @@ const SearchModal = ({
   const getTotalResults = () => {
     if (!resourcesToBeDisplayed?.hasLoaded) {
       return null;
+    }
+
+    // need to pass undefined to MCL for titles. In null - then infinite scroll won't work
+    if (!isPackageSearch) {
+      return undefined;
     }
 
     const records = resourcesToBeDisplayed.records;
@@ -445,16 +460,22 @@ const SearchModal = ({
   };
 
   const renderSubHeader = () => {
-    return hasLoaded
-      ? (
+    if (!hasLoaded) {
+      return fetchIsPending
+        ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.resultsCount.loading" />
+        : '';
+    }
+
+    if (isPackageSearch) {
+      return (
         <FormattedMessage
           id="ui-plugin-find-package-title.resultsPane.resultsCount"
           values={{ totalResults }}
         />
-      )
-      : fetchIsPending
-        ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.resultsCount.loading" />
-        : '';
+      );
+    }
+
+    return '';
   };
 
   const renderModalFooter = () => {
