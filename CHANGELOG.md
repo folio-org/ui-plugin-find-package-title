@@ -1,4 +1,4 @@
-## [2.1.0] (IN PROGRESS)
+## [2.0.1] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v2.0.1) (2021-01-25)
 
 * Fixed Title search is returning inaccurate results. Refs UIPFPAT-12.
 * Fixed Packages/Titles search: tag and access status type formatting. Refs UIPFPAT-16.
