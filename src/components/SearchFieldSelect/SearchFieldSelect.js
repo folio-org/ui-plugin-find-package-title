@@ -23,15 +23,19 @@ const SearchFieldSelect = ({
   };
 
   return (
-    <div data-test-search-field-select>
+    <div data-testid="search-field-select">
       <Select
         onChange={handleSearchFieldChange}
         value={value}
         aria-label={intl.formatMessage({ id: 'ui-plugin-find-package-title.searchPane.selectFieldToSearch' })}
-        data-test-search-field-select
+        data-testid="select-field"
       >
         {Object.values(titleSearchFields).map(searchField => (
-          <option value={searchField}>
+          <option
+            value={searchField}
+            key={searchField}
+            data-testid={`option-${searchField}`}
+          >
             {intl.formatMessage({ id: titleSearchFieldsTranslationIDs[searchField] })}
           </option>
         ))}

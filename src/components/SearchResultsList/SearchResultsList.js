@@ -31,7 +31,7 @@ const propTypes = {
   totalCount: PropTypes.number,
   onNeedMoreData: PropTypes.func.isRequired,
   hasLoaded: PropTypes.bool.isRequired,
-  searchType: PropTypes.oneOf(searchTypes).isRequired,
+  searchType: PropTypes.oneOf(Object.values(searchTypes)).isRequired,
 };
 
 const SearchResultsList = ({
@@ -49,7 +49,7 @@ const SearchResultsList = ({
     <Layout className="display-flex centerContent">
       {hasLoaded
         ? (
-          <NoResultsMessage data-test-no-results-message>
+          <NoResultsMessage>
             {searchType === searchTypes.PACKAGE
               ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
               : <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noTitlesFound" />
@@ -57,7 +57,7 @@ const SearchResultsList = ({
           </NoResultsMessage>
         )
         : (
-          <NoResultsMessage data-test-search-prompt>
+          <NoResultsMessage>
             <FormattedMessage id="ui-plugin-find-package-title.resultsPane.emptyMessage" />
           </NoResultsMessage>
         )

@@ -13,7 +13,7 @@ import {
 } from '../../constants';
 
 const propTypes = {
-  currentSearchType: PropTypes.oneOf(searchTypes).isRequired,
+  currentSearchType: PropTypes.oneOf(Object.values(searchTypes)).isRequired,
   onSearchTypeChange: PropTypes.func.isRequired,
 };
 
@@ -22,7 +22,6 @@ const SearchTypeSwitcher = ({
   onSearchTypeChange,
 }) => (
   <ButtonGroup
-    data-test-search-form-type-switcher
     fullWidth
     role="tablist"
   >
@@ -35,7 +34,7 @@ const SearchTypeSwitcher = ({
         key={type}
         onClick={() => onSearchTypeChange(type)}
         buttonStyle={type === currentSearchType ? 'primary' : 'default'}
-        data-test-search-type-button={type}
+        data-testid={`${type}-search-type-button`}
       >
         <FormattedMessage id={searchTypesTranslationIDs[type]} />
       </Button>

@@ -1,14 +1,13 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-
 import { noop } from 'lodash';
+
 import { Checkbox } from '@folio/stripes/components';
 
 import css from './CheckboxColumn.css';
 
 const CheckboxColumn = memo(props => {
   const {
-    value,
     checked,
     onChange,
     ...rest
@@ -19,21 +18,19 @@ const CheckboxColumn = memo(props => {
       tabIndex="0"
       role="button"
       className={css.selectableCellButton}
-      data-test-select-item
       onClick={e => e.stopPropagation()}
       {...rest}
     >
       <Checkbox
-        name={`selected-${value}`}
         checked={checked}
         onChange={onChange}
+        data-testid="checkbox-column"
       />
     </div>
   );
 });
 
 CheckboxColumn.propTypes = {
-  value: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
 };

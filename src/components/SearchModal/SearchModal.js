@@ -492,15 +492,17 @@ const SearchModal = ({
     }
 
     return (
-      <div className={css.modalFooter}>
+      <div
+        className={css.modalFooter}
+        data-testid="modal-footer"
+      >
         <Button
-          data-test-find-package-title-cancel
           onClick={closeModal}
           marginBottom0
         >
           <FormattedMessage id="stripes-components.cancel" />
         </Button>
-        <div data-test-titles-selected-count>
+        <div>
           <FormattedMessage
             id="ui-plugin-find-package-title.resultsPane.totalSelected.count"
             values={{
@@ -509,7 +511,6 @@ const SearchModal = ({
           />
         </div>
         <Button
-          data-test-find-package-title-save
           marginBottom0
           buttonStyle="primary"
           onClick={handleSave}
@@ -531,6 +532,7 @@ const SearchModal = ({
       onClose={closeModal}
       size="large"
       id="find-package-title-modal"
+      data-testid="find-package-title-modal"
       footer={renderModalFooter()}
     >
       <Paneset static isRoot>

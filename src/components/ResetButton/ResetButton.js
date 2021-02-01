@@ -9,7 +9,6 @@ import {
 
 import css from './ResetButton.css';
 
-
 const propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -34,6 +33,7 @@ const ResetButton = ({
         onClick={onClick}
         disabled={disabled}
         buttonClass={classnames(css.button, className)}
+        data-testid="reset-button"
         {...restProps}
       >
         <Icon size="small" icon="times-circle-solid">
