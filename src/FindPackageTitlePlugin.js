@@ -22,11 +22,10 @@ const FindPackageTitlePlugin = ({
   const openPluginModal = () => { setIsOpen(true); };
   const closePluginModal = () => { setIsOpen(false); };
 
-
   const renderDefaultTrigger = () => {
     return (
       <Button
-        data-test-find-package-title-trigger
+        data-testid="default-trigger"
         onClick={openPluginModal}
       >
         <FormattedMessage id="ui-plugin-find-package-title.defaultTriggerLabel" />

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   Button,
@@ -48,7 +51,7 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired,
   resetButtonDisabled: PropTypes.bool.isRequired,
   onSearchTypeChange: PropTypes.func.isRequired,
-  searchType: PropTypes.oneOf(searchTypes).isRequired,
+  searchType: PropTypes.oneOf(Object.values(searchTypes)).isRequired,
   titleSearchField: PropTypes.string.isRequired,
   onTitleSearchFieldChange: PropTypes.func.isRequired,
 };
@@ -74,11 +77,16 @@ const SearchForm = ({
   titleSearchField,
   onTitleSearchFieldChange,
 }) => {
+  const intl = useIntl();
+
   const renderAccessTypesFilter = () => {
     const accessTypesFilter = searchFilters.accessTypes || [];
 
     return (
-      <div className={css.multiselectionFilter}>
+      <div
+        className={css.multiselectionFilter}
+        data-testid="access-type-filter"
+      >
         <Accordion
           closedByDefault
           displayClearButton={accessTypesFilter.length > 0}
@@ -92,7 +100,7 @@ const SearchForm = ({
             label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.accessTypes.accessTypesOnly" />}
             onChange={toggleSearchByAccessTypes}
             checked={searchAccessTypesEnabled}
-            data-test-toggle-search-by-access-types
+            data-testid="toggle-search-by-access-types"
           />
           <MultiSelectionFilter
             dataOptions={accessTypesFilterOptions}
@@ -114,7 +122,10 @@ const SearchForm = ({
     const tagFilters = searchFilters.tags || [];
 
     return (
-      <div className={css.multiselectionFilter}>
+      <div
+        className={css.multiselectionFilter}
+        data-testid="tags-filter"
+      >
         <Accordion
           closedByDefault
           displayClearButton={tagFilters.length > 0}
@@ -128,7 +139,7 @@ const SearchForm = ({
             label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.tags.tagsOnly" />}
             onChange={toggleSearchByTags}
             checked={searchByTagsEnabled}
-            data-test-toggle-search-by-tags
+            data-testid="toggle-search-by-tags"
           />
           <MultiSelectionFilter
             dataOptions={tagsFilterOptions}
@@ -152,6 +163,8 @@ const SearchForm = ({
     onSubmit();
   };
 
+  const searchFieldLabel = intl.formatMessage({ id: 'ui-plugin-find-package-title.searchableEntity.package' });
+
   return (
     <>
       <SearchTypeSwitcher
@@ -165,25 +178,21 @@ const SearchForm = ({
             onChange={onTitleSearchFieldChange}
           />
         )}
-        <FormattedMessage id="ui-plugin-find-package-title.searchableEntity.package">
-          {ariaLabel => (
-            <SearchField
-              autoFocus
-              onChange={onSearchQueryChange}
-              placeholder={ariaLabel}
-              ariaLabel={ariaLabel}
-              value={searchQuery}
-              disabled={searchByTagsEnabled || searchAccessTypesEnabled}
-              data-test-find-package-title-search-field
-            />
-          )}
-        </FormattedMessage>
+        <SearchField
+          autoFocus
+          onChange={onSearchQueryChange}
+          placeholder={searchFieldLabel}
+          ariaLabel={searchFieldLabel}
+          value={searchQuery}
+          disabled={searchByTagsEnabled || searchAccessTypesEnabled}
+          data-testid="find-package-title-search-field"
+        />
         <Button
           buttonStyle="primary"
           fullWidth
           disabled={!searchQuery || searchByTagsEnabled || searchAccessTypesEnabled}
           type="submit"
-          data-test-find-package-title-search-button
+          data-testid="find-package-title-search-button"
         >
           <FormattedMessage id="ui-plugin-find-package-title.searchPane.searchButton.label" />
         </Button>
@@ -191,7 +200,6 @@ const SearchForm = ({
           label={<FormattedMessage id="ui-plugin-find-package-title.searchPane.resetAll" />}
           disabled={resetButtonDisabled}
           onClick={onResetAll}
-          data-test-find-package-title-reset-button
         />
         {searchType === searchTypes.PACKAGE && tagsExist && renderTagsFilter()}
         {searchType === searchTypes.PACKAGE && accessTypesExist && renderAccessTypesFilter()}

@@ -31,7 +31,7 @@ const propTypes = {
   totalCount: PropTypes.number,
   onNeedMoreData: PropTypes.func.isRequired,
   hasLoaded: PropTypes.bool.isRequired,
-  searchType: PropTypes.oneOf(searchTypes).isRequired,
+  searchType: PropTypes.oneOf(Object.values(searchTypes)).isRequired,
 };
 
 const SearchResultsList = ({
@@ -45,19 +45,21 @@ const SearchResultsList = ({
 }) => {
   const intl = useIntl();
 
+  const currentSearchType = searchType === searchTypes.PACKAGE;
+  const messageForLoadedData = currentSearchType
+    ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
+    : <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noTitlesFound" />;
+
   const emptyMessage = (
     <Layout className="display-flex centerContent">
       {hasLoaded
         ? (
-          <NoResultsMessage data-test-no-results-message>
-            {searchType === searchTypes.PACKAGE
-              ? <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noPackagesFound" />
-              : <FormattedMessage id="ui-plugin-find-package-title.resultsPane.noTitlesFound" />
-            }
+          <NoResultsMessage>
+            {messageForLoadedData}
           </NoResultsMessage>
         )
         : (
-          <NoResultsMessage data-test-search-prompt>
+          <NoResultsMessage>
             <FormattedMessage id="ui-plugin-find-package-title.resultsPane.emptyMessage" />
           </NoResultsMessage>
         )
@@ -66,7 +68,7 @@ const SearchResultsList = ({
   );
 
   const getVisibleColumns = () => {
-    const visibleColumns = searchType === searchTypes.PACKAGE
+    const visibleColumns = currentSearchType
       ? ['isSelected', 'name', 'selectedCount', 'titleCount']
       : ['isSelected', 'name', 'packageName', 'publisherName', 'publicationType'];
 
@@ -76,7 +78,7 @@ const SearchResultsList = ({
   };
 
   const getColumnWidths = () => {
-    const columnWidths = searchType === searchTypes.PACKAGE
+    const columnWidths = currentSearchType
       ? {
         isSelected: '15%',
         name: '53%',
@@ -91,13 +93,15 @@ const SearchResultsList = ({
         publicationType: '15%',
       };
 
-    return isMultiSelect
-      ? {
-        ...columnWidths,
-        checked: '5%',
-        name: searchType === searchTypes.PACKAGE ? '48%' : '25%',
-      }
-      : columnWidths;
+    if (!isMultiSelect) {
+      return columnWidths;
+    }
+
+    return {
+      ...columnWidths,
+      checked: '5%',
+      name: currentSearchType ? '48%' : '25%',
+    };
   };
 
   return (
@@ -105,7 +109,7 @@ const SearchResultsList = ({
       visibleColumns={getVisibleColumns()}
       columnMapping={{
         isSelected: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status' }),
-        name: searchType === searchTypes.PACKAGE
+        name: currentSearchType
           ? intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.name' })
           : intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.title' }),
         selectedCount: intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.titlesSelected' }),

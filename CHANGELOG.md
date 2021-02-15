@@ -4,6 +4,7 @@
 * Fixed Packages/Titles search: tag and access status type formatting. Refs UIPFPAT-16.
 * Update to stripes v6. Refs UIPFPAT-10.
 * Update to stripes-cli v2.
+* UI tests replacement with RTL/Jest. FAT-69.
 
 ## [2.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v2.0.0) (2020-10-14)
 

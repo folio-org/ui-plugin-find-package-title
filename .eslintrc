@@ -9,5 +9,9 @@
       }
     ],
     "no-unused-vars": ["error", { "ignoreRestSiblings": true }]
-  }
+  },
+  "env": {
+    "jest/globals": true
+  },
+  "plugins": ["jest"]
 }

@@ -38,6 +38,7 @@ export default function SearchFilters({
         key={value}
         name={name}
         id={`filter-${name}-${value}`}
+        data-testid={`filter-${name}-${value}`}
         label={radioBtnLabel}
         value={value}
         checked={isChecked}
@@ -72,6 +73,7 @@ export default function SearchFilters({
         <div
           role="radiogroup"
           aria-labelledby={accordionLabelId}
+          data-testid={`filter-${name}`}
         >
           {options.map(renderFilterOption({
             name,
