@@ -6,7 +6,7 @@ import { Checkbox } from '@folio/stripes/components';
 
 import css from './CheckboxColumn.css';
 
-const CheckboxColumn = memo(props => {
+const CheckboxColumn = memo((props) => {
   const {
     checked,
     onChange,

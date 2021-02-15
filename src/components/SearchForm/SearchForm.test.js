@@ -28,6 +28,7 @@ const renderSearchForm = ({
   toggleSearchByAccessTypes = noop,
   searchType = searchTypes.PACKAGE,
   titleSearchField = titleSearchFields.PACKAGE,
+  onSearchFiltersChange = noop,
 }) => render(
   <SearchForm
     onSubmit={onSubmit}
@@ -44,7 +45,7 @@ const renderSearchForm = ({
     searchQuery={searchQuery}
     searchFilters={searchFilters}
     onSearchQueryChange={noop}
-    onSearchFiltersChange={noop}
+    onSearchFiltersChange={onSearchFiltersChange}
     resetButtonDisabled={resetButtonDisabled}
     onResetAll={noop}
     accessTypesExist={accessTypesExist}
@@ -129,18 +130,5 @@ describe('Given SearchForm', () => {
         });
       });
     });
-
-    /*
-    descrobe('when click on submit button', () => {
-      it('should handle onSubmit', () => {
-        cosnt onSubmit = jest.fn();
-        const { getByTestId } = renderSearchForm({ onSubmit });
-
-        fireEvent.click(getByTestId('find-package-title-search-button'));
-
-        expect(onSubmit).toHaveBeenCalled();
-      });
-    });
-    */
   });
 });

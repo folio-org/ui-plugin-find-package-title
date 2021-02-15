@@ -37,17 +37,4 @@ describe('Given SearchFilters', () => {
     expect(getByTestId('filter-name1-opt1')).toBeDefined();
     expect(getByTestId('filter-name1-opt2')).toBeDefined();
   });
-
-/*
-  describe('when click on unchecked radio button', () => {
-    it('should handle onChange', () => {
-      const onChange = jest.fn();
-      const { getByTestId } = renderSearchFilters(onChange);
-
-      fireEvent.change(getByTestId('filter-name1-opt2'), { target: { value: 'opt2' } });
-
-      expect(onChange).toHaveBeenCalledWith({ 'name1': 'opt2' });
-    });
-  });
-*/
 });

@@ -7,7 +7,7 @@ import {
 
 import ResetButton from './ResetButton';
 
-const renderResetButton = onClick => render(
+const renderResetButton = (onClick) => render(
   <ResetButton
     id="testId"
     onClick={onClick}

@@ -309,25 +309,5 @@ describe('Given SearchModal', () => {
         expect(onClose).toHaveBeenCalled();
       });
     });
-
-    /*
-    it('should get', async () => {
-      mutator.packages.GET.mockReturnValue(Promise.resolve(resources));
-
-      await act(async () => {
-        renderSearchModal(props);
-      });
-
-      expect(mutator.packages.GET).toHaveBeenCalled();
-    });
-
-    it('should handle onSearchTypeChange after click on title button', () => {
-      const { getByTestId } = renderSearchModal(props);
-
-      fireEvent.click(getByTestId('title-search-type-button'));
-
-      expect(mutator.titles.GET).toHaveBeenCalled();
-    });
-    */
   });
 });

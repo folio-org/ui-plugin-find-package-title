@@ -165,15 +165,17 @@ const SearchModal = ({
     ? resources.accessTypes?.records[0]?.data.map(({ attributes }) => ({ value: attributes.name, label: attributes.name }))
     : [];
 
+  const getMappingData = ({ attributes, id, type }) => ({
+    ...attributes,
+    id,
+    type,
+    checked: !!currentSearchConfig.selectedItems.find(item => item.id === id),
+  });
+
   const getFormattedResourcesData = titleRecords => {
     return titleRecords.reduce((allResources, currentTitle) => {
       const titleResources = currentTitle.included;
-      const formattedTitleResources = titleResources.map(({ attributes, id, type }) => ({
-        ...attributes,
-        id,
-        type,
-        checked: !!currentSearchConfig.selectedItems.find(item => item.id === id),
-      }));
+      const formattedTitleResources = titleResources.map(getMappingData);
 
       return [
         ...allResources,
@@ -183,12 +185,7 @@ const SearchModal = ({
   };
 
   const getFormattedPackagesData = records => {
-    return records.map(({ attributes, id, type }) => ({
-      ...attributes,
-      id,
-      type,
-      checked: !!currentSearchConfig.selectedItems.find(item => item.id === id),
-    }));
+    return records.map(getMappingData);
   };
 
   const getFormattedListItems = () => {

@@ -91,17 +91,6 @@ describe('Given SearchResultList', () => {
         expect(getByText('ui-plugin-find-package-title.resultsPane.titlesSelected')).toBeDefined();
         expect(getByText('ui-plugin-find-package-title.resultsPane.totalTitles')).toBeDefined();
       });
-
-      /*
-      it('should show selected item', () => {
-        const { getByText } = renderSearchResultList({
-          items,
-          totalCount,
-        });
-
-        expect(getByText('ui-plugin-find-package-title.resultsPane.status.selected')).toBeDefined();
-      });
-      */
     });
   });
 
@@ -161,6 +150,23 @@ describe('Given SearchResultList', () => {
           });
 
           fireEvent.click(getByTestId('checkbox-column'));
+
+          expect(onRecordChosen).toHaveBeenCalled();
+        });
+      });
+
+      describe('when click on table row', () => {
+        it('should handle onRecordChosen', () => {
+          const onRecordChosen = jest.fn();
+          const { getByText } = renderSearchResultList({
+            items,
+            isMultiSelect,
+            onRecordChosen,
+            searchType,
+            totalCount,
+          });
+
+          fireEvent.click(getByText('row button'));
 
           expect(onRecordChosen).toHaveBeenCalled();
         });

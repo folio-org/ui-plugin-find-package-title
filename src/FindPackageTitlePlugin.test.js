@@ -12,7 +12,7 @@ jest.mock('./components', () => ({
   SearchModal: jest.fn(() => <span>SearchModal</span>),
 }));
 
-const renderFindPackageTitlePlugin = renderCustomTrigger => render(
+const renderFindPackageTitlePlugin = (renderCustomTrigger) => render(
   <FindPackageTitlePlugin
     isMultiSelect={false}
     onRecordChosen={noop}

@@ -70,19 +70,5 @@ jest.mock('@folio/stripes/core', () => {
 
       return <Component {...rest} mutator={fakeMutator} resources={fakeResources} stripes={fakeStripes} />;
     },
-
-    useStripes: () => STRIPES,
-
-    withStripes: Component => ({ stripes, ...rest }) => {
-      const fakeStripes = stripes || STRIPES;
-
-      return <Component {...rest} stripes={fakeStripes} />;
-    },
-
-    // eslint-disable-next-line react/prop-types
-    Pluggable: props => <>{props.children}</>,
-
-    // eslint-disable-next-line react/prop-types
-    IfPermission: props => <>{props.children}</>,
   };
 }, { virtual: true });

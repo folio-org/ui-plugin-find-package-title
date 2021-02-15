@@ -9,6 +9,7 @@ jest.mock('@folio/stripes/components', () => ({
     totalCount,
     contentData,
     formatter,
+    onRowClick,
   }) => {
     if (isEmptyMessage && !totalCount) {
       return isEmptyMessage;
@@ -20,6 +21,17 @@ jest.mock('@folio/stripes/components', () => ({
 
     const tableBody = contentData.map((item, i) => (
       <tr key={i}>
+        {onRowClick ? (
+          <td>
+            <button
+              type="button"
+              onClick={onRowClick}
+            >
+
+              row button
+            </button>
+          </td>
+        ) : null}
         {visibleColumns.map((columnName, index) => (
           <td key={index}>
             {formatter[columnName] ? formatter[columnName](item) : item[columnName]}

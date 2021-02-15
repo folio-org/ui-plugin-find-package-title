@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import NoResultsMessage from './NoResultsMessage';
 
-const renderNoResultMessage = children => render(
+const renderNoResultMessage = (children) => render(
   <NoResultsMessage>
     {children}
   </NoResultsMessage>

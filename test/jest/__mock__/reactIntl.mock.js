@@ -7,20 +7,7 @@ jest.mock('react-intl', () => {
 
   return {
     ...jest.requireActual('react-intl'),
-    FormattedMessage: jest.fn(({ id, children }) => {
-      if (children) {
-        return children(id);
-      }
-
-      return id;
-    }),
-    FormattedTime: jest.fn(({ value, children }) => {
-      if (children) {
-        return children([value]);
-      }
-
-      return value;
-    }),
+    FormattedMessage: jest.fn(({ id, children }) => (children ? children(id) : id)),
     useIntl: () => intl,
     injectIntl: (Component) => (props) => <Component {...props} intl={intl} />,
   };

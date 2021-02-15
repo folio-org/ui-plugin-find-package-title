@@ -23,7 +23,7 @@ module.exports = {
     'ky': 'ky/umd',
   },
   testMatch: ['**/(lib|src)/**/?(*.)test.{js,jsx}'],
-  testPathIgnorePatterns: ['/node_modules/', '/test/bigtest/'],
+  testPathIgnorePatterns: ['/node_modules/'],
   setupFiles: [path.join(__dirname, './test/jest/setup-tests.js')],
   setupFilesAfterEnv: [path.join(__dirname, './test/jest/jest.setup.js')],
 };

@@ -7,7 +7,7 @@ import {
 
 import CheckboxColumn from './CheckboxColumn';
 
-const renderCheckboxColumn = onChange => render(
+const renderCheckboxColumn = (onChange) => render(
   <CheckboxColumn
     value="test"
     onChange={onChange}
