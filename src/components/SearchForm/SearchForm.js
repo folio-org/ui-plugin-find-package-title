@@ -163,7 +163,7 @@ const SearchForm = ({
     onSubmit();
   };
 
-  const searchFieldLabel = intl.formatMessage({ id: 'ui-plugin-find-package-title.searchableEntity.package' });
+  const searchFieldLabel = intl.formatMessage({ id: `ui-plugin-find-package-title.searchableEntity.${searchType}` });
 
   return (
     <>

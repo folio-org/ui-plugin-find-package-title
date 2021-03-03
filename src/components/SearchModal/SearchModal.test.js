@@ -238,7 +238,7 @@ describe('Given SearchModal', () => {
 
           fireEvent.click(getByTestId('title-search-type-button'));
 
-          const searchField = getByPlaceholderText('ui-plugin-find-package-title.searchableEntity.package');
+          const searchField = getByPlaceholderText('ui-plugin-find-package-title.searchableEntity.title');
 
           fireEvent.change(searchField, { target: { value: 'a' } });
           fireEvent.click(getByTestId('reset-button'));
@@ -256,7 +256,7 @@ describe('Given SearchModal', () => {
 
           fireEvent.click(getByTestId('title-search-type-button'));
 
-          const searchField = getByPlaceholderText('ui-plugin-find-package-title.searchableEntity.package');
+          const searchField = getByPlaceholderText('ui-plugin-find-package-title.searchableEntity.title');
 
           fireEvent.change(searchField, { target: { value: 'a' } });
           fireEvent.click(getByTestId('find-package-title-search-button'));

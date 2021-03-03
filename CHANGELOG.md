@@ -5,6 +5,7 @@
 * Update to stripes v6. Refs UIPFPAT-10.
 * Update to stripes-cli v2.
 * UI tests replacement with RTL/Jest. FAT-69.
+* Fixed searh field's placeholder text. Refs UIPFPAT-30.
 
 ## [2.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v2.0.0) (2020-10-14)
 
