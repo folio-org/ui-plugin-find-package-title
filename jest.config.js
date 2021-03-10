@@ -10,7 +10,7 @@ module.exports = {
     '!**/node_modules/**',
     '!**/test/**',
   ],
-  coverageDirectory: './artifacts/coverage/',
+  coverageDirectory: './artifacts/coverage-jest/',
   coverageReporters: ['lcov'],
   reporters: ['jest-junit', 'default'],
   transform: {
