@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   isEqual,
   omit,
+  uniqBy,
 } from 'lodash';
 import queryString from 'qs';
 
@@ -195,7 +196,7 @@ const SearchModal = ({
 
     const { records } = resourcesToBeDisplayed;
 
-    const jointRecords = records.reduce((acc, rec) => [...acc, ...rec.data], []);
+    const jointRecords = uniqBy(records.reduce((acc, rec) => [...acc, ...rec.data], []), 'id');
 
     if (isPackageSearch) {
       return getFormattedPackagesData(jointRecords);
