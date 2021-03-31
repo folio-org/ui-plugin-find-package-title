@@ -202,7 +202,7 @@ const SearchForm = ({
           onClick={onResetAll}
         />
         {tagsExist && renderTagsFilter()}
-        {searchType === searchTypes.PACKAGE && accessTypesExist && renderAccessTypesFilter()}
+        {accessTypesExist && renderAccessTypesFilter()}
         <SearchFilters
           activeFilters={searchFilters}
           availableFilters={searchFiltersConfig[searchType]}
