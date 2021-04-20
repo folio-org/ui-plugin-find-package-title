@@ -2,6 +2,7 @@
 
 * Fix Titles: Search by Tag does not display results. Refs UIPFPAT-14.
 * Fix Titles: Search by Access status type does not display results. Refs UIPFPAT-15.
+* Compile translation files into AST format. Refs UIPFPAT-32. 
 
 ## [3.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v3.0.0) (2021-03-10)
 
