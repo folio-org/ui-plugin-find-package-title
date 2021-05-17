@@ -1,5 +1,5 @@
 {
-    "meta.title": "Package and title finder (plugin)",
+    "meta.title": "Recherche de bouquets et de titres (plugin)",
     "defaultTriggerLabel": "Ajouter un bouquet / une ressource",
     "searchableEntity.package": "Bouquets",
     "searchableEntity.title": "Titres",
@@ -37,7 +37,7 @@
     "resultsPane.titlesSelected": "Titres sélectionnés",
     "resultsPane.totalTitles": "Total des titres",
     "resultsPane.totalSelected.count": "Titres sélectionnés: {count}",
-    "modal.label.package": "Sélectionnez le bouquet",
+    "modal.label.package": "Sélectionner un bouquet",
     "modal.label.title": "Sélectionnez le titre",
     "searchPane.selectFieldToSearch": "Sélectionnez un champ à rechercher",
     "searchPane.titleSearchField.title": "Titre",
