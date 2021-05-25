@@ -30,7 +30,7 @@
     "resultsPane.resultsCount.loading": "読み込み中...",
     "resultsPane.emptyMessage": "Enter a query to show search results.",
     "resultsPane.noPackagesFound": "No packages found.",
-    "resultsPane.status": "Status",
+    "resultsPane.status": "ステータス",
     "resultsPane.status.selected": "選択済み",
     "resultsPane.status.notSelected": "未選択",
     "resultsPane.name": "Name",
