@@ -1,4 +1,4 @@
-## [3.1.0] (IN PROGRESS)
+## [3.1.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v3.0.0) (2021-06-04)
 
 * Fix Titles: Search by Tag does not display results. Refs UIPFPAT-14.
 * Fix Titles: Search by Access status type does not display results. Refs UIPFPAT-15.
