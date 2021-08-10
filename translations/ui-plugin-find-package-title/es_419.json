@@ -59,7 +59,7 @@
     "searchPane.filters.publicationType.streamingVideo": "Streaming video",
     "searchPane.filters.publicationType.thesisAndDissertation": "Thesis & Dissertation",
     "searchPane.filters.publicationType.website": "Website",
-    "searchPane.filters.publicationType.unspecified": "Unspecified",
+    "searchPane.filters.publicationType.unspecified": "Sin especificar",
     "searchPane.filters.sortOptions.title": "Title",
     "resultsPane.noTitlesFound": "No titles found.",
     "resultsPane.title": "Title",
