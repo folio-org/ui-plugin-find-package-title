@@ -63,7 +63,7 @@
     "searchPane.filters.sortOptions.title": "Titel",
     "resultsPane.noTitlesFound": "Keine Titel gefunden",
     "resultsPane.title": "Titel",
-    "resultsPane.publisher": "Publisher",
+    "resultsPane.publisher": "Verlag",
     "resultsPane.packageName": "Paket",
     "resultsPane.publicationType": "Typ",
     "searchTypes.package": "Pakete",
