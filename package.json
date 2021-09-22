@@ -38,9 +38,9 @@
     "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-react": "^7.10.4",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^6.0.0",
+    "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.0.0",
-    "@folio/stripes-core": "^7.0.0",
+    "@folio/stripes-core": "^8.0.0",
     "@formatjs/cli": "^4.2.7",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
@@ -53,8 +53,8 @@
     "inflected": "^2.0.4",
     "jest": "^26.4.2",
     "jest-junit": "^12.0.0",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-intl": "^5.8.0",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.3"
@@ -67,8 +67,9 @@
     "react-final-form": "^6.3.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^6.0.0",
-    "react": "*",
+    "@folio/stripes": "^7.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-intl": "^5.8.0",
     "react-router-dom": "^5.2.0"
   }
