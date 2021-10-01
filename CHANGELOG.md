@@ -1,8 +1,8 @@
-## [4.0.0] (IN PROGRESS)
+## [4.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v4.0.0) (2021-10-01)
 
 * Increment stripes to v7 and react v17. Refs UIPFPAT-36.
 
-## [3.1.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v3.0.0) (2021-06-04)
+## [3.1.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v3.1.0) (2021-06-04)
 
 * Fix Titles: Search by Tag does not display results. Refs UIPFPAT-14.
 * Fix Titles: Search by Access status type does not display results. Refs UIPFPAT-15.
