@@ -26,7 +26,7 @@
     "searchPane.filters.contentType.print": "인쇄",
     "searchPane.filters.contentType.onlineRef": "온라인 참고자료",
     "searchPane.filters.contentType.unknown": "알 수 없음",
-    "resultsPane.resultsCount": "{합계 결과, 번호} {totalResults, 복수, 하나의 {결과 발견} 다른 {결과 발견}}",
+    "resultsPane.resultsCount": "{totalResults, number} {totalResults, plural, one {결과 발견} other {결과 발견}}",
     "resultsPane.resultsCount.loading": "로드 중 ...",
     "resultsPane.emptyMessage": "검색 결과를 표시하려면 쿼리를 입력하세요",
     "resultsPane.noPackagesFound": "패키지가 없습니다.",
