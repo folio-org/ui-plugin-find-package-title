@@ -27,7 +27,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
-    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-plugin-find-package-title ./translations/ui-plugin-find-package-title/compiled"
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-plugin-find-package-title ./translations/ui-plugin-find-package-title/compiled",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json"
   },
   "okapiInterfaces": {
     "eholdings": "2.0"
