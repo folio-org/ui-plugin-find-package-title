@@ -1,3 +1,7 @@
+## In progress
+
+* ui-plugin-find-package-title: Configure GitHub actions. Refs UIPFPAT-39.
+
 ## [4.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v4.0.0) (2021-10-01)
 
 * Increment stripes to v7 and react v17. Refs UIPFPAT-36.
@@ -6,7 +10,7 @@
 
 * Fix Titles: Search by Tag does not display results. Refs UIPFPAT-14.
 * Fix Titles: Search by Access status type does not display results. Refs UIPFPAT-15.
-* Compile translation files into AST format. Refs UIPFPAT-32. 
+* Compile translation files into AST format. Refs UIPFPAT-32.
 * Updated @folio/eslint-config-stripes dependency to 5.2.0. Refs UIPFPAT-33.
 * Remove `react` imports. Refs UIPFPAT-35.
 
