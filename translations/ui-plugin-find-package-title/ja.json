@@ -1,7 +1,7 @@
 {
     "meta.title": "Package and title finder (plugin)",
     "defaultTriggerLabel": "Add a package/resource",
-    "searchableEntity.package": "Packages",
+    "searchableEntity.package": "パッケージ",
     "searchableEntity.title": "タイトル",
     "searchPane.label": "Search & filter",
     "searchPane.searchButton.label": "検索",
@@ -11,7 +11,7 @@
     "searchPane.filters.accessTypes": "アクセスステータスタイプ",
     "searchPane.filters.accessTypes.accessTypesOnly": "アクセスステータスタイプのみで検索",
     "searchPane.filters.sortOptions.label": "Sort options",
-    "searchPane.filters.sortOptions.package": "Package",
+    "searchPane.filters.sortOptions.package": "パッケージ",
     "searchPane.filters.sortOptions.relevance": "Relevance",
     "searchPane.filters.selectionStatus": "Selection status",
     "searchPane.filters.selectionStatus.all": "全部",
@@ -29,7 +29,7 @@
     "resultsPane.resultsCount": "{totalResults, number} {totalResults, plural, one {件の結果が見つかりました} other {件の結果が見つかりました}}",
     "resultsPane.resultsCount.loading": "読み込み中...",
     "resultsPane.emptyMessage": "Enter a query to show search results.",
-    "resultsPane.noPackagesFound": "No packages found.",
+    "resultsPane.noPackagesFound": "パッケージが見つかりませんでした。",
     "resultsPane.status": "ステータス",
     "resultsPane.status.selected": "選択済み",
     "resultsPane.status.notSelected": "未選択",
@@ -64,8 +64,8 @@
     "resultsPane.noTitlesFound": "タイトルが見つかりません。",
     "resultsPane.title": "タイトル",
     "resultsPane.publisher": "Publisher",
-    "resultsPane.packageName": "Package",
+    "resultsPane.packageName": "パッケージ",
     "resultsPane.publicationType": "Type",
-    "searchTypes.package": "Packages",
+    "searchTypes.package": "パッケージ",
     "searchTypes.title": "タイトル"
 }
