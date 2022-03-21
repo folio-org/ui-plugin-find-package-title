@@ -44,8 +44,10 @@ const contentTypeFilterConfig = {
     { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.abstract" />, value: 'abstractandindex' },
     { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.ebook" />, value: 'ebook' },
     { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.ejournal" />, value: 'ejournal' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.print" />, value: 'print' },
+    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.mixedContent" />, value: 'mixedcontent' },
     { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.onlineRef" />, value: 'onlinereference' },
+    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.print" />, value: 'print' },
+    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.streamingMedia" />, value: 'streamingmedia' },
     { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.unknown" />, value: 'unknown' }
   ]
 };
