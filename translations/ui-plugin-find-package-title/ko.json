@@ -67,5 +67,7 @@
     "resultsPane.packageName": "패키지",
     "resultsPane.publicationType": "유형",
     "searchTypes.package": "패키지",
-    "searchTypes.title": "타이틀"
+    "searchTypes.title": "타이틀",
+    "searchPane.filters.contentType.mixedContent": "Mixed Content",
+    "searchPane.filters.contentType.streamingMedia": "Streaming Media"
 }

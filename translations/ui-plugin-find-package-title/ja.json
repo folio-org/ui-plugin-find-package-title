@@ -67,5 +67,7 @@
     "resultsPane.packageName": "パッケージ",
     "resultsPane.publicationType": "Type",
     "searchTypes.package": "パッケージ",
-    "searchTypes.title": "タイトル"
+    "searchTypes.title": "タイトル",
+    "searchPane.filters.contentType.mixedContent": "Mixed Content",
+    "searchPane.filters.contentType.streamingMedia": "Streaming Media"
 }

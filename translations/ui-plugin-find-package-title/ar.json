@@ -67,5 +67,7 @@
     "resultsPane.packageName": "حزمة",
     "resultsPane.publicationType": "النوع",
     "searchTypes.package": "حزم",
-    "searchTypes.title": "العناوين"
+    "searchTypes.title": "العناوين",
+    "searchPane.filters.contentType.mixedContent": "محتوى مختلط",
+    "searchPane.filters.contentType.streamingMedia": "الوسائط التي تبث عبر الإنترنت"
 }
