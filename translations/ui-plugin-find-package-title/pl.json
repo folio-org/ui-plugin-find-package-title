@@ -67,5 +67,7 @@
     "resultsPane.packageName": "Pakiet",
     "resultsPane.publicationType": "Rodzaj",
     "searchTypes.package": "Pakiety",
-    "searchTypes.title": "Tytuły"
+    "searchTypes.title": "Tytuły",
+    "searchPane.filters.contentType.mixedContent": "Mixed Content",
+    "searchPane.filters.contentType.streamingMedia": "Streaming Media"
 }
