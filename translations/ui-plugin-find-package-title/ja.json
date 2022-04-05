@@ -24,7 +24,7 @@
     "searchPane.filters.contentType.ebook": "電子書籍",
     "searchPane.filters.contentType.ejournal": "電子ジャーナル",
     "searchPane.filters.contentType.print": "Print",
-    "searchPane.filters.contentType.onlineRef": "オンラインリファレンス",
+    "searchPane.filters.contentType.onlineRef": "オンラインレファレンス",
     "searchPane.filters.contentType.unknown": "不明",
     "resultsPane.resultsCount": "{totalResults, number} {totalResults, plural, one {件の結果が見つかりました} other {件の結果が見つかりました}}",
     "resultsPane.resultsCount.loading": "読み込み中...",
