@@ -117,6 +117,7 @@ const SearchModal = ({
   const getInitialSearchConfig = currentSearchType => {
     const searchConfig = {
       selectedItems: [],
+      currentPage: 0,
       lastFetchedPage: 0,
       searchQuery: '',
       searchFilters: getInitialFiltersState(currentSearchType),
@@ -199,13 +200,14 @@ const SearchModal = ({
 
     const { records } = resourcesToBeDisplayed;
 
-    const jointRecords = uniqBy(records.reduce((acc, rec) => [...acc, ...rec.data], []), 'id');
+    // const jointRecords = uniqBy(records.reduce((acc, rec) => [...acc, ...rec.data], []), 'id');
+    const currentRecords = uniqBy(records[currentSearchConfig.currentPage]?.data, 'id');
 
     if (isPackageSearch) {
-      return getFormattedPackagesData(jointRecords);
+      return getFormattedPackagesData(currentRecords);
     }
 
-    return getFormattedResourcesData(jointRecords);
+    return getFormattedResourcesData(currentRecords);
   };
 
   const getTotalResults = () => {
@@ -213,10 +215,11 @@ const SearchModal = ({
       return null;
     }
 
-    // need to pass undefined to MCL for titles. In null - then infinite scroll won't work
-    if (!isPackageSearch) {
-      return undefined;
-    }
+    // next lines are commented, to make pagination work for titles
+    // // need to pass undefined to MCL for titles. In null - then infinite scroll won't work
+    // if (!isPackageSearch) {
+    //   return undefined;
+    // }
 
     const records = resourcesToBeDisplayed.records;
 
@@ -224,6 +227,8 @@ const SearchModal = ({
   };
 
   const formattedResults = getFormattedListItems();
+  const paginatedResults = new Array(currentSearchConfig.currentPage * 25);
+  paginatedResults.push(...formattedResults);
   const totalResults = getTotalResults();
 
   const fetchItems = async ({
@@ -296,24 +301,30 @@ const SearchModal = ({
     }
   };
 
-  const fetchNextPage = () => {
+  const fetchNextPage = (...args) => {
+    const [askAmount, , , offset] = args;
+    const pagesAmount = resourcesToBeDisplayed.records.length;
     const {
       lastFetchedPage,
       searchQuery,
       searchFilters,
     } = currentSearchConfig;
 
-    const pageToFetch = lastFetchedPage + 1;
+    let pageToFetch = lastFetchedPage;
 
-    fetchItems({
-      searchQuery,
-      searchFilters,
-      page: pageToFetch
-    });
+    if (totalResults > pagesAmount * askAmount) {
+      pageToFetch++;
+      fetchItems({
+        searchQuery,
+        searchFilters,
+        page: pageToFetch
+      });
+    }
 
     changeCurrentSearchConfig(prev => ({
       ...prev,
       lastFetchedPage: pageToFetch,
+      currentPage: offset === 'next' ? prev.currentPage + 1 : prev.currentPage - 1,
     }));
   };
 
@@ -342,6 +353,7 @@ const SearchModal = ({
 
       changeCurrentSearchConfig(prev => ({
         ...prev,
+        currentPage: 0,
         lastFetchedPage: 1,
       }));
 
@@ -379,6 +391,7 @@ const SearchModal = ({
 
     changeCurrentSearchConfig(prev => ({
       ...prev,
+      currentPage: 0,
       lastFetchedPage: 1,
     }));
 
@@ -404,6 +417,7 @@ const SearchModal = ({
 
     changeCurrentSearchConfig(prev => ({
       ...prev,
+      currentPage: 0,
       lastFetchedPage: 1,
       searchQuery: '',
       searchByTagsEnabled: false,
@@ -576,7 +590,7 @@ const SearchModal = ({
             ? (
               <SearchResultsList
                 onRecordChosen={handleRecordClick}
-                items={formattedResults}
+                items={paginatedResults}
                 totalCount={totalResults}
                 onNeedMoreData={fetchNextPage}
                 hasLoaded={hasLoaded}

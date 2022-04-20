@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -43,6 +44,13 @@ const SearchResultsList = ({
   searchType,
 }) => {
   const intl = useIntl();
+  const [, setItemsAreLoaded] = useState(false);
+
+  useEffect(() => {
+    // MCL resets the actual height of the modal-content
+    const timerId = setTimeout(() => setItemsAreLoaded(!!items.length));
+    return () => clearTimeout(timerId);
+  }, [items]);
 
   const currentSearchType = searchType === searchTypes.PACKAGE;
   const messageForLoadedData = currentSearchType
@@ -134,8 +142,8 @@ const SearchResultsList = ({
       isEmptyMessage={emptyMessage}
       totalCount={totalCount}
       onNeedMoreData={onNeedMoreData}
+      pagingType="prev-next"
       onRowClick={(_e, item) => { onRecordChosen(item); }}
-      virtualize
       autosize
       pageAmount={25}
     />
