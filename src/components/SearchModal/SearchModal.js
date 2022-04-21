@@ -200,7 +200,6 @@ const SearchModal = ({
 
     const { records } = resourcesToBeDisplayed;
 
-    // const jointRecords = uniqBy(records.reduce((acc, rec) => [...acc, ...rec.data], []), 'id');
     const currentRecords = uniqBy(records[currentSearchConfig.currentPage]?.data, 'id');
 
     if (isPackageSearch) {
@@ -391,8 +390,8 @@ const SearchModal = ({
 
     changeCurrentSearchConfig(prev => ({
       ...prev,
-      currentPage: 0,
       lastFetchedPage: 1,
+      currentPage: 0,
     }));
 
     fetchItems({
