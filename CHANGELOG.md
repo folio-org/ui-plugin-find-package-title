@@ -2,6 +2,7 @@
 
 * ui-plugin-find-package-title: Configure GitHub actions. Refs UIPFPAT-39.
 * Include additional package content types in several responses. Refs UIPFPAT-42.
+* Apply prev/next pagination to Packages and Titles results. Refs UIPFPAT-41
 
 ## [4.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v4.0.0) (2021-10-01)
 
