@@ -143,6 +143,7 @@ const SearchResultsList = ({
       totalCount={totalCount}
       onNeedMoreData={onNeedMoreData}
       pagingType="prev-next"
+      hidePageIndices
       onRowClick={(_e, item) => { onRecordChosen(item); }}
       autosize
       pageAmount={25}
