@@ -4,6 +4,7 @@
 * Include additional package content types in several responses. Refs UIPFPAT-42.
 * Apply prev/next pagination to Packages and Titles results. Refs UIPFPAT-41.
 * Replace `babel-eslint` with `@babel/eslint-parser`. Refs UIPFPAT-43.
+* Refactor the `SearchModal` component. Refs UIPFPAT-27.
 
 ## [4.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v4.0.0) (2021-10-01)
 
