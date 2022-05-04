@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   isEqual,
   omit,
+  pickBy,
   uniqBy,
 } from 'lodash';
 import queryString from 'qs';
@@ -101,6 +102,8 @@ const propTypes = {
   }).isRequired,
 };
 
+const PAGE_SIZE = 25;
+
 const SearchModal = ({
   open,
   onRecordChosen,
@@ -109,10 +112,12 @@ const SearchModal = ({
   resources,
   isMultiSelect,
 }) => {
-  const getInitialFiltersState = currentSearchType => searchFiltersConfig[currentSearchType].reduce((filtersState, filter) => ({
-    ...filtersState,
-    [filter.name]: filter.defaultValue,
-  }), {});
+  const getInitialFiltersState = currentSearchType => {
+    return searchFiltersConfig[currentSearchType].reduce((filtersState, filter) => ({
+      ...filtersState,
+      [filter.name]: filter.defaultValue,
+    }), {});
+  };
 
   const getInitialSearchConfig = currentSearchType => {
     const searchConfig = {
@@ -136,6 +141,7 @@ const SearchModal = ({
   const [packageSearchConfig, setPackageSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.PACKAGE));
   const [titlesSearchConfig, setTitleSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.TITLE));
   const isPackageSearch = searchType === searchTypes.PACKAGE;
+  const okapiResource = isPackageSearch ? 'packages' : 'titles';
 
   const changeCurrentSearchConfig = updater => {
     if (isPackageSearch) {
@@ -149,9 +155,7 @@ const SearchModal = ({
     ? packageSearchConfig
     : titlesSearchConfig;
 
-  const resourcesToBeDisplayed = isPackageSearch
-    ? resources?.packages
-    : resources?.titles;
+  const resourcesToBeDisplayed = resources?.[okapiResource];
 
   const hasLoaded = !!resourcesToBeDisplayed?.hasLoaded;
   const fetchIsPending = !hasLoaded && resourcesToBeDisplayed?.isPending;
@@ -214,21 +218,55 @@ const SearchModal = ({
       return null;
     }
 
-    // next lines are commented, to make pagination work for titles
-    // // need to pass undefined to MCL for titles. In null - then infinite scroll won't work
-    // if (!isPackageSearch) {
-    //   return undefined;
-    // }
-
     const records = resourcesToBeDisplayed.records;
 
     return records[records.length - 1].meta.totalResults;
   };
 
   const formattedResults = getFormattedListItems();
-  const paginatedResults = new Array(currentSearchConfig.currentPage * 25);
+  const paginatedResults = new Array(currentSearchConfig.currentPage * PAGE_SIZE);
   paginatedResults.push(...formattedResults);
   const totalResults = getTotalResults();
+
+  const determineFiltersKeyword = (filters) => {
+    if (currentSearchConfig.searchByTagsEnabled && filters.tags?.length) {
+      return 'tags';
+    } else if (currentSearchConfig.searchAccessTypesEnabled && filters.accessTypes?.length) {
+      return 'accessTypes';
+    }
+
+    return 'otherFilters';
+  };
+
+  const getParams = ({
+    otherFilters,
+    sort,
+    query,
+  }) => {
+    const formattedFilters = pickBy(otherFilters, (_, filterName) => otherFilters[filterName] !== 'all');
+
+    const params = {
+      filter: formattedFilters,
+      ...(sort === 'name' && { sort }),
+    };
+
+    if (!isPackageSearch) {
+      const currentSearchField = currentSearchConfig.searchField === titleSearchFields.TITLE
+        ? 'name'
+        : currentSearchConfig.searchField;
+
+      const searchFilterName = currentSearchField === titleSearchFields.TITLE
+        ? 'name'
+        : currentSearchField;
+
+      params.searchfield = currentSearchField;
+      params[`filter[${searchFilterName}]`] = query;
+    } else {
+      params.q = query;
+    }
+
+    return params;
+  };
 
   const fetchItems = async ({
     searchQuery: query,
@@ -242,62 +280,26 @@ const SearchModal = ({
       ...otherFilters
     } = filters;
 
-    const params = {
-      filter: {},
+    const paramsMap = {
+      tags: () => ({ filter: { tags } }),
+      accessTypes: () => ({ filter: { 'access-type': accessTypes } }),
+      otherFilters: () => getParams({
+        otherFilters,
+        sort,
+        query,
+      }),
     };
 
-    if (currentSearchConfig.searchByTagsEnabled && tags?.length) {
-      params.filter.tags = tags;
-    } else if (currentSearchConfig.searchAccessTypesEnabled && accessTypes?.length) {
-      params.filter['access-type'] = accessTypes;
-    } else {
-      const formattedFilters = Object.keys(otherFilters).reduce((acc, filterName) => {
-        return otherFilters[filterName] !== 'all'
-          ? {
-            ...acc,
-            [filterName]: otherFilters[filterName],
-          }
-          : { ...acc };
-      }, {});
-
-      params.filter = {
-        ...params.filter,
-        ...formattedFilters,
-      };
-
-      if (sort === 'name') {
-        params.sort = sort;
-      }
-
-      if (!isPackageSearch) {
-        const currentSearchField = currentSearchConfig.searchField === titleSearchFields.TITLE
-          ? 'name'
-          : currentSearchConfig.searchField;
-
-        const searchFilterName = currentSearchField === titleSearchFields.TITLE
-          ? 'name'
-          : currentSearchField;
-
-        params.searchfield = currentSearchField;
-        params[`filter[${searchFilterName}]`] = query;
-      } else {
-        params.q = query;
-      }
-    }
-
-    params.include = 'resources';
-
-    if (page) {
-      params.page = page;
-    }
+    const keyword = determineFiltersKeyword(filters);
+    const params = {
+      ...paramsMap[keyword](),
+      ...(page && { page }),
+      include: 'resources',
+    };
 
     const queryParams = qs.stringify(params);
 
-    if (isPackageSearch) {
-      mutator.packages.GET({ path: `eholdings/packages?${queryParams}` });
-    } else {
-      mutator.titles.GET({ path: `eholdings/titles?${queryParams}` });
-    }
+    mutator[okapiResource].GET({ path: `eholdings/${okapiResource}?${queryParams}` });
   };
 
   const fetchNextPage = (...args) => {
@@ -334,21 +336,22 @@ const SearchModal = ({
       searchAccessTypesEnabled,
       searchQuery,
     } = currentSearchConfig;
-    const { tags, accessTypes, ...otherFilters } = searchFilters;
+    const {
+      tags,
+      accessTypes,
+      ...otherFilters
+    } = searchFilters;
 
     const shouldPerformSearchByTags = searchByTagsEnabled && tags?.length;
     const shouldPerformSearchByAccessTypes = searchAccessTypesEnabled && accessTypes?.length;
     const shouldPerformRegularSearch =
       !searchByTagsEnabled
       && !searchAccessTypesEnabled
-      && Object.keys(otherFilters).length && searchQuery;
+      && Object.keys(otherFilters).length
+      && searchQuery;
 
     if (shouldPerformSearchByTags || shouldPerformRegularSearch || shouldPerformSearchByAccessTypes) {
-      if (isPackageSearch) {
-        mutator.packages.reset();
-      } else {
-        mutator.titles.reset();
-      }
+      mutator[okapiResource].reset();
 
       changeCurrentSearchConfig(prev => ({
         ...prev,
@@ -382,11 +385,7 @@ const SearchModal = ({
   };
 
   const handleSearchFormSubmit = () => {
-    if (isPackageSearch) {
-      mutator.packages.reset();
-    } else {
-      mutator.titles.reset();
-    }
+    mutator[okapiResource].reset();
 
     changeCurrentSearchConfig(prev => ({
       ...prev,
@@ -408,11 +407,7 @@ const SearchModal = ({
   };
 
   const resetSearch = () => {
-    if (isPackageSearch) {
-      mutator.packages.reset();
-    } else {
-      mutator.titles.reset();
-    }
+    mutator[okapiResource].reset();
 
     changeCurrentSearchConfig(prev => ({
       ...prev,
@@ -612,7 +607,7 @@ SearchModal.manifest = {
     path: 'eholdings/packages',
     type: 'okapi',
     headers: {
-      'accept': 'application/vnd.api+json'
+      'accept': 'application/vnd.api+json',
     },
     fetch: false,
     accumulate: true,
@@ -621,7 +616,7 @@ SearchModal.manifest = {
     path: 'eholdings/titles',
     type: 'okapi',
     headers: {
-      'accept': 'application/vnd.api+json'
+      'accept': 'application/vnd.api+json',
     },
     fetch: false,
     accumulate: true,
@@ -636,8 +631,8 @@ SearchModal.manifest = {
     type: 'okapi',
     fetch: true,
     headers: {
-      'accept': 'application/vnd.api+json'
-    }
+      'accept': 'application/vnd.api+json',
+    },
   },
 };
 
