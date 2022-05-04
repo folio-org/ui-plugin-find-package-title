@@ -68,6 +68,6 @@
     "resultsPane.publicationType": "Type",
     "searchTypes.package": "Packages",
     "searchTypes.title": "Titles",
-    "searchPane.filters.contentType.mixedContent": "Mixed Content",
-    "searchPane.filters.contentType.streamingMedia": "Streaming Media"
+    "searchPane.filters.contentType.mixedContent": "Smíšený obsah",
+    "searchPane.filters.contentType.streamingMedia": "Streamovaná média"
 }
