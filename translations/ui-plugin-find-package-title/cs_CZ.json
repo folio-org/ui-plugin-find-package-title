@@ -1,5 +1,5 @@
 {
-    "meta.title": "Package and title finder (plugin)",
+    "meta.title": "Vyhledávač balíčků a titulů (plugin)",
     "defaultTriggerLabel": "Add a package/resource",
     "searchableEntity.package": "Packages",
     "searchableEntity.title": "Titles",
