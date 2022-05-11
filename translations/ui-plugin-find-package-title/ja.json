@@ -9,7 +9,7 @@
     "searchPane.filters.tags": "タグ",
     "searchPane.filters.tags.tagsOnly": "Search by tags only",
     "searchPane.filters.accessTypes": "アクセスステータスタイプ",
-    "searchPane.filters.accessTypes.accessTypesOnly": "アクセスステータスタイプのみで検索",
+    "searchPane.filters.accessTypes.accessTypesOnly": "アクセス・ステータス・タイプのみで検索",
     "searchPane.filters.sortOptions.label": "Sort options",
     "searchPane.filters.sortOptions.package": "パッケージ",
     "searchPane.filters.sortOptions.relevance": "Relevance",
