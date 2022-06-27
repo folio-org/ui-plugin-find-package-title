@@ -27,7 +27,7 @@
     "searchPane.filters.contentType.onlineRef": "Online reference",
     "searchPane.filters.contentType.unknown": "Unknown",
     "resultsPane.resultsCount": "{totalResults, number} {totalResults, plural, one {result found} other {results found}}",
-    "resultsPane.resultsCount.loading": "Loading ...",
+    "resultsPane.resultsCount.loading": "Načítání ...",
     "resultsPane.emptyMessage": "Enter a query to show search results.",
     "resultsPane.noPackagesFound": "No packages found.",
     "resultsPane.status": "Stav",
