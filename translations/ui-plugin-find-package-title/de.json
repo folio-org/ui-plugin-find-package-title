@@ -17,7 +17,7 @@
     "searchPane.filters.selectionStatus.all": "Alles",
     "searchPane.filters.selectionStatus.selected": "Ausgewählt",
     "searchPane.filters.selectionStatus.notSelected": "Nicht ausgewählt",
-    "searchPane.filters.contentType": "Typ des Contents",
+    "searchPane.filters.contentType": "Typ des Inhalts",
     "searchPane.filters.contentType.all": "Alles",
     "searchPane.filters.contentType.aggregated": "Aggregierter Volltext",
     "searchPane.filters.contentType.abstract": "Abstract und Index",
