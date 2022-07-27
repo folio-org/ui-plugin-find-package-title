@@ -1,7 +1,7 @@
 {
     "meta.title": "Vyhledávač balíčků a titulů (plugin)",
-    "defaultTriggerLabel": "Add a package/resource",
-    "searchableEntity.package": "Packages",
+    "defaultTriggerLabel": "Přidání balíčku/zdroje",
+    "searchableEntity.package": "Balíčky",
     "searchableEntity.title": "Titles",
     "searchPane.label": "Search & filter",
     "searchPane.searchButton.label": "Search",
