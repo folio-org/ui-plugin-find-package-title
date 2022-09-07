@@ -7,7 +7,7 @@
     "searchPane.searchButton.label": "搜索",
     "searchPane.resetAll": "全部重置",
     "searchPane.filters.tags": "標籤",
-    "searchPane.filters.tags.tagsOnly": "仅按标签搜索",
+    "searchPane.filters.tags.tagsOnly": "僅使用標籤查詢",
     "searchPane.filters.accessTypes": "访问状态类型",
     "searchPane.filters.accessTypes.accessTypesOnly": "仅按访问状态类型搜索",
     "searchPane.filters.sortOptions.label": "排序选项",
