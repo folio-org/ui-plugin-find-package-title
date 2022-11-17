@@ -68,6 +68,6 @@
     "resultsPane.publicationType": "Tipo",
     "searchTypes.package": "Packages",
     "searchTypes.title": "Titles",
-    "searchPane.filters.contentType.mixedContent": "Mixed Content",
+    "searchPane.filters.contentType.mixedContent": "Contenido mixto",
     "searchPane.filters.contentType.streamingMedia": "Streaming Media"
 }
