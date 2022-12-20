@@ -102,7 +102,8 @@ const propTypes = {
   }).isRequired,
 };
 
-const PAGE_SIZE = 25;
+const PACKAGE_PAGE_SIZE = 25;
+const TITLES_PAGE_SIZE = 100000; // to hide focus after clicking Next or Previous button
 
 const SearchModal = ({
   open,
@@ -223,8 +224,9 @@ const SearchModal = ({
     return records[records.length - 1].meta.totalResults;
   };
 
+  const pageSize = isPackageSearch ? PACKAGE_PAGE_SIZE : TITLES_PAGE_SIZE;
   const formattedResults = getFormattedListItems();
-  const paginatedResults = new Array(currentSearchConfig.currentPage * PAGE_SIZE);
+  const paginatedResults = new Array(currentSearchConfig.currentPage * pageSize);
   paginatedResults.push(...formattedResults);
   const totalResults = getTotalResults();
 
