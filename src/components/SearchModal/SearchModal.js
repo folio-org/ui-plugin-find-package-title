@@ -102,8 +102,7 @@ const propTypes = {
   }).isRequired,
 };
 
-const PACKAGE_PAGE_SIZE = 25;
-const TITLES_PAGE_SIZE = 100000; // to hide focus after clicking Next or Previous button
+const PAGE_SIZE = 25;
 
 const SearchModal = ({
   open,
@@ -129,6 +128,7 @@ const SearchModal = ({
       searchFilters: getInitialFiltersState(currentSearchType),
       searchByTagsEnabled: false,
       searchAccessTypesEnabled: false,
+      offset: '',
     };
 
     if (currentSearchType === searchTypes.TITLE) {
@@ -142,6 +142,7 @@ const SearchModal = ({
   const [packageSearchConfig, setPackageSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.PACKAGE));
   const [titlesSearchConfig, setTitleSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.TITLE));
   const isPackageSearch = searchType === searchTypes.PACKAGE;
+  const isTitleSearch = searchType === searchTypes.TITLE;
   const okapiResource = isPackageSearch ? 'packages' : 'titles';
 
   const changeCurrentSearchConfig = updater => {
@@ -174,6 +175,18 @@ const SearchModal = ({
   const formattedAccessTypes = accessTypesExist
     ? resources.accessTypes?.records[0]?.data.map(({ attributes }) => ({ value: attributes.name, label: attributes.name }))
     : [];
+
+  const getFocusIndex = () => {
+    if (currentSearchConfig.currentPage) {
+      return (currentSearchConfig.currentPage * PAGE_SIZE).toString();
+    }
+
+    if (currentSearchConfig.offset) {
+      return currentSearchConfig.currentPage.toString();
+    }
+
+    return null;
+  };
 
   const getMappingData = ({ attributes, id, type }) => ({
     ...attributes,
@@ -224,9 +237,8 @@ const SearchModal = ({
     return records[records.length - 1].meta.totalResults;
   };
 
-  const pageSize = isPackageSearch ? PACKAGE_PAGE_SIZE : TITLES_PAGE_SIZE;
   const formattedResults = getFormattedListItems();
-  const paginatedResults = new Array(currentSearchConfig.currentPage * pageSize);
+  const paginatedResults = new Array(currentSearchConfig.currentPage * PAGE_SIZE);
   paginatedResults.push(...formattedResults);
   const totalResults = getTotalResults();
 
@@ -328,6 +340,7 @@ const SearchModal = ({
       ...prev,
       lastFetchedPage: pageToFetch,
       currentPage: offset === 'next' ? prev.currentPage + 1 : prev.currentPage - 1,
+      offset,
     }));
   };
 
@@ -419,6 +432,7 @@ const SearchModal = ({
       searchByTagsEnabled: false,
       searchAccessTypesEnabled: false,
       searchFilters: getInitialFiltersState(searchType),
+      offset: '',
     }));
   };
 
@@ -592,6 +606,7 @@ const SearchModal = ({
                 hasLoaded={hasLoaded}
                 isMultiSelect={isMultiSelect}
                 searchType={searchType}
+                focusIndex={isTitleSearch ? getFocusIndex() : null}
               />
             )
             : (

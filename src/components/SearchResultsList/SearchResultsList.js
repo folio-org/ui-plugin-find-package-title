@@ -19,6 +19,7 @@ import {
 } from '../../constants';
 
 const propTypes = {
+  focusIndex: PropTypes.string,
   isMultiSelect: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.shape({
@@ -42,6 +43,7 @@ const SearchResultsList = ({
   hasLoaded,
   isMultiSelect,
   searchType,
+  focusIndex,
 }) => {
   const intl = useIntl();
   const [, setItemsAreLoaded] = useState(false);
@@ -139,6 +141,7 @@ const SearchResultsList = ({
         )
       }}
       contentData={items}
+      focusIndex={focusIndex}
       isEmptyMessage={emptyMessage}
       totalCount={totalCount}
       onNeedMoreData={onNeedMoreData}
