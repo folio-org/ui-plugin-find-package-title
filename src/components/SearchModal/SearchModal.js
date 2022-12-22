@@ -160,7 +160,7 @@ const SearchModal = ({
   const resourcesToBeDisplayed = resources?.[okapiResource];
 
   const hasLoaded = !!resourcesToBeDisplayed?.hasLoaded;
-  const fetchIsPending = !hasLoaded && resourcesToBeDisplayed?.isPending;
+  const fetchIsPending = resourcesToBeDisplayed?.isPending;
 
   const tagsLoaded = !!resources.tags?.hasLoaded;
   const tagsExist = tagsLoaded && !!resources.tags?.records[0]?.tags?.length;
@@ -175,18 +175,6 @@ const SearchModal = ({
   const formattedAccessTypes = accessTypesExist
     ? resources.accessTypes?.records[0]?.data.map(({ attributes }) => ({ value: attributes.name, label: attributes.name }))
     : [];
-
-  const getFocusIndex = () => {
-    if (currentSearchConfig.currentPage) {
-      return (currentSearchConfig.currentPage * PAGE_SIZE).toString();
-    }
-
-    if (currentSearchConfig.offset) {
-      return currentSearchConfig.currentPage.toString();
-    }
-
-    return null;
-  };
 
   const getMappingData = ({ attributes, id, type }) => ({
     ...attributes,
@@ -511,6 +499,26 @@ const SearchModal = ({
     return '';
   };
 
+  const getFocusIndex = () => {
+    if (currentSearchConfig.currentPage) {
+      return (currentSearchConfig.currentPage * PAGE_SIZE).toString();
+    }
+
+    if (currentSearchConfig.offset) {
+      return currentSearchConfig.currentPage.toString();
+    }
+
+    return null;
+  };
+
+  const focusFirstListItem = (listContainer) => {
+    const focusIndex = getFocusIndex();
+
+    if (focusIndex) {
+      listContainer.querySelector(`[data-row-inner="${focusIndex}"]`)?.focus();
+    }
+  };
+
   const renderModalFooter = () => {
     if (!isMultiSelect) {
       return null;
@@ -606,7 +614,11 @@ const SearchModal = ({
                 hasLoaded={hasLoaded}
                 isMultiSelect={isMultiSelect}
                 searchType={searchType}
-                focusIndex={isTitleSearch ? getFocusIndex() : null}
+                containerRef={ref => {
+                  if (ref && isTitleSearch) {
+                    focusFirstListItem(ref);
+                  }
+                }}
               />
             )
             : (

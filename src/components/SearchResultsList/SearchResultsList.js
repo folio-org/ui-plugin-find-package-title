@@ -19,7 +19,7 @@ import {
 } from '../../constants';
 
 const propTypes = {
-  focusIndex: PropTypes.string,
+  containerRef: PropTypes.func,
   isMultiSelect: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.shape({
@@ -43,7 +43,7 @@ const SearchResultsList = ({
   hasLoaded,
   isMultiSelect,
   searchType,
-  focusIndex,
+  containerRef,
 }) => {
   const intl = useIntl();
   const [, setItemsAreLoaded] = useState(false);
@@ -141,7 +141,6 @@ const SearchResultsList = ({
         )
       }}
       contentData={items}
-      focusIndex={focusIndex}
       isEmptyMessage={emptyMessage}
       totalCount={totalCount}
       onNeedMoreData={onNeedMoreData}
@@ -150,6 +149,7 @@ const SearchResultsList = ({
       onRowClick={(_e, item) => { onRecordChosen(item); }}
       autosize
       pageAmount={25}
+      containerRef={containerRef}
     />
   );
 };
