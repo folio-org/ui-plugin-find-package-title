@@ -1,6 +1,7 @@
 ## [4.2.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v4.2.0) (2022-10-24)
 
 * Translations updates
+* eholdings Plug-in | Title Search | Click Previous and Next does not shift focus to the first result. Refs UIPFPAT-47.
 
 ## [4.1.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v4.1.0) (2022-06-20)
 

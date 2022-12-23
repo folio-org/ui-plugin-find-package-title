@@ -19,6 +19,7 @@ import {
 } from '../../constants';
 
 const propTypes = {
+  containerRef: PropTypes.func,
   isMultiSelect: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.shape({
@@ -42,6 +43,7 @@ const SearchResultsList = ({
   hasLoaded,
   isMultiSelect,
   searchType,
+  containerRef,
 }) => {
   const intl = useIntl();
   const [, setItemsAreLoaded] = useState(false);
@@ -147,6 +149,7 @@ const SearchResultsList = ({
       onRowClick={(_e, item) => { onRecordChosen(item); }}
       autosize
       pageAmount={25}
+      containerRef={containerRef}
     />
   );
 };

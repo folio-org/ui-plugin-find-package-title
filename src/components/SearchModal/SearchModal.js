@@ -128,6 +128,7 @@ const SearchModal = ({
       searchFilters: getInitialFiltersState(currentSearchType),
       searchByTagsEnabled: false,
       searchAccessTypesEnabled: false,
+      offset: '',
     };
 
     if (currentSearchType === searchTypes.TITLE) {
@@ -141,6 +142,7 @@ const SearchModal = ({
   const [packageSearchConfig, setPackageSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.PACKAGE));
   const [titlesSearchConfig, setTitleSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.TITLE));
   const isPackageSearch = searchType === searchTypes.PACKAGE;
+  const isTitleSearch = searchType === searchTypes.TITLE;
   const okapiResource = isPackageSearch ? 'packages' : 'titles';
 
   const changeCurrentSearchConfig = updater => {
@@ -158,7 +160,7 @@ const SearchModal = ({
   const resourcesToBeDisplayed = resources?.[okapiResource];
 
   const hasLoaded = !!resourcesToBeDisplayed?.hasLoaded;
-  const fetchIsPending = !hasLoaded && resourcesToBeDisplayed?.isPending;
+  const fetchIsPending = resourcesToBeDisplayed?.isPending;
 
   const tagsLoaded = !!resources.tags?.hasLoaded;
   const tagsExist = tagsLoaded && !!resources.tags?.records[0]?.tags?.length;
@@ -326,6 +328,7 @@ const SearchModal = ({
       ...prev,
       lastFetchedPage: pageToFetch,
       currentPage: offset === 'next' ? prev.currentPage + 1 : prev.currentPage - 1,
+      offset,
     }));
   };
 
@@ -417,6 +420,7 @@ const SearchModal = ({
       searchByTagsEnabled: false,
       searchAccessTypesEnabled: false,
       searchFilters: getInitialFiltersState(searchType),
+      offset: '',
     }));
   };
 
@@ -493,6 +497,26 @@ const SearchModal = ({
     }
 
     return '';
+  };
+
+  const getFocusIndex = () => {
+    if (currentSearchConfig.currentPage) {
+      return (currentSearchConfig.currentPage * PAGE_SIZE).toString();
+    }
+
+    if (currentSearchConfig.offset) {
+      return currentSearchConfig.currentPage.toString();
+    }
+
+    return null;
+  };
+
+  const focusFirstListItem = (listContainer) => {
+    const focusIndex = getFocusIndex();
+
+    if (focusIndex) {
+      listContainer.querySelector(`[data-row-inner="${focusIndex}"]`)?.focus();
+    }
   };
 
   const renderModalFooter = () => {
@@ -590,6 +614,11 @@ const SearchModal = ({
                 hasLoaded={hasLoaded}
                 isMultiSelect={isMultiSelect}
                 searchType={searchType}
+                containerRef={ref => {
+                  if (ref && isTitleSearch) {
+                    focusFirstListItem(ref);
+                  }
+                }}
               />
             )
             : (
