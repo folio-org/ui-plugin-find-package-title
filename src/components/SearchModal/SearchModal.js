@@ -142,7 +142,6 @@ const SearchModal = ({
   const [packageSearchConfig, setPackageSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.PACKAGE));
   const [titlesSearchConfig, setTitleSearchConfig] = useState(() => getInitialSearchConfig(searchTypes.TITLE));
   const isPackageSearch = searchType === searchTypes.PACKAGE;
-  const isTitleSearch = searchType === searchTypes.TITLE;
   const okapiResource = isPackageSearch ? 'packages' : 'titles';
 
   const changeCurrentSearchConfig = updater => {
@@ -367,6 +366,7 @@ const SearchModal = ({
         searchFilters
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentSearchConfig.searchByTagsEnabled,
     currentSearchConfig.searchAccessTypesEnabled,
@@ -615,7 +615,7 @@ const SearchModal = ({
                 isMultiSelect={isMultiSelect}
                 searchType={searchType}
                 containerRef={ref => {
-                  if (ref && isTitleSearch) {
+                  if (ref) {
                     focusFirstListItem(ref);
                   }
                 }}
