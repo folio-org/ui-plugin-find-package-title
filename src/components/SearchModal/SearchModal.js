@@ -366,6 +366,7 @@ const SearchModal = ({
         searchFilters
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentSearchConfig.searchByTagsEnabled,
     currentSearchConfig.searchAccessTypesEnabled,
