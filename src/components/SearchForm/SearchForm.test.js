@@ -6,6 +6,8 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import SearchForm from './SearchForm';
 import {
   searchTypes,
@@ -26,7 +28,7 @@ const renderSearchForm = ({
   searchAccessTypesEnabled = false,
   toggleSearchByAccessTypes = noop,
   searchType = searchTypes.PACKAGE,
-  titleSearchField = titleSearchFields.PACKAGE,
+  titleSearchField = titleSearchFields.TITLE,
   onSearchFiltersChange = noop,
 }) => render(
   <SearchForm
@@ -79,16 +81,48 @@ describe('Given SearchForm', () => {
 
       expect(getByText('SearchFieldSelect')).toBeDefined();
     });
+
+    it('should render with no axe errors', async () => {
+      const {
+        container,
+      } = renderSearchForm({
+        searchType: searchTypes.TITLE,
+        titleSearchField: titleSearchFields.TITLE,
+      });
+
+      await runAxeTest({
+        rootNode: container,
+      });
+    });
   });
 
   describe('when search type is package', () => {
+    it('should render with no axe errors', async () => {
+      const {
+        container,
+      } = renderSearchForm({});
+
+      await runAxeTest({
+        rootNode: container,
+      });
+    });
+
     describe('when tags are exist', () => {
       tagsExist = true;
-
       it('should show tags filter', () => {
         const { getByTestId } = renderSearchForm({ tagsExist });
 
         expect(getByTestId('tags-filter')).toBeDefined();
+      });
+
+      it('should render with no axe errors', async () => {
+        const {
+          container,
+        } = renderSearchForm({ tagsExist });
+
+        await runAxeTest({
+          rootNode: container,
+        });
       });
 
       describe('when click on search by tags checkbox', () => {
@@ -103,6 +137,20 @@ describe('Given SearchForm', () => {
 
           expect(toggleSearchByTags).toHaveBeenCalled();
         });
+
+        it('should render with no axe errors', async () => {
+          const toggleSearchByTags = jest.fn();
+          const { getByTestId, container } = renderSearchForm({
+            tagsExist,
+            toggleSearchByTags,
+          });
+
+          fireEvent.click(getByTestId('toggle-search-by-tags'));
+
+          await runAxeTest({
+            rootNode: container,
+          });
+        });
       });
     });
 
@@ -113,6 +161,14 @@ describe('Given SearchForm', () => {
         const { getByTestId } = renderSearchForm({ accessTypesExist });
 
         expect(getByTestId('access-type-filter')).toBeDefined();
+      });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchForm({ accessTypesExist });
+
+        await runAxeTest({
+          rootNode: container,
+        });
       });
 
       describe('when click on search by access types checkbox', () => {
@@ -126,6 +182,20 @@ describe('Given SearchForm', () => {
           fireEvent.click(getByTestId('toggle-search-by-access-types'));
 
           expect(toggleSearchByAccessTypes).toHaveBeenCalled();
+        });
+
+        it('should render with no axe errors', async () => {
+          const toggleSearchByAccessTypes = jest.fn();
+          const { getByTestId, container } = renderSearchForm({
+            toggleSearchByAccessTypes,
+            accessTypesExist,
+          });
+
+          fireEvent.click(getByTestId('toggle-search-by-access-types'));
+
+          await runAxeTest({
+            rootNode: container,
+          });
         });
       });
     });

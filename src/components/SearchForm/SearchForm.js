@@ -111,6 +111,7 @@ const SearchForm = ({
               accessTypes: values
             })}
             selectedValues={accessTypesFilter}
+            aria-label={intl.formatMessage({ id: 'ui-plugin-find-package-title.searchPane.filters.accessTypes' })}
           />
         </Accordion>
       </div>
@@ -150,6 +151,7 @@ const SearchForm = ({
               tags: values
             })}
             selectedValues={tagFilters}
+            aria-label={intl.formatMessage({ id: 'ui-plugin-find-package-title.searchPane.filters.tags' })}
           />
         </Accordion>
       </div>
@@ -170,7 +172,7 @@ const SearchForm = ({
         currentSearchType={searchType}
         onSearchTypeChange={onSearchTypeChange}
       />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="filters-panel">
         {searchType === searchTypes.TITLE && (
           <SearchFieldSelect
             value={titleSearchField}
