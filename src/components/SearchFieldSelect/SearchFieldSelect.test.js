@@ -6,6 +6,8 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import SearchFieldSelect from './SearchFieldSelect';
 import {
   titleSearchFields,
@@ -21,6 +23,16 @@ const renderSearchFieldSelect = (onChange = noop) => render(
 
 describe('Given Search Field Select', () => {
   afterEach(cleanup);
+
+  it('should render with no axe errors', async () => {
+    const {
+      container,
+    } = renderSearchFieldSelect();
+
+    await runAxeTest({
+      rootNode: container,
+    });
+  });
 
   it('should show all options', () => {
     const { getByText } = renderSearchFieldSelect();

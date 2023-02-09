@@ -61,6 +61,7 @@
     "regenerator-runtime": "^0.13.3"
   },
   "dependencies": {
+    "@folio/stripes-testing": "^4.5.0",
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",

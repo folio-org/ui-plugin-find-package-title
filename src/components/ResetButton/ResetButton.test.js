@@ -4,6 +4,8 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import ResetButton from './ResetButton';
 
 const renderResetButton = (onClick) => render(
@@ -15,6 +17,16 @@ const renderResetButton = (onClick) => render(
 
 describe('Given ResetButton', () => {
   afterEach(cleanup);
+
+  it('should render with no axe errors', async () => {
+    const {
+      container,
+    } = renderResetButton();
+
+    await runAxeTest({
+      rootNode: container,
+    });
+  });
 
   describe('when click on reset button', () => {
     it('should handle onClick', () => {
