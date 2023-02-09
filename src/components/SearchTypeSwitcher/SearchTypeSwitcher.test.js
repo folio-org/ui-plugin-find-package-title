@@ -6,17 +6,21 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import SearchTypeSwitcher from './SearchTypeSwitcher';
 import {
   searchTypes,
   searchTypesTranslationIDs,
 } from '../../constants';
 
+
 const renderSearchTypeSwitcher = (onSearchTypeChange = noop) => render(
-  <SearchTypeSwitcher
-    currentSearchType={searchTypes.PACKAGE}
-    onSearchTypeChange={onSearchTypeChange}
-  />
+  <div id="filters-panel">
+    <SearchTypeSwitcher
+      currentSearchType={searchTypes.PACKAGE}
+      onSearchTypeChange={onSearchTypeChange}
+    />
+  </div>
 );
 
 describe('Given SearchTypeSwitcher', () => {
@@ -44,6 +48,14 @@ describe('Given SearchTypeSwitcher', () => {
     expect(getByTestId('title-search-type-button')).toHaveClass('default');
   });
 
+  it('should render with no axe errors', async () => {
+    const { container } = renderSearchTypeSwitcher();
+
+    await runAxeTest({
+      rootNode: container,
+    });
+  });
+
   describe('when click on title search type button', () => {
     it('should handle onSearchTypeChange', () => {
       const onSearchTypeChange = jest.fn();
@@ -52,6 +64,14 @@ describe('Given SearchTypeSwitcher', () => {
       fireEvent.click(getByTestId('title-search-type-button'));
 
       expect(onSearchTypeChange).toHaveBeenCalledWith(searchTypes.TITLE);
+    });
+
+    it('should render with no axe errors', async () => {
+      const { container } = renderSearchTypeSwitcher();
+
+      await runAxeTest({
+        rootNode: container,
+      });
     });
   });
 });
