@@ -17,6 +17,7 @@ import {
   packageAttributesFields,
   searchTypes,
 } from '../../constants';
+import selectTypesTranslationIDs from '../../constants/selectTypesTranslationIDs';
 
 const propTypes = {
   containerRef: PropTypes.func,
@@ -130,13 +131,14 @@ const SearchResultsList = ({
       }}
       columnWidths={getColumnWidths()}
       formatter={{
-        isSelected: item => item.isSelected //eslint-disable-line
+        isSelected: item => (item.isSelected
           ? intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status.selected' })
-          : intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status.notSelected' }),
+          : intl.formatMessage({ id: 'ui-plugin-find-package-title.resultsPane.status.notSelected' })),
         checked: item => (
           <CheckboxColumn
             checked={item.checked}
             onChange={() => onRecordChosen(item)}
+            ariaLabel={intl.formatMessage({ id: selectTypesTranslationIDs[item.type] ?? 'ui-plugin-find-package-title.resultsPane.select' }, { name: item.name })}
           />
         )
       }}

@@ -4,12 +4,15 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import CheckboxColumn from './CheckboxColumn';
 
 const renderCheckboxColumn = (onChange) => render(
   <CheckboxColumn
     value="test"
     onChange={onChange}
+    ariaLabel="test area label"
   />
 );
 
@@ -24,6 +27,17 @@ describe('Given CheckboxColumn', () => {
       fireEvent.click(getByTestId('checkbox-column'));
 
       expect(onChange).toHaveBeenCalled();
+    });
+  });
+
+
+  it('should render with no axe errors', async () => {
+    const {
+      container,
+    } = renderCheckboxColumn();
+
+    await runAxeTest({
+      rootNode: container,
     });
   });
 });

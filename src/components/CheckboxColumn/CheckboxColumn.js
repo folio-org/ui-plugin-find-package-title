@@ -10,29 +10,27 @@ const CheckboxColumn = memo((props) => {
   const {
     checked,
     onChange,
+    ariaLabel,
     ...rest
   } = props;
 
   return (
-    <div // eslint-disable-line jsx-a11y/click-events-have-key-events
-      tabIndex="0"
-      role="button"
+    <Checkbox
       className={css.selectableCellButton}
+      checked={checked}
+      onChange={onChange}
       onClick={e => e.stopPropagation()}
+      data-testid="checkbox-column"
+      aria-label={ariaLabel}
       {...rest}
-    >
-      <Checkbox
-        checked={checked}
-        onChange={onChange}
-        data-testid="checkbox-column"
-      />
-    </div>
+    />
   );
 });
 
 CheckboxColumn.propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func,
+  ariaLabel: PropTypes.string.isRequired
 };
 
 CheckboxColumn.defaultProps = {
