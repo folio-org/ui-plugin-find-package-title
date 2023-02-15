@@ -2,7 +2,7 @@
 ## [5.0.0] (IN PROGRESS)
 
 * bump stripes to 8.0.0 for Orchid/2023-R1. Refs UIPFPAT-52.
-* Add a11y tests
+* Add a11y tests. Refs UIPFPAT-51.
 
 ## [4.2.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v4.2.0) (2022-10-24)
 
