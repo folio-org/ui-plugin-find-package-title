@@ -2,6 +2,8 @@ import noop from 'lodash/noop';
 
 import { render } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import SearchFilters from './SearchFilters';
 
 const renderSearchFilters = (onChange = noop) => render(
@@ -24,6 +26,16 @@ const renderSearchFilters = (onChange = noop) => render(
 );
 
 describe('Given SearchFilters', () => {
+  it('should render with no axe errors', async () => {
+    const {
+      container,
+    } = renderSearchFilters();
+
+    await runAxeTest({
+      rootNode: container,
+    });
+  });
+
   it('should show correct accordion', () => {
     const { getByTestId } = renderSearchFilters();
 

@@ -6,6 +6,7 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import SearchResultsList from './SearchResultsList';
 import { searchTypes } from '../../constants';
 
@@ -65,6 +66,14 @@ describe('Given SearchResultList', () => {
 
       expect(getByText('ui-plugin-find-package-title.resultsPane.emptyMessage')).toBeDefined();
     });
+
+    it('should render with no axe errors', async () => {
+      const { container } = renderSearchResultList({ hasLoaded: false });
+
+      await runAxeTest({
+        rootNode: container,
+      });
+    });
   });
 
   describe('when search type is package', () => {
@@ -74,9 +83,17 @@ describe('Given SearchResultList', () => {
 
         expect(getByText('ui-plugin-find-package-title.resultsPane.noPackagesFound')).toBeDefined();
       });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchResultList({});
+
+        await runAxeTest({
+          rootNode: container,
+        });
+      });
     });
 
-    describe('when search type is package', () => {
+    describe('when data is loaded for package', () => {
       totalCount = 1;
       items = [item];
 
@@ -90,6 +107,17 @@ describe('Given SearchResultList', () => {
         expect(getByText('ui-plugin-find-package-title.resultsPane.titlesSelected')).toBeDefined();
         expect(getByText('ui-plugin-find-package-title.resultsPane.totalTitles')).toBeDefined();
       });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchResultList({
+          items,
+          totalCount,
+        });
+
+        await runAxeTest({
+          rootNode: container,
+        });
+      });
     });
   });
 
@@ -102,9 +130,17 @@ describe('Given SearchResultList', () => {
 
         expect(getByText('ui-plugin-find-package-title.resultsPane.noTitlesFound')).toBeDefined();
       });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchResultList({ searchType });
+
+        await runAxeTest({
+          rootNode: container,
+        });
+      });
     });
 
-    describe('when search type is title and serach result list is multi select', () => {
+    describe('when search type is title and search result list is multi select', () => {
       totalCount = 1;
       isMultiSelect = true;
       items = [{
@@ -168,6 +204,19 @@ describe('Given SearchResultList', () => {
           fireEvent.click(getByText('row button'));
 
           expect(onRecordChosen).toHaveBeenCalled();
+        });
+      });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchResultList({
+          items,
+          isMultiSelect,
+          searchType,
+          totalCount,
+        });
+
+        await runAxeTest({
+          rootNode: container,
         });
       });
     });

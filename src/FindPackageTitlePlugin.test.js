@@ -5,7 +5,9 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import FindPackageTitlePlugin from './FindPackageTitlePlugin';
+
 
 jest.mock('./components', () => ({
   SearchModal: jest.fn(() => <span>SearchModal</span>),
@@ -27,6 +29,14 @@ describe('Given FindPackageTitlePlugin', () => {
       const { getByTestId } = renderFindPackageTitlePlugin();
 
       expect(getByTestId('default-trigger')).toBeDefined();
+    });
+
+    it('should render with no axe errors', async () => {
+      const { container } = renderFindPackageTitlePlugin();
+
+      await runAxeTest({
+        rootNode: container,
+      });
     });
   });
 

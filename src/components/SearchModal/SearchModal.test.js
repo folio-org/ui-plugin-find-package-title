@@ -6,7 +6,9 @@ import {
   render,
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
 import SearchModal from './SearchModal';
+
 
 jest.mock('../SearchFieldSelect', () => jest.fn(() => <span>SearchFieldSelect</span>));
 
@@ -124,6 +126,25 @@ describe('Given SearchModal', () => {
       expect(getByText('ui-plugin-find-package-title.resultsPane.resultsCount.loading')).toBeDefined();
       expect(queryByText('ui-plugin-find-package-title.resultsPane.resultsCount')).not.toBeInTheDocument();
     });
+
+    it('should render with no axe errors', async () => {
+      const {
+        container
+      } = renderSearchModal({
+        ...props,
+        resources: {
+          packages: {
+            ...packages,
+            hasLoaded: false,
+            isPending: true,
+          },
+        },
+      });
+
+      await runAxeTest({
+        rootNode: container,
+      });
+    });
   });
 
   describe('when data was not loaded', () => {
@@ -141,6 +162,23 @@ describe('Given SearchModal', () => {
 
       expect(queryByText('ui-plugin-find-package-title.resultsPane.resultsCount.loading')).not.toBeInTheDocument();
     });
+
+    it('should render with no axe errors', async () => {
+      const { container } = renderSearchModal({
+        ...props,
+        resources: {
+          packages: {
+            ...packages,
+            hasLoaded: false,
+            isPending: false,
+          },
+        },
+      });
+
+      await runAxeTest({
+        rootNode: container,
+      });
+    });
   });
 
   describe('when data was loaded', () => {
@@ -148,6 +186,14 @@ describe('Given SearchModal', () => {
       const { getByTestId } = renderSearchModal(props);
 
       expect(getByTestId('find-package-title-modal')).toBeDefined();
+    });
+
+    it('should render with no axe errors', async () => {
+      const { container } = renderSearchModal(props);
+
+      await runAxeTest({
+        rootNode: container,
+      });
     });
 
     describe('when modal is multiselect', () => {
@@ -158,6 +204,17 @@ describe('Given SearchModal', () => {
         });
 
         expect(getByTestId('modal-footer')).toBeDefined();
+      });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchModal({
+          ...props,
+          isMultiSelect: true,
+        });
+
+        await runAxeTest({
+          rootNode: container,
+        });
       });
     });
 
@@ -228,6 +285,19 @@ describe('Given SearchModal', () => {
         expect(queryByText('ui-plugin-find-package-title.resultsPane.resultsCount.loading')).not.toBeInTheDocument();
       });
 
+      it('should render with no axe errors', async () => {
+        const {
+          container,
+          getByTestId
+        } = renderSearchModal(props);
+
+        fireEvent.click(getByTestId('title-search-type-button'));
+
+        await runAxeTest({
+          rootNode: container,
+        });
+      });
+
       describe('when click on reset filters button', () => {
         it('should reset filters', () => {
           const {
@@ -277,6 +347,20 @@ describe('Given SearchModal', () => {
 
         expect(getByTestId('tags-filter')).toBeDefined();
       });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchModal({
+          ...props,
+          resources: {
+            ...resources,
+            tags,
+          },
+        });
+
+        await runAxeTest({
+          rootNode: container,
+        });
+      });
     });
 
     describe('when access type exist', () => {
@@ -290,6 +374,20 @@ describe('Given SearchModal', () => {
         });
 
         expect(getByTestId('access-type-filter')).toBeDefined();
+      });
+
+      it('should render with no axe errors', async () => {
+        const { container } = renderSearchModal({
+          ...props,
+          resources: {
+            ...resources,
+            accessTypes,
+          },
+        });
+
+        await runAxeTest({
+          rootNode: container,
+        });
       });
     });
 

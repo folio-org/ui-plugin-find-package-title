@@ -28,7 +28,7 @@ const SearchTypeSwitcher = ({
       <Button
         role="tab"
         aria-selected={currentSearchType === type}
-        aria-controls={`${type}-panel`}
+        aria-controls="filters-panel"
         id={`${type}-tab`}
         key={type}
         onClick={() => onSearchTypeChange(type)}
