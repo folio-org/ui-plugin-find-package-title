@@ -69,5 +69,8 @@
     "searchTypes.package": "Pacchetti",
     "searchTypes.title": "Titoli",
     "searchPane.filters.contentType.mixedContent": "Contenuto misto",
-    "searchPane.filters.contentType.streamingMedia": "Streaming media"
+    "searchPane.filters.contentType.streamingMedia": "Streaming media",
+    "resultsPane.selectTitle": "Select title {name}",
+    "resultsPane.selectPackage": "Select package {name}",
+    "resultsPane.select": "Seleziona {name}"
 }

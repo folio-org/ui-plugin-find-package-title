@@ -69,5 +69,8 @@
     "searchTypes.package": "حزم",
     "searchTypes.title": "العناوين",
     "searchPane.filters.contentType.mixedContent": "محتوى مختلط",
-    "searchPane.filters.contentType.streamingMedia": "الوسائط التي تبث عبر الإنترنت"
+    "searchPane.filters.contentType.streamingMedia": "الوسائط التي تبث عبر الإنترنت",
+    "resultsPane.selectTitle": "Select title {name}",
+    "resultsPane.selectPackage": "Select package {name}",
+    "resultsPane.select": "Select {name}"
 }

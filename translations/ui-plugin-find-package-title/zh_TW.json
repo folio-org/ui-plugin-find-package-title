@@ -69,5 +69,8 @@
     "searchTypes.package": "资源包",
     "searchTypes.title": "题名",
     "searchPane.filters.contentType.mixedContent": "Mixed Content",
-    "searchPane.filters.contentType.streamingMedia": "Streaming Media"
+    "searchPane.filters.contentType.streamingMedia": "Streaming Media",
+    "resultsPane.selectTitle": "Select title {name}",
+    "resultsPane.selectPackage": "Select package {name}",
+    "resultsPane.select": "Select {name}"
 }
