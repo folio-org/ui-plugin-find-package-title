@@ -6,8 +6,8 @@
     "searchPane.label": "Hledat a filtrovat",
     "searchPane.searchButton.label": "Vyhledávání",
     "searchPane.resetAll": "Obnovit vše",
-    "searchPane.filters.tags": "Tagy",
-    "searchPane.filters.tags.tagsOnly": "Vyhledávání pouze podle tagů",
+    "searchPane.filters.tags": "Štítky",
+    "searchPane.filters.tags.tagsOnly": "Vyhledávání pouze podle štítků",
     "searchPane.filters.accessTypes": "Typy stavu přístupu",
     "searchPane.filters.accessTypes.accessTypesOnly": "Vyhledávání pouze podle typů stavu přístupu",
     "searchPane.filters.sortOptions.label": "Volby třídění",
@@ -69,5 +69,8 @@
     "searchTypes.package": "Balíčky",
     "searchTypes.title": "Názvy",
     "searchPane.filters.contentType.mixedContent": "Smíšený obsah",
-    "searchPane.filters.contentType.streamingMedia": "Streamovaná média"
+    "searchPane.filters.contentType.streamingMedia": "Streamovaná média",
+    "resultsPane.selectTitle": "Vybrat název {name}",
+    "resultsPane.selectPackage": "Vybrat balíček {name}",
+    "resultsPane.select": "Vybrat {name}"
 }
