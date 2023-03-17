@@ -70,7 +70,7 @@
     "searchTypes.title": "题名",
     "searchPane.filters.contentType.mixedContent": "混合内容",
     "searchPane.filters.contentType.streamingMedia": "流媒体",
-    "resultsPane.selectTitle": "Select title {name}",
-    "resultsPane.selectPackage": "Select package {name}",
-    "resultsPane.select": "Select {name}"
+    "resultsPane.selectTitle": "选择标题{name}",
+    "resultsPane.selectPackage": "选择资源包{name}",
+    "resultsPane.select": "选择{name}"
 }

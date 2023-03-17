@@ -70,7 +70,7 @@
     "searchTypes.title": "タイトル",
     "searchPane.filters.contentType.mixedContent": "Mixed Content",
     "searchPane.filters.contentType.streamingMedia": "Streaming Media",
-    "resultsPane.selectTitle": "Select title {name}",
-    "resultsPane.selectPackage": "Select package {name}",
-    "resultsPane.select": "Select {name}"
+    "resultsPane.selectTitle": "タイトル{name}を選択",
+    "resultsPane.selectPackage": "パッケージ{name}を選択",
+    "resultsPane.select": "{name}を選択"
 }
