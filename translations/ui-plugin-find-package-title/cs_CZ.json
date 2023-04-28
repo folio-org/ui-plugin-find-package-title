@@ -10,7 +10,7 @@
     "searchPane.filters.tags.tagsOnly": "Vyhledávání pouze podle štítků",
     "searchPane.filters.accessTypes": "Typy stavu přístupu",
     "searchPane.filters.accessTypes.accessTypesOnly": "Vyhledávání pouze podle typů stavu přístupu",
-    "searchPane.filters.sortOptions.label": "Volby třídění",
+    "searchPane.filters.sortOptions.label": "Možnosti seřazení",
     "searchPane.filters.sortOptions.package": "Balík",
     "searchPane.filters.sortOptions.relevance": "Relevantnost",
     "searchPane.filters.selectionStatus": "Stav výběru",
