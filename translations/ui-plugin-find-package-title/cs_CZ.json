@@ -39,7 +39,7 @@
     "resultsPane.totalSelected.count": "Vybrané názvy: {count}",
     "modal.label.package": "Vybrat balíček",
     "modal.label.title": "Vyberte název",
-    "searchPane.selectFieldToSearch": "Vyberte pole pro vyhledávání",
+    "searchPane.selectFieldToSearch": "Vybrat pole pro vyhledávání",
     "searchPane.titleSearchField.title": "Název",
     "searchPane.titleSearchField.isxn": "ISSN/ISBN",
     "searchPane.titleSearchField.publisher": "Vydavatel",
