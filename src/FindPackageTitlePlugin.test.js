@@ -3,7 +3,7 @@ import noop from 'lodash/noop';
 import {
   cleanup,
   render,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import { runAxeTest } from '@folio/stripes-testing';
 import FindPackageTitlePlugin from './FindPackageTitlePlugin';
