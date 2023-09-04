@@ -1,4 +1,8 @@
 
+## [6.0.0] (IN PROGRESS)
+
+* Update Node.js to v18 in GitHub Actions. Refs UIPFPAT-56.
+
 ## [5.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v5.0.0) (2023-02-20)
 
 * bump stripes to 8.0.0 for Orchid/2023-R1. Refs UIPFPAT-52.
