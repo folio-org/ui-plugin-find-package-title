@@ -1,5 +1,5 @@
 
-## [6.0.0] (IN PROGRESS)
+## [6.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v6.0.0) (2023-10-12)
 
 * Update Node.js to v18 in GitHub Actions. Refs UIPFPAT-56.
 * *BREAKING* Bump `react` to `v18`. Refs UIPFPAT-55.
