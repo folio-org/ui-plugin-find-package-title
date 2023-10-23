@@ -1,3 +1,8 @@
+# Change history for ui-plugin-find-package-title
+
+## [6.1.0] (IN PROGRESS)
+
+* Remove eslint deps that are already listed in eslint-config-stripes. Refs UIPFPAT-57.
 
 ## [6.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v6.0.0) (2023-10-12)
 
