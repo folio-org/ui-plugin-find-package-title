@@ -4,7 +4,7 @@
     "searchableEntity.package": "Balíčky",
     "searchableEntity.title": "Názvy",
     "searchPane.label": "Hledat a filtrovat",
-    "searchPane.searchButton.label": "Vyhledávání",
+    "searchPane.searchButton.label": "Vyhledat",
     "searchPane.resetAll": "Obnovit vše",
     "searchPane.filters.tags": "Štítky",
     "searchPane.filters.tags.tagsOnly": "Vyhledávání pouze podle štítků",
