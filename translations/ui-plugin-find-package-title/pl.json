@@ -72,5 +72,5 @@
     "searchPane.filters.contentType.streamingMedia": "Streaming Media",
     "resultsPane.selectTitle": "Select title {name}",
     "resultsPane.selectPackage": "Select package {name}",
-    "resultsPane.select": "Select {name}"
+    "resultsPane.select": "Wybierz {name}"
 }
