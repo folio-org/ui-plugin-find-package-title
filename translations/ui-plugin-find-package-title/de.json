@@ -68,7 +68,7 @@
     "resultsPane.publicationType": "Typ",
     "searchTypes.package": "Pakete",
     "searchTypes.title": "Titel",
-    "searchPane.filters.contentType.mixedContent": "Mixed Content",
+    "searchPane.filters.contentType.mixedContent": "Gemischter Inhalt",
     "searchPane.filters.contentType.streamingMedia": "Streaming",
     "resultsPane.selectTitle": "Select title {name}",
     "resultsPane.selectPackage": "Select package {name}",
