@@ -21,7 +21,7 @@
     "searchPane.filters.contentType.all": "Todos",
     "searchPane.filters.contentType.aggregated": "Texto completo agregado",
     "searchPane.filters.contentType.abstract": "Resumo e índice",
-    "searchPane.filters.contentType.ebook": "E-Book",
+    "searchPane.filters.contentType.ebook": "Livro eletrônico",
     "searchPane.filters.contentType.ejournal": "Periódico eletrônico",
     "searchPane.filters.contentType.print": "Impresso",
     "searchPane.filters.contentType.onlineRef": "Referência online",
