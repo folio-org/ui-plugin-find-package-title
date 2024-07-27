@@ -12,7 +12,7 @@
     "searchPane.filters.accessTypes.accessTypesOnly": "Szukaj tylko według typów statusu dostępu",
     "searchPane.filters.sortOptions.label": "Opcje sortowania",
     "searchPane.filters.sortOptions.package": "Pakiet",
-    "searchPane.filters.sortOptions.relevance": "Znaczenia",
+    "searchPane.filters.sortOptions.relevance": "Trafność",
     "searchPane.filters.selectionStatus": "Status wyboru",
     "searchPane.filters.selectionStatus.all": "Wszystkie",
     "searchPane.filters.selectionStatus.selected": "Wybrane",
