@@ -1,8 +1,8 @@
 # Change history for ui-plugin-find-package-title
 
-## [7.0.0] (IN PROGRESS)
+## [6.2.0] (IN PROGRESS)
 
-* *BREAKING* Upgrade `eholdings` to `4.0`. Refs UIPFPAT-61.
+* Upgrade `eholdings` to `4.0`. Refs UIPFPAT-61.
 
 ## [6.1.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v6.1.0) (2024-03-20)
 

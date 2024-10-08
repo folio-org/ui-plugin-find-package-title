@@ -1,6 +1,6 @@
 {
   "name": "@folio/plugin-find-package-title",
-  "version": "7.0.0",
+  "version": "6.2.0",
   "description": "Stripes plugin to find packages and titles",
   "repository": "folio-org/ui-plugin-find-package-title",
   "publishConfig": {
@@ -28,7 +28,7 @@
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json"
   },
   "okapiInterfaces": {
-    "eholdings": "4.0"
+    "eholdings": "2.0 4.0"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^7.0.0",
