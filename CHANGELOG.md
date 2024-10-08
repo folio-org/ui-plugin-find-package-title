@@ -1,5 +1,9 @@
 # Change history for ui-plugin-find-package-title
 
+## [6.2.0] (IN PROGRESS)
+
+* Upgrade `eholdings` to `4.0`. Refs UIPFPAT-61.
+
 ## [6.1.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v6.1.0) (2024-03-20)
 
 * Remove eslint deps that are already listed in eslint-config-stripes. Refs UIPFPAT-57.
