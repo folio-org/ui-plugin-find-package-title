@@ -59,7 +59,7 @@
     "searchPane.filters.publicationType.streamingVideo": "Vidéo en streaming",
     "searchPane.filters.publicationType.thesisAndDissertation": "Thèse & Mémoire",
     "searchPane.filters.publicationType.website": "Site Internet",
-    "searchPane.filters.publicationType.unspecified": "Non spécifié",
+    "searchPane.filters.publicationType.unspecified": "Non renseigné",
     "searchPane.filters.sortOptions.title": "Titre",
     "resultsPane.noTitlesFound": "Aucun titre trouvé.",
     "resultsPane.title": "Titre",
