@@ -1,5 +1,5 @@
 {
-    "meta.title": "資源包和題名查找器（外掛程式）",
+    "meta.title": "資源包和題名查找器 ( 外掛程式 )",
     "defaultTriggerLabel": "新增資源包/資源",
     "searchableEntity.package": "資源包",
     "searchableEntity.title": "題名",
