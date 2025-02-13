@@ -1,5 +1,8 @@
 # Change history for ui-plugin-find-package-title
 
+## IN PROGRESS
+* Migrate to shared GA workflows. Refs UIPFPAT-63.
+
 ## [6.2.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v6.2.0) (2024-10-30)
 
 * Upgrade `eholdings` to `4.0`. Refs UIPFPAT-61.
