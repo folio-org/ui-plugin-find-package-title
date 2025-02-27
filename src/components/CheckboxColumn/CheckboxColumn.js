@@ -8,8 +8,8 @@ import css from './CheckboxColumn.css';
 
 const CheckboxColumn = memo((props) => {
   const {
-    checked,
-    onChange,
+    checked = false,
+    onChange = noop,
     ariaLabel,
     ...rest
   } = props;
@@ -31,11 +31,6 @@ CheckboxColumn.propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func,
   ariaLabel: PropTypes.string.isRequired
-};
-
-CheckboxColumn.defaultProps = {
-  checked: false,
-  onChange: noop,
 };
 
 export default CheckboxColumn;
