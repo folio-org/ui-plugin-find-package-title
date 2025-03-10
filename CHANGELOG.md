@@ -1,6 +1,6 @@
 # Change history for ui-plugin-find-package-title
 
-## [7.0.0] IN PROGRESS
+## [7.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v7.0.0) (2025-03-10)
 
 * Migrate to shared GA workflows. Refs UIPFPAT-63.
 * *BREAKING* migrate stripes dependencies to their Sunflower versions. Refs UIPFPAT-64.
