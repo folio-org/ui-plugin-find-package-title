@@ -1,5 +1,5 @@
 {
-    "meta.title": "资源包和标题查找器（插件）",
+    "meta.title": "资源包和标题查找器 : 插件 ) ",
     "defaultTriggerLabel": "添加资源包/资源",
     "searchableEntity.package": "资源包",
     "searchableEntity.title": "题名",
@@ -36,7 +36,7 @@
     "resultsPane.name": "名称",
     "resultsPane.titlesSelected": "已选标题",
     "resultsPane.totalTitles": "总计标题",
-    "resultsPane.totalSelected.count": "已选标题： {count}",
+    "resultsPane.totalSelected.count": "已选标题 :  {count}",
     "modal.label.package": "选择资源包",
     "modal.label.title": "选择题名",
     "searchPane.selectFieldToSearch": "选择搜索字段",
