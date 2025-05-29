@@ -19,7 +19,7 @@
     "searchPane.filters.selectionStatus.notSelected": "Nie wybrane",
     "searchPane.filters.contentType": "Typ treści",
     "searchPane.filters.contentType.all": "Wszystkie",
-    "searchPane.filters.contentType.aggregated": "Zbiorczy pełny tekst",
+    "searchPane.filters.contentType.aggregated": "Zagregowany pełny tekst",
     "searchPane.filters.contentType.abstract": "Streszczenie i indeks",
     "searchPane.filters.contentType.ebook": "e-Book",
     "searchPane.filters.contentType.ejournal": "e-Czasopismo",
