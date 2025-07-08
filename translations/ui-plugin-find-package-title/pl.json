@@ -70,7 +70,7 @@
     "searchTypes.title": "Tytuły",
     "searchPane.filters.contentType.mixedContent": "Mixed Content",
     "searchPane.filters.contentType.streamingMedia": "Streaming media",
-    "resultsPane.selectTitle": "Select title {name}",
-    "resultsPane.selectPackage": "Select package {name}",
+    "resultsPane.selectTitle": "Wybierz tytuł {name}",
+    "resultsPane.selectPackage": "Wybierz pakiet {name}",
     "resultsPane.select": "Wybierz {name}"
 }
