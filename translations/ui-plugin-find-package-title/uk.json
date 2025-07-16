@@ -17,7 +17,7 @@
     "searchPane.filters.selectionStatus.all": "Все",
     "searchPane.filters.selectionStatus.selected": "Вибрано",
     "searchPane.filters.selectionStatus.notSelected": "Не вибрано",
-    "searchPane.filters.contentType": "Content type",
+    "searchPane.filters.contentType": "Тип змісту",
     "searchPane.filters.contentType.all": "Все",
     "searchPane.filters.contentType.aggregated": "Агрегований повний текст",
     "searchPane.filters.contentType.abstract": "Abstract and index",
