@@ -39,7 +39,7 @@
     "resultsPane.totalSelected.count": "Вибрані назви: {count}",
     "modal.label.package": "Вибрати пакет",
     "modal.label.title": "Вибрати назву",
-    "searchPane.selectFieldToSearch": "Виберіть поле для пошуку",
+    "searchPane.selectFieldToSearch": "Вибрати поле для пошуку",
     "searchPane.titleSearchField.title": "Назва",
     "searchPane.titleSearchField.isxn": "ISSN/ISBN",
     "searchPane.titleSearchField.publisher": "Видавець",
