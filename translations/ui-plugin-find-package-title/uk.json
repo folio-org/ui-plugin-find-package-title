@@ -20,7 +20,7 @@
     "searchPane.filters.contentType": "Тип змісту",
     "searchPane.filters.contentType.all": "Все",
     "searchPane.filters.contentType.aggregated": "Агрегований повний текст",
-    "searchPane.filters.contentType.abstract": "Abstract and index",
+    "searchPane.filters.contentType.abstract": "Анотація та покажчик",
     "searchPane.filters.contentType.ebook": "Е-книга",
     "searchPane.filters.contentType.ejournal": "Е-журнал",
     "searchPane.filters.contentType.print": "Друк",
