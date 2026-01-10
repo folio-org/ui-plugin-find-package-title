@@ -3,6 +3,7 @@
 ## [7.1.0] (IN PROGRESS)
 
 * Move "okapiInterfaces" to "stripes" in package.json. Refs UIPFPAT-70.
+* Migrate qs from ^6.9.6 to ^6.14.1 fixing CVE-2025-15284. Refs UIPFPAT-72.
 
 ## [7.0.0] (https://github.com/folio-org/ui-plugin-find-package-title/tree/v7.0.0) (2025-03-10)
 
