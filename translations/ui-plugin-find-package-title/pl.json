@@ -48,7 +48,7 @@
     "searchPane.filters.publicationType.all": "Wszystko",
     "searchPane.filters.publicationType.audiobook": "Audiobook",
     "searchPane.filters.publicationType.book": "Książka",
-    "searchPane.filters.publicationType.bookSeries": "Książki w serii",
+    "searchPane.filters.publicationType.bookSeries": "Wydawnictwa seryjne",
     "searchPane.filters.publicationType.database": "Baza danych",
     "searchPane.filters.publicationType.journal": "Czasopismo",
     "searchPane.filters.publicationType.newsletter": "Newsletter",
