@@ -30,7 +30,7 @@
     "resultsPane.resultsCount.loading": "Loading ...",
     "resultsPane.emptyMessage": "Enter a query to show search results.",
     "resultsPane.noPackagesFound": "No packages found.",
-    "resultsPane.status": "Status",
+    "resultsPane.status": "สถานะ",
     "resultsPane.status.selected": "Selected",
     "resultsPane.status.notSelected": "Not selected",
     "resultsPane.name": "Name",
