@@ -47,7 +47,7 @@
     "searchPane.filters.publicationType": "出版物タイプ",
     "searchPane.filters.publicationType.all": "全部",
     "searchPane.filters.publicationType.audiobook": "オーディオブック",
-    "searchPane.filters.publicationType.book": "本",
+    "searchPane.filters.publicationType.book": "図書",
     "searchPane.filters.publicationType.bookSeries": "ブックシリーズ",
     "searchPane.filters.publicationType.database": "データベース",
     "searchPane.filters.publicationType.journal": "ジャーナル",
