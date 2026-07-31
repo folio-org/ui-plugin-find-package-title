@@ -52,10 +52,6 @@ const packages = {
         providerName: 'ABC Chemistry',
         selectedCount: 0,
         titleCount: 1,
-        visibilityData: {
-          isHidden: false,
-          reason: ''
-        }
       },
     }],
     meta: {

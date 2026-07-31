@@ -21,7 +21,7 @@
       }
     ],
     "okapiInterfaces": {
-      "eholdings": "2.0 4.0"
+      "eholdings": "2.0 4.0 5.0"
     }
   },
   "scripts": {

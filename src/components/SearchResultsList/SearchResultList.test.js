@@ -44,10 +44,6 @@ const item = {
   providerName: 'provider name',
   selectedCount: 2,
   titleCount: 2,
-  visibilityData: {
-    isHidden: false,
-    reason: 'reason',
-  },
   id: 'id1',
   type: 'package',
 };

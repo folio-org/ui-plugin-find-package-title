@@ -15,10 +15,6 @@ export const packageAttributesFields = {
   providerName: PropTypes.string.isRequired,
   selectedCount: PropTypes.number.isRequired,
   titleCount: PropTypes.number.isRequired,
-  visibilityData: PropTypes.shape({
-    isHidden: PropTypes.bool.isRequired,
-    reason: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export const packageResponseShape = PropTypes.shape({
