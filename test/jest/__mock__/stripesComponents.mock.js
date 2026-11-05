@@ -1,6 +1,6 @@
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  MultiColumnList: jest.fn(({
+jest.mock('@folio/stripes-components/lib/MultiColumnList', () => ({
+  __esModule: true,
+  default: jest.fn(({
     visibleColumns,
     columnMapping,
     isEmptyMessage,

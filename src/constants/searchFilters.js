@@ -24,31 +24,138 @@ const titleSortFilterConfig = {
 };
 
 const selectionStatusFilterConfig = {
+  type: 'selection',
   name: 'selected',
   label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus" />,
   defaultValue: 'all',
   options: [
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus.all" />, value: 'all' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus.selected" />, value: 'true' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus.notSelected" />, value: 'false' },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.selectionStatus',
+      options: [
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.selectionStatus.all',
+          value: 'all',
+          filters: {},
+          isDefault: true,
+        },
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.selectionStatus.selected',
+          value: 'selected',
+          filters: { selected: 'true' },
+        },
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.selectionStatus.notSelected',
+          value: 'notSelected',
+          filters: { selected: 'false' },
+        },
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.selectionStatus.orderedThrough',
+          value: 'orderedThrough',
+          filters: { selected: 'ebsco' },
+        },
+      ],
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.visibilityStatus',
+      options: [
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.visibleSomewhere',
+          value: 'visibleSomewhere',
+          filters: { selected: 'true', visibility: 'visibleSomewhere' },
+        },
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.hiddenSomewhere',
+          value: 'hiddenSomewhere',
+          filters: { selected: 'true', visibility: 'hiddenSomewhere' },
+        },
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.hiddenPF',
+          value: 'hiddenPF',
+          filters: { selected: 'true', visibility: 'hiddenInPF' },
+        },
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.hiddenFTF',
+          value: 'hiddenFTF',
+          filters: { selected: 'true', visibility: 'hiddenInFTF' },
+        },
+        {
+          labelId: 'ui-plugin-find-package-title.searchPane.filters.hiddenMARC',
+          value: 'hiddenMARC',
+          filters: { selected: 'true', visibility: 'hiddenInMARC' },
+        },
+      ],
+    },
   ]
 };
 
 const contentTypeFilterConfig = {
+  type: 'selection',
   name: 'type',
   label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType" />,
   defaultValue: 'all',
   options: [
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.all" />, value: 'all' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.aggregated" />, value: 'aggregatedfulltext' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.abstract" />, value: 'abstractandindex' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.ebook" />, value: 'ebook' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.ejournal" />, value: 'ejournal' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.mixedContent" />, value: 'mixedcontent' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.onlineRef" />, value: 'onlinereference' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.print" />, value: 'print' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.streamingMedia" />, value: 'streamingmedia' },
-    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType.unknown" />, value: 'unknown' }
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.all',
+      value: 'all',
+      filters: {},
+      isDefault: true,
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.aggregated',
+      value: 'aggregatedfulltext',
+      filters: { type: 'aggregatedfulltext' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.abstract',
+      value: 'abstractandindex',
+      filters: { type: 'abstractandindex' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.ebook',
+      value: 'ebook',
+      filters: { type: 'ebook' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.ejournal',
+      value: 'ejournal',
+      filters: { type: 'ejournal' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.mixedContent',
+      value: 'mixedcontent',
+      filters: { type: 'mixedcontent' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.onlineRef',
+      value: 'onlinereference',
+      filters: { type: 'onlinereference' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.print',
+      value: 'print',
+      filters: { type: 'print' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.streamingMedia',
+      value: 'streamingmedia',
+      filters: { type: 'streamingmedia' },
+    },
+    {
+      labelId: 'ui-plugin-find-package-title.searchPane.filters.contentType.unknown',
+      value: 'unknown',
+      filters: { type: 'unknown' },
+    },
+  ]
+};
+
+const packageAccessFilterConfig = {
+  name: 'access',
+  label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.packageAccess" />,
+  defaultValue: 'all',
+  options: [
+    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.packageAccess.all" />, value: 'all' },
+    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.packageAccess.public" />, value: 'public' },
+    { label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.packageAccess.controlled" />, value: 'controlled' },
   ]
 };
 
@@ -79,6 +186,7 @@ const packageFilters = [
   packageSortFilterConfig,
   selectionStatusFilterConfig,
   contentTypeFilterConfig,
+  packageAccessFilterConfig,
 ];
 
 const titleFilters = [

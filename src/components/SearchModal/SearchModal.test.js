@@ -266,6 +266,20 @@ describe('Given SearchModal', () => {
           expect(mutator.packages.GET).toHaveBeenCalled();
         });
       });
+
+      describe('when selecting a filter without a search query', () => {
+        it('should fetch packages immediately', () => {
+          mutator.packages.GET.mockClear();
+          const { getByTestId } = renderSearchModal(props);
+
+          fireEvent.click(getByTestId('filter-access-controlled'));
+
+          expect(mutator.packages.GET).toHaveBeenCalledWith({
+            path: expect.stringContaining('filter%5Baccess%5D=controlled'),
+          });
+          expect(mutator.packages.GET.mock.calls[0][0].path).not.toContain('q=');
+        });
+      });
     });
 
     describe('when search type is title', () => {
@@ -279,6 +293,16 @@ describe('Given SearchModal', () => {
 
         expect(queryByText('ui-plugin-find-package-title.resultsPane.resultsCount')).not.toBeInTheDocument();
         expect(queryByText('ui-plugin-find-package-title.resultsPane.resultsCount.loading')).not.toBeInTheDocument();
+      });
+
+      it('should not fetch titles for filters without a search query', () => {
+        mutator.titles.GET.mockClear();
+        const { getByTestId } = renderSearchModal(props);
+
+        fireEvent.click(getByTestId('title-search-type-button'));
+        fireEvent.click(getByTestId('filter-type-audiobook'));
+
+        expect(mutator.titles.GET).not.toHaveBeenCalled();
       });
 
       it('should render with no axe errors', async () => {
