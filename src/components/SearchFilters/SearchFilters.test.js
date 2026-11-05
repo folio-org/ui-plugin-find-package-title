@@ -63,6 +63,8 @@ describe('Given SearchFilters', () => {
 
     expect(container.querySelector('fieldset[aria-labelledby="filter-selected-label"]')).toBeInTheDocument();
 
+    fireEvent.click(container.querySelector('#accordion-toggle-button-filter-selected'));
+    fireEvent.click(getByRole('button', { name: 'ui-plugin-find-package-title.searchPane.filters.selectionStatus.all' }));
     fireEvent.click(getByRole('combobox'));
     fireEvent.click(getAllByRole('option').find(option => option.textContent.endsWith('.hiddenPF')));
 
@@ -71,7 +73,7 @@ describe('Given SearchFilters', () => {
 
   it('should render and apply Content type Selection options', () => {
     const onChange = jest.fn();
-    const { getByRole, getAllByRole } = render(
+    const { getByRole, getAllByRole, container } = render(
       <SearchFilters
         activeFilters={{}}
         availableFilters={[searchFiltersConfig[searchTypes.PACKAGE][2]]}
@@ -80,6 +82,8 @@ describe('Given SearchFilters', () => {
       />
     );
 
+    fireEvent.click(container.querySelector('#accordion-toggle-button-filter-type'));
+    fireEvent.click(getByRole('button', { name: 'ui-plugin-find-package-title.searchPane.filters.contentType.all' }));
     fireEvent.click(getByRole('combobox'));
     fireEvent.click(getAllByRole('option').find(option => option.textContent.endsWith('.ebook')));
 

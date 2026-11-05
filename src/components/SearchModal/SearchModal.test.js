@@ -274,10 +274,11 @@ describe('Given SearchModal', () => {
 
           fireEvent.click(getByTestId('filter-access-controlled'));
 
-          expect(mutator.packages.GET).toHaveBeenCalledWith({
-            path: expect.stringContaining('filter%5Baccess%5D=controlled'),
-          });
-          expect(mutator.packages.GET.mock.calls[0][0].path).not.toContain('q=');
+          const packageRequests = mutator.packages.GET.mock.calls;
+          const requestPath = packageRequests[packageRequests.length - 1][0].path;
+
+          expect(requestPath).toContain('filter[access]=controlled');
+          expect(requestPath).not.toContain('q=');
         });
       });
     });
