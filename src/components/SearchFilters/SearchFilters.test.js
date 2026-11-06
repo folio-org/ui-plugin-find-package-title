@@ -1,6 +1,10 @@
 import noop from 'lodash/noop';
 
-import { fireEvent, render } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  fireEvent,
+  render,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -25,6 +29,36 @@ const renderSearchFilters = (onChange = noop) => render(
     onChange={onChange}
   />
 );
+
+const selectionFilter = {
+  type: 'selection',
+  label: <span>grouped label</span>,
+  name: 'grouped',
+  options: [{
+    labelId: 'group.one',
+    options: [{
+      labelId: 'option.all',
+      value: 'all',
+      filters: {},
+      isDefault: true,
+    }, {
+      labelId: 'option.match',
+      value: 'match',
+      filters: { first: 'yes' },
+    }, {
+      labelId: 'option.other',
+      value: 'other',
+      filters: { first: 'no' },
+    }],
+  }, {
+    labelId: 'group.two',
+    options: [{
+      labelId: 'option.third',
+      value: 'third',
+      filters: { second: 'yes' },
+    }],
+  }],
+};
 
 describe('Given SearchFilters', () => {
   it('should render with no axe errors', async () => {
@@ -108,5 +142,88 @@ describe('Given SearchFilters', () => {
 
     fireEvent.click(getByTestId('filter-access-controlled'));
     expect(onChange).toHaveBeenCalledWith({ access: 'controlled' });
+  });
+
+  it('should clear a radio filter while preserving other active filters', () => {
+    const onChange = jest.fn();
+    const { getByRole } = render(
+      <SearchFilters
+        activeFilters={{ access: 'controlled', other: 'value' }}
+        availableFilters={[searchFiltersConfig[searchTypes.PACKAGE][3]]}
+        disabled={false}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(getByRole('button', { name: 'stripes-components.filterGroups.clearFilterSetLabel' }));
+
+    expect(onChange).toHaveBeenCalledWith({ access: undefined, other: 'value' });
+  });
+
+  it('should clear all keys owned by a selection filter and preserve unrelated filters', () => {
+    const onChange = jest.fn();
+    const { getByRole } = render(
+      <SearchFilters
+        activeFilters={{ first: 'yes', second: 'yes', unrelated: 'value' }}
+        availableFilters={[selectionFilter]}
+        disabled={false}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(getByRole('button', { name: 'stripes-components.filterGroups.clearFilterSetLabel' }));
+
+    expect(onChange).toHaveBeenCalledWith({ unrelated: 'value' });
+  });
+
+  it('should use the default selection for unmatched active filters and allow clearing it', () => {
+    const onChange = jest.fn();
+    const filter = {
+      ...selectionFilter,
+      options: [{
+        labelId: 'option.all',
+        value: 'all',
+        filters: {},
+        isDefault: true,
+      }, ...selectionFilter.options],
+    };
+    const { getByRole } = render(
+      <SearchFilters
+        activeFilters={{ first: 'unknown', unrelated: 'value' }}
+        availableFilters={[filter]}
+        disabled={false}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(getByRole('button', { name: 'stripes-components.filterGroups.clearFilterSetLabel' }));
+
+    expect(onChange).toHaveBeenCalledWith({ unrelated: 'value' });
+  });
+
+  it('should filter nested selection options by their labels case-insensitively', async () => {
+    const { getByRole, getAllByRole, container } = render(
+      <SearchFilters
+        activeFilters={{}}
+        availableFilters={[selectionFilter]}
+        disabled={false}
+        onChange={noop}
+      />
+    );
+
+    fireEvent.click(container.querySelector('#accordion-toggle-button-filter-grouped'));
+    fireEvent.click(getByRole('button', { name: 'option.all' }));
+    fireEvent.click(getByRole('combobox'));
+    fireEvent.change(getByRole('combobox'), { target: { value: 'GROUP.ONE' } });
+
+    await waitFor(() => {
+      const options = getAllByRole('option');
+
+      expect(options.map(option => option.textContent)).toEqual([
+        'option.all',
+        'option.match',
+        'option.other',
+      ]);
+    });
   });
 });

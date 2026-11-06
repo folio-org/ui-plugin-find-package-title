@@ -275,7 +275,7 @@ const SearchModal = ({
     return params;
   };
 
-  const fetchItems = async ({
+  const fetchItems = ({
     searchQuery: query,
     searchFilters: filters,
     page,
