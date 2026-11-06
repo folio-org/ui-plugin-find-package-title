@@ -1,7 +1,5 @@
-const path = require('path');
-const config = require('@folio/jest-config-stripes');
-
-const transformIgnorePatterns = config.transformIgnorePatterns.map(pattern => pattern.replace('|uuid', '|uuid|keyboardjs'));
+const path = require('node:path');
+const { config } = require('@folio/jest-config-stripes');
 
 module.exports = {
   ...config,
@@ -9,5 +7,4 @@ module.exports = {
     ...config.setupFiles,
     path.join(__dirname, './test/jest/setup-tests.js'),
   ],
-  transformIgnorePatterns,
 };
