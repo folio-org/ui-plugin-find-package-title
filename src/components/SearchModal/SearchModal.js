@@ -113,10 +113,14 @@ const SearchModal = ({
   isMultiSelect,
 }) => {
   const getInitialFiltersState = currentSearchType => {
-    return searchFiltersConfig[currentSearchType].reduce((filtersState, filter) => ({
-      ...filtersState,
-      [filter.name]: filter.defaultValue,
-    }), {});
+    return searchFiltersConfig[currentSearchType].reduce((filtersState, filter) => {
+      if (filter.type === 'selection') return filtersState;
+
+      return {
+        ...filtersState,
+        [filter.name]: filter.defaultValue,
+      };
+    }, {});
   };
 
   const getInitialSearchConfig = currentSearchType => {
@@ -262,14 +266,16 @@ const SearchModal = ({
 
       params.searchfield = currentSearchField;
       params[`filter[${searchFilterName}]`] = query;
-    } else {
+    }
+
+    if (query) {
       params.q = query;
     }
 
     return params;
   };
 
-  const fetchItems = async ({
+  const fetchItems = ({
     searchQuery: query,
     searchFilters: filters,
     page,
@@ -346,11 +352,11 @@ const SearchModal = ({
 
     const shouldPerformSearchByTags = searchByTagsEnabled && tags?.length;
     const shouldPerformSearchByAccessTypes = searchAccessTypesEnabled && accessTypes?.length;
+    const hasRegularFilters = Object.values(otherFilters).some(value => value && value !== 'all');
     const shouldPerformRegularSearch =
       !searchByTagsEnabled
       && !searchAccessTypesEnabled
-      && Object.keys(otherFilters).length
-      && searchQuery;
+      && (searchQuery || (isPackageSearch && hasRegularFilters));
 
     if (shouldPerformSearchByTags || shouldPerformRegularSearch || shouldPerformSearchByAccessTypes) {
       mutator[okapiResource].reset();

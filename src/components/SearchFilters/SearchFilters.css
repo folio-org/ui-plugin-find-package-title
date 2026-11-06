@@ -1,4 +1,11 @@
 .search-filters {
+  & .selectionFilterGroup {
+    border: 0;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+  }
+
   & section {
     margin-bottom: 1em;
   }
