@@ -223,6 +223,14 @@ describe('Given SearchModal', () => {
     });
 
     describe('when search type is package', () => {
+      it('should not fetch packages when the modal opens', () => {
+        mutator.packages.GET.mockClear();
+
+        renderSearchModal(props);
+
+        expect(mutator.packages.GET).not.toHaveBeenCalled();
+      });
+
       it('should show sub header', () => {
         const {
           getByText,
@@ -231,6 +239,40 @@ describe('Given SearchModal', () => {
 
         expect(getByText('ui-plugin-find-package-title.resultsPane.resultsCount')).toBeDefined();
         expect(queryByText('ui-plugin-find-package-title.resultsPane.resultsCount.loading')).not.toBeInTheDocument();
+      });
+
+      it('should not mark the form as dirty when Content type is All', () => {
+        const { getByTestId, container } = renderSearchModal(props);
+        const resetButton = getByTestId('reset-button');
+
+        expect(resetButton).toBeDisabled();
+
+        fireEvent.click(container.querySelector('#accordion-toggle-button-filter-type'));
+        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'ebook' } });
+
+        expect(resetButton).toBeEnabled();
+
+        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'all' } });
+
+        expect(resetButton).toBeDisabled();
+      });
+
+      it('should clear the results when clearing the Content type filter', () => {
+        mutator.packages.GET.mockClear();
+        const { getByTestId, container } = renderSearchModal(props);
+
+        fireEvent.click(container.querySelector('#accordion-toggle-button-filter-type'));
+        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'ebook' } });
+
+        expect(mutator.packages.GET).toHaveBeenCalled();
+
+        mutator.packages.GET.mockClear();
+        mutator.packages.reset.mockClear();
+
+        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'all' } });
+
+        expect(mutator.packages.reset).toHaveBeenCalled();
+        expect(mutator.packages.GET).not.toHaveBeenCalled();
       });
 
       describe('when click on reset filters button', () => {

@@ -89,9 +89,10 @@ const selectionStatusFilterConfig = {
 };
 
 const contentTypeFilterConfig = {
-  type: 'selection',
+  type: 'select',
   name: 'type',
   label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.contentType" />,
+  filterLabelId: 'ui-plugin-find-package-title.searchPane.filters.contentType',
   defaultValue: 'all',
   options: [
     {
