@@ -4,6 +4,7 @@ import {
   cleanup,
   fireEvent,
   render,
+  within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import { runAxeTest } from '@folio/stripes-testing';
@@ -242,34 +243,38 @@ describe('Given SearchModal', () => {
       });
 
       it('should not mark the form as dirty when Content type is All', () => {
-        const { getByTestId, container } = renderSearchModal(props);
+        const { getByTestId } = renderSearchModal(props);
         const resetButton = getByTestId('reset-button');
+        const filterTypeSelect = getByTestId('filter-type-select');
 
         expect(resetButton).toBeDisabled();
 
-        fireEvent.click(container.querySelector('#accordion-toggle-button-filter-type'));
-        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'ebook' } });
+        const filterTypeAccordion = filterTypeSelect.closest('[data-test-accordion-section]');
+        fireEvent.click(within(filterTypeAccordion).getByRole('button'));
+        fireEvent.change(filterTypeSelect, { target: { value: 'ebook' } });
 
         expect(resetButton).toBeEnabled();
 
-        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'all' } });
+        fireEvent.change(filterTypeSelect, { target: { value: 'all' } });
 
         expect(resetButton).toBeDisabled();
       });
 
       it('should clear the results when clearing the Content type filter', () => {
         mutator.packages.GET.mockClear();
-        const { getByTestId, container } = renderSearchModal(props);
+        const { getByTestId } = renderSearchModal(props);
+        const filterTypeSelect = getByTestId('filter-type-select');
+        const filterTypeAccordion = filterTypeSelect.closest('[data-test-accordion-section]');
 
-        fireEvent.click(container.querySelector('#accordion-toggle-button-filter-type'));
-        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'ebook' } });
+        fireEvent.click(within(filterTypeAccordion).getByRole('button'));
+        fireEvent.change(filterTypeSelect, { target: { value: 'ebook' } });
 
         expect(mutator.packages.GET).toHaveBeenCalled();
 
         mutator.packages.GET.mockClear();
         mutator.packages.reset.mockClear();
 
-        fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'all' } });
+        fireEvent.change(filterTypeSelect, { target: { value: 'all' } });
 
         expect(mutator.packages.reset).toHaveBeenCalled();
         expect(mutator.packages.GET).not.toHaveBeenCalled();
