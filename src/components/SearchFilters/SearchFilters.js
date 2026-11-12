@@ -6,6 +6,7 @@ import {
   Accordion,
   FilterAccordionHeader,
   RadioButton,
+  Select,
   Selection,
 } from '@folio/stripes/components';
 
@@ -28,6 +29,21 @@ export default function SearchFilters({
   }));
 
   const flattenOptions = options => options.flatMap(option => option.options ?? [option]);
+
+  const getOptionsState = (dataOptions, filters) => {
+    const leaves = flattenOptions(dataOptions);
+    const ownedKeys = [...new Set(leaves.flatMap(({ filters: optionFilters = {} }) => Object.keys(optionFilters)))];
+    const matched = leaves.find(option => ownedKeys.every(key => option.filters?.[key] === filters[key]));
+    const current = matched ?? leaves.find(({ isDefault }) => isDefault) ?? {};
+    const hasUnmatchedFilters = !matched && ownedKeys.some(key => filters[key] !== undefined);
+
+    return {
+      current,
+      leaves,
+      ownedKeys,
+      hasSelectedOption: !current.isDefault || hasUnmatchedFilters,
+    };
+  };
 
   const filterOptionsByContains = (filterValue, dataOptions = []) => {
     const needle = filterValue.toLowerCase();
@@ -53,18 +69,19 @@ export default function SearchFilters({
     });
   };
 
-  const renderSelectionFilter = ({ name, label, options }) => {
+  const renderOptionsFilter = ({ type, name, label, filterLabelId, options }) => {
     const accordionLabelId = `filter-${name}-label`;
     const dataOptions = toDataOptions(options);
-    const leaves = flattenOptions(dataOptions);
-    const ownedKeys = [...new Set(leaves.flatMap(({ filters = {} }) => Object.keys(filters)))];
-    const matched = leaves.find(option => ownedKeys.every(key => option.filters?.[key] === activeFilters[key]));
-    const current = matched ?? leaves.find(({ isDefault }) => isDefault) ?? {};
-    const hasUnmatchedFilters = !matched && ownedKeys.some(key => activeFilters[key] !== undefined);
-    const hasSelectedOption = !current.isDefault || hasUnmatchedFilters;
+    const {
+      current,
+      leaves,
+      ownedKeys,
+      hasSelectedOption,
+    } = getOptionsState(dataOptions, activeFilters);
 
     const clearFilter = () => onChange(omit(activeFilters, ownedKeys));
-    const selectOption = value => {
+    const selectOption = selection => {
+      const value = type === 'select' ? selection.target.value : selection;
       const selectedOption = leaves.find(option => option.value === value);
 
       if (!selectedOption) return;
@@ -74,12 +91,31 @@ export default function SearchFilters({
         ...(selectedOption.isDefault ? {} : selectedOption.filters),
       });
     };
+    const FilterComponent = type === 'select' ? Select : Selection;
+    const filterComponentProps = type === 'select'
+      ? {
+        'aria-label': formatMessage({ id: filterLabelId }),
+        'data-testid': `filter-${name}-select`,
+      }
+      : {
+        onFilter: filterOptionsByContains,
+      };
+    const filterComponent = (
+      <FilterComponent
+        dataOptions={dataOptions}
+        disabled={disabled}
+        value={current.value}
+        onChange={selectOption}
+        marginBottom0
+        {...filterComponentProps}
+      />
+    );
 
     return (
       <Accordion
         key={name}
         name={name}
-        label={<span id={accordionLabelId}>{label}</span>}
+        label={type === 'selection' ? <span id={accordionLabelId}>{label}</span> : label}
         separator={false}
         closedByDefault
         header={FilterAccordionHeader}
@@ -87,15 +123,11 @@ export default function SearchFilters({
         onClearFilter={clearFilter}
         id={`filter-${name}`}
       >
-        <fieldset className={styles.selectionFilterGroup} aria-labelledby={accordionLabelId}>
-          <Selection
-            dataOptions={dataOptions}
-            disabled={disabled}
-            value={current.value}
-            onChange={selectOption}
-            onFilter={filterOptionsByContains}
-          />
-        </fieldset>
+        {type === 'selection' ? (
+          <fieldset className={styles.selectionFilterGroup} aria-labelledby={accordionLabelId}>
+            {filterComponent}
+          </fieldset>
+        ) : filterComponent}
       </Accordion>
     );
   };
@@ -127,8 +159,8 @@ export default function SearchFilters({
   };
 
   const renderFilter = filter => {
-    if (filter.type === 'selection') {
-      return renderSelectionFilter(filter);
+    if (filter.type === 'selection' || filter.type === 'select') {
+      return renderOptionsFilter(filter);
     }
 
     const { name, label, defaultValue, options } = filter;
@@ -178,6 +210,7 @@ SearchFilters.propTypes = {
     label: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.object).isRequired,
+    filterLabelId: PropTypes.string,
     type: PropTypes.string,
   })).isRequired,
   disabled: PropTypes.bool.isRequired,

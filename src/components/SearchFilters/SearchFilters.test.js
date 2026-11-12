@@ -105,9 +105,9 @@ describe('Given SearchFilters', () => {
     expect(onChange).toHaveBeenCalledWith({ selected: 'true', visibility: 'hiddenInPF' });
   });
 
-  it('should render and apply Content type Selection options', () => {
+  it('should render and apply Content type Select options', () => {
     const onChange = jest.fn();
-    const { getByRole, getAllByRole, container } = render(
+    const { getByTestId, getAllByRole, container } = render(
       <SearchFilters
         activeFilters={{}}
         availableFilters={[searchFiltersConfig[searchTypes.PACKAGE][2]]}
@@ -117,11 +117,45 @@ describe('Given SearchFilters', () => {
     );
 
     fireEvent.click(container.querySelector('#accordion-toggle-button-filter-type'));
-    fireEvent.click(getByRole('button', { name: 'ui-plugin-find-package-title.searchPane.filters.contentType.all' }));
-    fireEvent.click(getByRole('combobox'));
-    fireEvent.click(getAllByRole('option').find(option => option.textContent.endsWith('.ebook')));
+    expect(getByTestId('filter-type-select').tagName).toBe('SELECT');
+    expect(getByTestId('filter-type-select').value).toBe('all');
+    expect(getAllByRole('option')).toHaveLength(10);
+    expect(onChange).not.toHaveBeenCalled();
+
+    fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'ebook' } });
 
     expect(onChange).toHaveBeenCalledWith({ type: 'ebook' });
+  });
+
+  it('should show an active Content type and clear its selection', () => {
+    const onChange = jest.fn();
+    const { getByTestId, rerender, container } = render(
+      <SearchFilters
+        activeFilters={{ type: 'ebook' }}
+        availableFilters={[searchFiltersConfig[searchTypes.PACKAGE][2]]}
+        disabled={false}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(container.querySelector('#accordion-toggle-button-filter-type'));
+
+    expect(getByTestId('filter-type-select').value).toBe('ebook');
+
+    fireEvent.change(getByTestId('filter-type-select'), { target: { value: 'all' } });
+
+    expect(onChange).toHaveBeenCalledWith({});
+
+    rerender(
+      <SearchFilters
+        activeFilters={{}}
+        availableFilters={[searchFiltersConfig[searchTypes.PACKAGE][2]]}
+        disabled={false}
+        onChange={onChange}
+      />
+    );
+
+    expect(getByTestId('filter-type-select').value).toBe('all');
   });
 
   it('should render and apply Package access radio options', () => {

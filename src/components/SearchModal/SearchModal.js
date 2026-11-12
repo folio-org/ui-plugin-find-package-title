@@ -114,7 +114,12 @@ const SearchModal = ({
 }) => {
   const getInitialFiltersState = currentSearchType => {
     return searchFiltersConfig[currentSearchType].reduce((filtersState, filter) => {
-      if (filter.type === 'selection') return filtersState;
+      if (
+        filter.type === 'selection'
+        || filter.type === 'select'
+        || filter.defaultValue === 'all'
+        || filter.defaultValue === 'relevance'
+      ) return filtersState;
 
       return {
         ...filtersState,
@@ -371,6 +376,8 @@ const SearchModal = ({
         searchQuery,
         searchFilters
       });
+    } else {
+      mutator[okapiResource].reset();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
