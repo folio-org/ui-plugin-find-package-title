@@ -88,6 +88,26 @@ const selectionStatusFilterConfig = {
   ]
 };
 
+const titleSelectionStatusFilterConfig = {
+  name: 'selected',
+  label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus" />,
+  defaultValue: 'all',
+  options: [
+    {
+      label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus.all" />,
+      value: 'all',
+    },
+    {
+      label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus.selected" />,
+      value: 'true',
+    },
+    {
+      label: <FormattedMessage id="ui-plugin-find-package-title.searchPane.filters.selectionStatus.notSelected" />,
+      value: 'false',
+    },
+  ]
+};
+
 const contentTypeFilterConfig = {
   type: 'select',
   name: 'type',
@@ -192,7 +212,7 @@ const packageFilters = [
 
 const titleFilters = [
   titleSortFilterConfig,
-  selectionStatusFilterConfig,
+  titleSelectionStatusFilterConfig,
   publicationTypeFilterConfig,
 ];
 

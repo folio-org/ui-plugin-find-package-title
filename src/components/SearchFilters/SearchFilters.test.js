@@ -105,6 +105,28 @@ describe('Given SearchFilters', () => {
     expect(onChange).toHaveBeenCalledWith({ selected: 'true', visibility: 'hiddenInPF' });
   });
 
+  it('should render Title selection status as radio options', () => {
+    const onChange = jest.fn();
+    const { getByTestId, getByRole, container } = render(
+      <SearchFilters
+        activeFilters={{}}
+        availableFilters={[searchFiltersConfig[searchTypes.TITLE][1]]}
+        disabled={false}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(container.querySelector('#accordion-toggle-button-filter-selected'));
+
+    expect(getByRole('radiogroup')).toBeInTheDocument();
+    expect(getByTestId('filter-selected-all')).toBeInTheDocument();
+    expect(getByTestId('filter-selected-true')).toBeInTheDocument();
+    expect(getByTestId('filter-selected-false')).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('filter-selected-true'));
+    expect(onChange).toHaveBeenCalledWith({ selected: 'true' });
+  });
+
   it('should render and apply Content type Select options', () => {
     const onChange = jest.fn();
     const { getByTestId, getAllByRole, container } = render(
